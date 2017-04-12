@@ -12,8 +12,9 @@ public class GhostController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
-	}
+        RecalculatePosition();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,9 +34,9 @@ public class GhostController : MonoBehaviour {
         for (int t = 0; t < GHOST_NUM_STEPS; t++)
         {
             // apply proportion of the turn
-            rot *= Quaternion.Euler(Vector3.forward * Ship.Turn * Ship.MaxTurn / (float)GHOST_NUM_STEPS);
+            rot *= Quaternion.Euler(Vector3.up * Ship.Turn * Ship.MaxTurn / (float)GHOST_NUM_STEPS);
             // move forward 1 seconds worth of movement in the new direction
-            pos += rot * -Vector3.up * GHOST_STEP_SIZE * (Ship.CurrentSpeed + Ship.Acceleration * Ship.MaxAcceleration);
+            pos += rot * Vector3.forward * GHOST_STEP_SIZE * (Ship.CurrentSpeed + Ship.Acceleration * Ship.MaxAcceleration);
             
             points[t + 1] = pos;
             

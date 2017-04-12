@@ -21,7 +21,6 @@ public class ShipController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CurrentSpeed = 0f;
 	}
 	
 	// Update is called once per frame

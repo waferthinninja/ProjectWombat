@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class InputController : MonoBehaviour {
     
+    public ShipControlsController ShipControlsController;
+    public ShipDetailsController ShipDetailsController;
 
-    public int CameraSpeed = 20;
-
-    public Slider TurnSlider;
-    public Slider AccelerationSlider;
+    private float CameraSpeed = 20;
 
     private ShipController _selectedShip;
 
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -47,11 +45,12 @@ public class InputController : MonoBehaviour {
             var go = GetClickedGameObject();
             if (go != null && go.transform.parent.gameObject.GetComponent<ShipController>() != null)
             {
-                _selectedShip = go.transform.parent.gameObject.GetComponent<ShipController>();
-                Debug.Log(_selectedShip.ShipName + " selected");
+                SelectShip(go.transform.parent.gameObject.GetComponent<ShipController>());
 
-                TurnSlider.value = _selectedShip.Turn;
-                AccelerationSlider.value = _selectedShip.Acceleration;
+            }
+            else
+            {
+                ClearSelectedShip();
             }
 
         }
@@ -64,23 +63,25 @@ public class InputController : MonoBehaviour {
             }
             else
             {
-                Application.Quit();
+                //TODO - add confirmatio 
+                //Application.Quit();
             }
         }
     }
 
-    public void ApplyTurnSliderChange()
+    public void ClearSelectedShip()
     {
-        if (_selectedShip == null) return;
-
-        _selectedShip.SetTurn(TurnSlider.value);
+        _selectedShip = null;
     }
 
-    public void ApplyAccelerationSliderChange()
+    public void SelectShip(ShipController ship)
     {
-        if (_selectedShip == null) return;
+        _selectedShip = ship;
+        Debug.Log(_selectedShip.ShipName + " selected");
 
-        _selectedShip.SetAcceleration(AccelerationSlider.value);
+        // TODO - use callback action for these
+        ShipControlsController.SelectShip(ship);
+        ShipDetailsController.SelectShip(ship);
     }
 
     GameObject GetClickedGameObject()
@@ -89,11 +90,15 @@ public class InputController : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
-        
+
         // Casts the ray and get the first game object hit 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
             return hit.transform.gameObject;
+        }
         else
+        {
             return null;
+        }
     }
 }

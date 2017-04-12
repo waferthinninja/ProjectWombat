@@ -9,9 +9,11 @@ public class ShieldManager : MonoBehaviour {
     public LineRenderer SWBeam;
     public LineRenderer SEBeam;
 
-    public float width;
-    public float height;
-    public float radius;
+    public Color Color;
+
+    public float Width;
+    public float Height;
+    public float Radius;
 
     private float currentWidth = 0;
     private float currentHeight = 0;
@@ -28,13 +30,13 @@ public class ShieldManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (currentWidth != width)
+        if (currentWidth != Width)
         {
-            currentWidth = width;// * Time.deltaTime * speed;
+            currentWidth = Width;// * Time.deltaTime * speed;
         }
-        if (currentHeight != height)
+        if (currentHeight != Height)
         {
-            currentHeight = height;// * Time.deltaTime * speed;
+            currentHeight = Height;// * Time.deltaTime * speed;
         }
 
         shieldRenderer.material.SetFloat("_WidthAngle", currentWidth);
@@ -50,23 +52,20 @@ public class ShieldManager : MonoBehaviour {
 
     void SetBeamPosition(float angle1, float angle2, LineRenderer lr)
     {
+        Vector3 p1 = new Vector3(Mathf.Cos(angle1), 0, -Mathf.Sin(angle1));
+        Vector3 p2 = new Vector3(0, Mathf.Cos(angle2), Mathf.Sin(angle2));
+        
+        // cross product
+        Vector3 cp = Vector3.Cross(p1, p2);
+        cp.Normalize();
+        
         Vector3[] points = new Vector3[2];
         points[0] = new Vector3();
-        points[1] = new Vector3(0,0,radius/2f);
+        points[1] = Radius * 0.5f * cp;
 
-        shieldRenderer.transform.localScale = new Vector3(radius, radius, radius);
+        shieldRenderer.transform.localScale = new Vector3(Radius, Radius, Radius);
 
         lr.SetPositions(points);
-
-        lr.transform.localEulerAngles = new Vector3( 0,0, 0);
-        lr.transform.Rotate(Vector3.up, Mathf.Rad2Deg * angle1 );
-        lr.transform.Rotate(Vector3.right, Mathf.Rad2Deg * angle2  * Mathf.Cos(angle1));
-        
-
-        //float x = radius * Mathf.Cos(angle1) * Mathf.Sin(angle2);
-        //float y = radius * Mathf.Sin(angle1) * Mathf.Sin(angle2);
-        //float z = radius * Mathf.Cos(angle2);
-
-        
+     
     }
 }
