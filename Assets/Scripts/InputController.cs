@@ -4,13 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InputController : MonoBehaviour {
-    
+
+    //MAKE INSTANCE
+    private static InputController _instance;
+
+    public static InputController Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = GameObject.FindObjectOfType<InputController>();
+            return _instance;
+        }
+    }
+    //END MAKE INSTANCE
+
+
     public ShipControlsController ShipControlsController;
     public ShipDetailsController ShipDetailsController;
 
-    private float CameraSpeed = 20;
+    private float _cameraSpeed = 20;
 
-    private ShipController _selectedShip;
+    public ShipController SelectedShip { get; private set; }
 
 
     // Use this for initialization
@@ -21,7 +36,7 @@ public class InputController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        float moveSpeed = CameraSpeed * Time.deltaTime;
+        float moveSpeed = _cameraSpeed * Time.deltaTime;
 
 		if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -43,23 +58,17 @@ public class InputController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             var go = GetClickedGameObject();
-            if (go != null && go.transform.parent.gameObject.GetComponent<ShipController>() != null)
+            if (go != null && go.transform.parent != null && go.transform.parent.gameObject.GetComponent<ShipController>() != null)
             {
                 SelectShip(go.transform.parent.gameObject.GetComponent<ShipController>());
-
             }
-            else
-            {
-                ClearSelectedShip();
-            }
-
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_selectedShip != null)
+            if (SelectedShip != null)
             {
-                _selectedShip = null;
+                ClearSelectedShip();
             }
             else
             {
@@ -71,13 +80,15 @@ public class InputController : MonoBehaviour {
 
     public void ClearSelectedShip()
     {
-        _selectedShip = null;
+        SelectedShip = null;
+        ShipControlsController.ClearSelectedShip();
+        ShipDetailsController.ClearSelectedShip();
     }
 
     public void SelectShip(ShipController ship)
     {
-        _selectedShip = ship;
-        Debug.Log(_selectedShip.ShipName + " selected");
+        SelectedShip = ship;
+        Debug.Log(SelectedShip.ShipName + " selected");
 
         // TODO - use callback action for these
         ShipControlsController.SelectShip(ship);

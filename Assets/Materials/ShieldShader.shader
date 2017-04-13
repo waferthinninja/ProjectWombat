@@ -62,7 +62,7 @@
 				clip(diff2);
 
 				// edge glow
-				float glow = 1 / (min(diff, diff2) * 150);
+				float glow = 1 / (min(diff, diff2) * 40);
 				fixed4 glowColor = fixed4(lerp(_Color.rgb, fixed3(1, 1, 1),  pow(glow, 2)), 1);
 				fixed4 col = _Color * _Color.a + glowColor * glow;
 				return col;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,17 +21,59 @@ public class GameManager: MonoBehaviour {
 
     public GameState GameState;
 
+    private TurnOrder _opponentOrders;
+
+    private static int _nextShipId = 0;
+
+    public static readonly int NUM_MOVEMENT_STEPS = 12;
+    public static readonly float MOVEMENT_STEP_LENGTH = 0.5f;
+
+    // callbacks
+    private Action OnStartOfPlanning;
+    private Action OnStartOfPlayback;
+
+    public void RegisterOnStartOfPlanning(Action action)
+    {
+        OnStartOfPlanning += action;
+    }
+
+    public void RegisterOnStartOfPlayback(Action action)
+    {
+        OnStartOfPlayback += action;
+    }
+
+    public void SubmitOrders()
+    {
+        StartPlaybackPhase(); // TEMP       
+    }
+
+    public int GetShipId()
+    {
+        return _nextShipId++;
+    }
 
     void Start()
     {
-        UpdateGameState(GameState.Planning);
+        StartPlanningPhase(); // TODO - replace with loading game
+    }
+    
+    void StartPlanningPhase()
+    {
+        GameState = GameState.Planning;
+        if (OnStartOfPlanning != null)
+        {
+            OnStartOfPlanning();
+        }
+
     }
 
-    public 
-
-    void UpdateGameState(GameState gameState)
+    void StartPlaybackPhase()
     {
-        GameState = gameState;     
+        GameState = GameState.Playback;
+        if (OnStartOfPlayback != null)
+        {
+            OnStartOfPlayback();
+        }
     }
 
 }

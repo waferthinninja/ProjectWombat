@@ -5,15 +5,17 @@ using UnityEngine;
 public class GhostController : MonoBehaviour {
 
     public ShipController Ship;
+    
+    public MeshRenderer ChassisRenderer;
 
-    // turn length settings - should prob move to a central place
-    float GHOST_STEP_SIZE = 0.5f; // seconds per interval
-    int GHOST_NUM_STEPS = 10; // intervals per turn 
+    public Color Color;
 
     // Use this for initialization
     void Start () {
-        RecalculatePosition();
 
+        ChassisRenderer.material.SetColor("_Color", Color);
+
+        RecalculatePosition();
     }
 	
 	// Update is called once per frame
@@ -23,7 +25,7 @@ public class GhostController : MonoBehaviour {
 
     public void RecalculatePosition()
     {
-        var points = new Vector3[GHOST_NUM_STEPS + 1];
+        var points = new Vector3[GameManager.NUM_MOVEMENT_STEPS + 1];
 
         // first point is current position
         points[0] = Ship.transform.position;
@@ -31,12 +33,12 @@ public class GhostController : MonoBehaviour {
         Vector3 pos = Ship.transform.position;
         Quaternion rot = Ship.transform.rotation;
         // now simulate 5 seconds of movement placing a point at the end of each
-        for (int t = 0; t < GHOST_NUM_STEPS; t++)
+        for (int t = 0; t < GameManager.NUM_MOVEMENT_STEPS; t++)
         {
             // apply proportion of the turn
-            rot *= Quaternion.Euler(Vector3.up * Ship.Turn * Ship.MaxTurn / (float)GHOST_NUM_STEPS);
+            rot *= Quaternion.Euler(Vector3.up * Ship.TurnProportion * Ship.MaxTurn / GameManager.NUM_MOVEMENT_STEPS);
             // move forward 1 seconds worth of movement in the new direction
-            pos += rot * Vector3.forward * GHOST_STEP_SIZE * (Ship.CurrentSpeed + Ship.Acceleration * Ship.MaxAcceleration);
+            pos += rot * Vector3.forward * GameManager.MOVEMENT_STEP_LENGTH * (Ship.CurrentSpeed + Ship.Acceleration * Ship.MaxAcceleration);
             
             points[t + 1] = pos;
             
@@ -47,7 +49,7 @@ public class GhostController : MonoBehaviour {
         GetComponent<LineRenderer>().SetPositions(points);
 
         // place the ghost at the end of the line
-        transform.position = pos; 
+        transform.position = new Vector3(pos.x, pos.y - 0.01f, pos.z); 
         transform.rotation = rot;
         
 

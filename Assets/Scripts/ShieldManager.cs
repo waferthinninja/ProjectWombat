@@ -25,11 +25,15 @@ public class ShieldManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+        shieldRenderer.material.SetColor("_Color", Color);
         if (currentWidth != Width)
         {
             currentWidth = Width;// * Time.deltaTime * speed;
@@ -59,12 +63,17 @@ public class ShieldManager : MonoBehaviour {
         Vector3 cp = Vector3.Cross(p1, p2);
         cp.Normalize();
         
-        Vector3[] points = new Vector3[2];
+        int NUMPOINTS = 2;
+        Vector3[] points = new Vector3[NUMPOINTS];
         points[0] = new Vector3();
-        points[1] = Radius * 0.5f * cp;
+        for (int i = 1; i < NUMPOINTS; i++)
+        {
+            points[i] = Radius * cp / i;
+        }
 
-        shieldRenderer.transform.localScale = new Vector3(Radius, Radius, Radius);
+        shieldRenderer.transform.localScale = new Vector3(Radius*2, Radius*2, Radius*2);
 
+        lr.numPositions = NUMPOINTS;
         lr.SetPositions(points);
      
     }
