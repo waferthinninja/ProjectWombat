@@ -20,7 +20,6 @@ public class ShipControlsController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -54,12 +53,14 @@ public class ShipControlsController : MonoBehaviour {
     {
         if (_selectedShip == null) return;
         TurnSlider.value = 0;
+        ApplyTurnSliderChange();
 
     }
     public void ZeroAcceleration()
     {
         if (_selectedShip == null) return;
         AccelerationSlider.value = 0;
+        ApplyAccelerationSliderChange();
     }
 
     public void ApplyTurnSliderChange()
@@ -67,6 +68,7 @@ public class ShipControlsController : MonoBehaviour {
         if (_selectedShip == null) return;
 
         _selectedShip.SetTurn(TurnSlider.value);
+        Recalculate();
     }
 
     public void ApplyAccelerationSliderChange()
@@ -74,5 +76,15 @@ public class ShipControlsController : MonoBehaviour {
         if (_selectedShip == null) return;
 
         _selectedShip.SetAcceleration(AccelerationSlider.value);
+        Recalculate();
+    }
+
+    private void Recalculate()
+    {
+        if (_selectedShip == null) return;
+
+        _selectedShip.RecalculateProjections();
+        TimeController.Instance.ApplyTimeSlider();
+
     }
 }

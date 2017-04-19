@@ -22,18 +22,19 @@ public class CanvasManager : MonoBehaviour {
     public PanelController ShipControlsPanel;
     public PanelController ShipDetailsPanel;
     public PanelController PlanningPhaseControlPanel;
+    public PanelController PlaybackPhaseControlPanel;
 
     public ShipControlsController ShipControlsController;
     public ShipDetailsController ShipDetailsController;
     
-
-    // Use this for initialization
-    void Start () {
-		
-	}
+    void Start ()
+    {
+        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
+        GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
+    }
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
@@ -47,5 +48,18 @@ public class CanvasManager : MonoBehaviour {
     {
         ShipControlsPanel.SetActive(false);
         ShipDetailsPanel.SetActive(false);
+    }
+
+    public void OnStartOfPlayback()
+    {
+        ClearShipPanels();
+        PlaybackPhaseControlPanel.SetActive(true);
+    }
+
+    public void OnStartOfWaitingForOpponent()
+    {
+        ClearShipPanels();
+        PlanningPhaseControlPanel.SetActive(false);
+        PlaybackPhaseControlPanel.SetActive(false);
     }
 }

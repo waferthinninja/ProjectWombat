@@ -30,21 +30,18 @@ public class GameManager: MonoBehaviour {
 
     // callbacks
     private Action OnStartOfPlanning;
+    private Action OnStartOfWaitingForOpponent;
+    private Action OnStartOfProcessing;
     private Action OnStartOfPlayback;
 
-    public void RegisterOnStartOfPlanning(Action action)
-    {
-        OnStartOfPlanning += action;
-    }
-
-    public void RegisterOnStartOfPlayback(Action action)
-    {
-        OnStartOfPlayback += action;
-    }
+    public void RegisterOnStartOfPlanning(Action action) { OnStartOfPlanning += action; }
+    public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
+    public void RegisterOnStartOfProcessing(Action action) { OnStartOfProcessing += action; }
+    public void RegisterOnStartOfPlayback(Action action) { OnStartOfPlayback += action; }
 
     public void SubmitOrders()
     {
-        StartPlaybackPhase(); // TEMP       
+        StartWaitingForOpponentPhase(); // TEMP - add confirmation      
     }
 
     public int GetShipId()
@@ -57,9 +54,26 @@ public class GameManager: MonoBehaviour {
         StartPlanningPhase(); // TODO - replace with loading game
     }
     
+    void Update()
+    {
+        // TEMP - auto cycle through phases
+        if (GameState == GameState.WaitingForOpponent)
+        {
+            StartProcessingPhase();
+        }
+
+        if (GameState == GameState.Processing)
+        {
+            StartPlaybackPhase();
+        }
+
+
+    }
+
     void StartPlanningPhase()
     {
         GameState = GameState.Planning;
+
         if (OnStartOfPlanning != null)
         {
             OnStartOfPlanning();
@@ -67,9 +81,28 @@ public class GameManager: MonoBehaviour {
 
     }
 
+    void StartWaitingForOpponentPhase()
+    {
+        GameState = GameState.WaitingForOpponent;
+        
+        if (OnStartOfWaitingForOpponent != null)
+        {
+            OnStartOfWaitingForOpponent();
+        }
+    }
+    void StartProcessingPhase()
+    {
+        GameState = GameState.Processing;
+
+        if (OnStartOfProcessing != null)
+        {
+            OnStartOfProcessing();
+        }
+    }
     void StartPlaybackPhase()
     {
         GameState = GameState.Playback;
+
         if (OnStartOfPlayback != null)
         {
             OnStartOfPlayback();

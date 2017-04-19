@@ -2,5 +2,6 @@
 {
     Planning,
     WaitingForOpponent,
+    Processing,
     Playback
 }
