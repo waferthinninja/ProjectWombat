@@ -42,7 +42,8 @@ public class TimeController : MonoBehaviour {
 
     public void OnStartOfPlanning()
     {
-
+        TimeSlider.value = 0;
+        ApplyTimeSlider();
     }
 
     public void OnStartOfPlayback()

@@ -23,7 +23,7 @@ public class GameManager: MonoBehaviour {
 
     private TurnOrder _opponentOrders;
 
-    private static int _nextShipId = 0;
+    private static int _nextMobId = 0;
 
     public static readonly int NUM_MOVEMENT_STEPS = 12;
     public static readonly float MOVEMENT_STEP_LENGTH = 0.5f;
@@ -44,9 +44,9 @@ public class GameManager: MonoBehaviour {
         StartWaitingForOpponentPhase(); // TEMP - add confirmation      
     }
 
-    public int GetShipId()
+    public int GetMobId()
     {
-        return _nextShipId++;
+        return _nextMobId++;
     }
 
     void Start()
@@ -70,7 +70,7 @@ public class GameManager: MonoBehaviour {
 
     }
 
-    void StartPlanningPhase()
+    public void StartPlanningPhase()
     {
         GameState = GameState.Planning;
 

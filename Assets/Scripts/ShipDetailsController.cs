@@ -13,13 +13,25 @@ public class ShipDetailsController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        InputController.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void OnSelectedShipChange(ShipController ship)
+    {
+        if (ship == null)
+        {
+            ClearSelectedShip();
+        }
+        else
+        {
+            SelectShip(ship);
+        }
+    }
 
     public void SelectShip(ShipController ship)
     {

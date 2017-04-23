@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldManager : MonoBehaviour {
+public class ShieldController : MonoBehaviour {
 
     public LineRenderer NWBeam;
     public LineRenderer NEBeam;
@@ -18,22 +18,25 @@ public class ShieldManager : MonoBehaviour {
     private float currentWidth = 0;
     private float currentHeight = 0;
 
-    public float speed = 0.2f;
+    public float MaxStrength = 100f;
+    public float Strength = 100f;
+    private const float MAX_INTENSITY = 0.3f; 
 
     public MeshRenderer shieldRenderer;
 
     // Use this for initialization
     void Start()
     {
-
+        // get faction of ship 
+        Color = FactionColors.ShieldColor[transform.parent.GetComponent<ShipController>().Faction];
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        shieldRenderer.material.SetColor("_Color", Color);
+        float alpha = (Strength / MaxStrength) * MAX_INTENSITY;
+        Color c = new Color(Color.r, Color.g, Color.b, alpha);
+        shieldRenderer.material.SetColor("_Color", c);
         if (currentWidth != Width)
         {
             currentWidth = Width;// * Time.deltaTime * speed;
