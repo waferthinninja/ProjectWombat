@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputController : MonoBehaviour {
+public class InputManager : MonoBehaviour {
 
     //MAKE INSTANCE
-    private static InputController _instance;
+    private static InputManager _instance;
 
-    public static InputController Instance
+    public static InputManager Instance
     {
         get
         {
             if (_instance == null)
-                _instance = GameObject.FindObjectOfType<InputController>();
+                _instance = GameObject.FindObjectOfType<InputManager>();
             return _instance;
         }
     }
@@ -26,7 +26,6 @@ public class InputController : MonoBehaviour {
 
     public ShipController SelectedShip { get; private set; }
 
-    public ShipController[] _ships;
     private int _selectedShipIndex;
 
     private Action<ShipController> OnSelectedShipChange;
@@ -34,7 +33,6 @@ public class InputController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        RefreshShipList();
 	}
 	
 	// Update is called once per frame
@@ -98,11 +96,7 @@ public class InputController : MonoBehaviour {
         OnSelectedShipChange += action;
     }
 
-    public void RefreshShipList()
-    {
-        _ships = FindObjectsOfType<ShipController>();
-    }
-
+    
     public void SelectNextShip()
     {
         if (SelectedShip == null)
@@ -112,7 +106,7 @@ public class InputController : MonoBehaviour {
         else
         {
             _selectedShipIndex++;
-            if (_selectedShipIndex >= _ships.Length)
+            if (_selectedShipIndex >= GameManager.Instance.Ships.Length)
             {
                 _selectedShipIndex = 0;
             }
@@ -137,21 +131,21 @@ public class InputController : MonoBehaviour {
             Debug.LogError("Tried to select ship index < 0");
             index = 0;
         }
-        if (index >= _ships.Length)
+        if (index >= GameManager.Instance.Ships.Length)
         {
             Debug.LogError("Tried to select ship index out of bounds");
             index = 0;
         }
         
         _selectedShipIndex = index;
-        SelectShip(_ships[index]);
+        SelectShip(GameManager.Instance.Ships[index]);
     }
 
     public void SelectShip(ShipController ship)
     {
-        for (int i = 0; i < _ships.Length; i++)
+        for (int i = 0; i < GameManager.Instance.Ships.Length; i++)
         {
-            if (ship == _ships[i])
+            if (ship == GameManager.Instance.Ships[i])
             {
                 _selectedShipIndex = i; 
             }

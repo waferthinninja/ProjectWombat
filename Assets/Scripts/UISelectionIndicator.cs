@@ -17,14 +17,14 @@ public class UISelectionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputController.Instance.SelectedShip != null)
+        if (InputManager.Instance.SelectedShip != null)
         {
             for (int i = 0; i < this.transform.childCount; i++)
             {
                 this.transform.GetChild(i).gameObject.SetActive(true);
             }
 
-            Rect visualRect = RendererBoundsInScreenSpace(InputController.Instance.SelectedShip.GetComponentInChildren<Renderer>());
+            Rect visualRect = RendererBoundsInScreenSpace(InputManager.Instance.SelectedShip.GetComponentInChildren<Renderer>());
             
             RectTransform rt = GetComponent<RectTransform>();
 
@@ -32,9 +32,9 @@ public class UISelectionIndicator : MonoBehaviour
 
             rt.sizeDelta = new Vector2(visualRect.width, visualRect.height);
 
-            Text.text = InputController.Instance.SelectedShip.ShipName;
+            Text.text = InputManager.Instance.SelectedShip.ShipName;
             Color factionColor = Color.white;
-            factionColor = (InputController.Instance.SelectedShip.Faction == Faction.Friendly ? Color.green : Color.red );
+            factionColor = (InputManager.Instance.SelectedShip.Faction == Faction.Friendly ? Color.green : Color.red );
 
             Indicator.color = factionColor;
             Text.color = factionColor;

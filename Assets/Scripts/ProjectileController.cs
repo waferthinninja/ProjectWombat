@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileController : MobileObjectBase {
-
+    
     public override void Start()
     {
         base.Start();

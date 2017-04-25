@@ -24,6 +24,8 @@ public class ShieldController : MonoBehaviour {
 
     public MeshRenderer shieldRenderer;
 
+    public Transform Target;
+
     // Use this for initialization
     void Start()
     {
@@ -34,6 +36,11 @@ public class ShieldController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Target != null)
+        {
+            transform.LookAt(Target);
+        }
+
         float alpha = (Strength / MaxStrength) * MAX_INTENSITY;
         Color c = new Color(Color.r, Color.g, Color.b, alpha);
         shieldRenderer.material.SetColor("_Color", c);

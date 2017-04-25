@@ -31,8 +31,9 @@ public class CanvasManager : MonoBehaviour {
     {
 
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
-        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
         GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
+        GameManager.Instance.RegisterOnStartOfProcessing(OnStartOfProcessing);
+        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
     }
 	
 	void Update ()
@@ -58,6 +59,14 @@ public class CanvasManager : MonoBehaviour {
         PlaybackPhaseControlPanel.SetActive(false);
         PlanningPhaseControlPanel.SetActive(true);
     }
+
+    public void OnStartOfProcessing()
+    {
+        ClearShipPanels();
+        PlanningPhaseControlPanel.SetActive(false);
+        PlaybackPhaseControlPanel.SetActive(false);
+    }
+
 
     public void OnStartOfPlayback()
     {

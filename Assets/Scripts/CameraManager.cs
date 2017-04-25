@@ -33,8 +33,8 @@ public class CameraManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        SwitchToFreeMode();
-        InputController.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
+        SwitchToOverheadMode();
+        InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
 
 	}
 	
@@ -95,12 +95,12 @@ public class CameraManager : MonoBehaviour {
     {
         _cameraMode = CameraMode.Follow;
 
-        if (InputController.Instance.SelectedShip == null)
+        if (InputManager.Instance.SelectedShip == null)
         {
-            InputController.Instance.SelectNextShip();
+            InputManager.Instance.SelectNextShip();
         }
 
-        Camera.main.transform.parent = InputController.Instance.SelectedShip.transform.Find("CameraPoint");
+        Camera.main.transform.parent = InputManager.Instance.SelectedShip.transform.Find("CameraPoint");
         Camera.main.transform.localPosition = new Vector3();
         Camera.main.transform.rotation = new Quaternion();
     }

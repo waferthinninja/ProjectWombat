@@ -20,6 +20,9 @@ public class GameManager: MonoBehaviour {
     //END MAKE INSTANCE
 
     public GameState GameState;
+    
+    // keep track of a list of ships
+    public ShipController[] Ships;
 
     private TurnOrder _opponentOrders;
 
@@ -30,14 +33,44 @@ public class GameManager: MonoBehaviour {
 
     // callbacks
     private Action OnStartOfPlanning;
+    private Action OnStartOfPlanning_Late;
     private Action OnStartOfWaitingForOpponent;
     private Action OnStartOfProcessing;
     private Action OnStartOfPlayback;
 
+
+    public void RegisterOnStartOfPlanning_Late(Action action) { OnStartOfPlanning_Late += action; }
     public void RegisterOnStartOfPlanning(Action action) { OnStartOfPlanning += action; }
     public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
     public void RegisterOnStartOfProcessing(Action action) { OnStartOfProcessing += action; }
     public void RegisterOnStartOfPlayback(Action action) { OnStartOfPlayback += action; }
+
+    public void UnregisterOnStartOfPlanning(Action action) { OnStartOfPlanning -= action; }
+    public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
+    public void UnregisterOnStartOfProcessing(Action action) { OnStartOfProcessing -= action; }
+    public void UnregisterOnStartOfPlayback(Action action) { OnStartOfPlayback -= action; }
+
+    void Start()
+    {
+        RefreshShipList();
+
+        StartPlanningPhase(); // TODO - replace with loading game
+    }    
+    
+    void Update()
+    {
+        // TEMP - auto cycle through phases
+        if (GameState == GameState.WaitingForOpponent)
+        {
+            StartProcessingPhase();
+        }               
+    }
+
+    public void RefreshShipList()
+    {
+        Ships = FindObjectsOfType<ShipController>();
+    }
+
 
     public void SubmitOrders()
     {
@@ -49,27 +82,6 @@ public class GameManager: MonoBehaviour {
         return _nextMobId++;
     }
 
-    void Start()
-    {
-        StartPlanningPhase(); // TODO - replace with loading game
-    }
-    
-    void Update()
-    {
-        // TEMP - auto cycle through phases
-        if (GameState == GameState.WaitingForOpponent)
-        {
-            StartProcessingPhase();
-        }
-
-        if (GameState == GameState.Processing)
-        {
-            StartPlaybackPhase();
-        }
-
-
-    }
-
     public void StartPlanningPhase()
     {
         GameState = GameState.Planning;
@@ -78,10 +90,14 @@ public class GameManager: MonoBehaviour {
         {
             OnStartOfPlanning();
         }
+        if (OnStartOfPlanning_Late != null)
+        {
+            OnStartOfPlanning_Late();
+        }
 
     }
 
-    void StartWaitingForOpponentPhase()
+    public void StartWaitingForOpponentPhase()
     {
         GameState = GameState.WaitingForOpponent;
         
@@ -90,7 +106,7 @@ public class GameManager: MonoBehaviour {
             OnStartOfWaitingForOpponent();
         }
     }
-    void StartProcessingPhase()
+    public void StartProcessingPhase()
     {
         GameState = GameState.Processing;
 
@@ -99,7 +115,7 @@ public class GameManager: MonoBehaviour {
             OnStartOfProcessing();
         }
     }
-    void StartPlaybackPhase()
+    public void StartPlaybackPhase()
     {
         GameState = GameState.Playback;
 
