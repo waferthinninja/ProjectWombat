@@ -3,8 +3,8 @@
 	Properties
 	{
 		_Color("Color", Color) = (0,0,0,0)
-		_Angle("WidthAngle", Range(0,3.14)) = 0
-		_Angle2("HeightAngle", Range(0,3.14)) = 0
+		_Angle("WidthAngle", Range(0, 1.57)) = 0
+		_Angle("HeightAngle", Range(0, 1.57)) = 0
 	}
 
 	SubShader
@@ -40,18 +40,25 @@
 			};
 
 
-			v2f vert(appdata v)
-			{
-				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-				o.objectPos = v.vertex.xyz;
-				
-				return o;
-			}
-			
 			fixed4 _Color;
 			float _WidthAngle;
 			float _HeightAngle;
+
+			v2f vert(appdata v)
+			{
+
+				v2f o;
+				
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.objectPos = v.vertex.xyz;
+
+				float diff = 0.7 + _WidthAngle - abs(atan2(v.vertex.x, v.vertex.z));
+				float diff2 = 0.7 + _HeightAngle - abs(atan2(v.vertex.y, v.vertex.z));
+				if (diff < 0 || diff2 < 0)
+					o.objectPos.xyz = 0, 0, 0;
+
+				return o;
+			}			
 
 			fixed4 frag(v2f i) : SV_Target
 			{

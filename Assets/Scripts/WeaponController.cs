@@ -8,9 +8,8 @@ public class WeaponController : MonoBehaviour {
     public float MaxAngle; // in degrees
     public float Range;
 
-    private float lastMaxAngle;
-    private float lastRange;
-
+    public Color LaserColor;
+    
     public LineRenderer FireArcIndicator;
 
     public Transform RotationPoint;
@@ -20,10 +19,17 @@ public class WeaponController : MonoBehaviour {
     public float TimeBetweenShots;
     public float TimeSinceLastShot;
 
-	// Use this for initialization
-	void Start () {
-        //TimeController.Instance.RegisterOnTimeChange(OnTimeChange);
-	}
+    private float lastMaxAngle;
+    private float lastRange;
+    private Faction _faction;
+    
+    // Use this for initialization
+    void Start ()
+    {
+        // get faction of ship 
+        _faction = transform.parent.GetComponent<ShipController>().Faction;
+        LaserColor = FactionColors.LaserColor[_faction];
+    }
 
     // Update is called once per frame
     void Update()
@@ -50,18 +56,30 @@ public class WeaponController : MonoBehaviour {
             ShipController ship = GameManager.Instance.Ships[i];
 
             // don't target friends
-            if (ship.Faction == Faction.Friendly) continue;
+            if (ship.Faction == _faction) continue;
 
             // check range
-            if (Vector3.Distance(transform.position, ship.transform.position) > Range) continue;
+            float distance = Vector3.Distance(transform.position, ship.transform.position);
 
-            // check firing arc
-            float angle = Vector3.Angle(transform.forward, (ship.transform.position - transform.position)); 
+            float timeToTarget = distance / Projectile.GetComponent<ProjectileController>().MaxAcceleration;
+            // temporarily move object to provide lead
+            Debug.Log("P" + ship.transform.position);
+            ship.transform.Translate(ship.transform.forward * timeToTarget);
+            Vector3 target = ship.transform.position;
+            ship.transform.Translate(ship.transform.forward * -timeToTarget);
 
-            if (angle < MaxAngle / 2f)
+            Debug.Log("T" + target);
+            distance = Vector3.Distance(transform.position, target);
+            if (distance <= Range)
             {
-                RotationPoint.LookAt(ship.transform);
-                return true;
+                // check firing arc
+                float angle = Vector3.Angle(transform.forward, (target - transform.position));
+
+                if (angle < MaxAngle / 2f)
+                {
+                    RotationPoint.LookAt(target);
+                    return true;
+                }
             }
             
         }
@@ -77,9 +95,14 @@ public class WeaponController : MonoBehaviour {
         t.position = FirePoint.position;
         t.rotation = RotationPoint.rotation;
         ProjectileController projectile = t.GetComponent<ProjectileController>();
-        //projectile.MaxAcceleration = 5f;
+        projectile.LayerMask = 1 << 10; //ugh
+        projectile.Damage = 40;
 
-        projectile.TimeOffset = TimeController.Instance.GetTurnTime();
+        LineRenderer renderer = projectile.GetComponent<LineRenderer>();
+
+        renderer.material.SetColor("_TintColor", LaserColor);
+
+        projectile.TimeOffset = TimeController.Instance.GetTime();
         projectile.DeathTime = projectile.TimeOffset + Range / (projectile.MaxAcceleration * GameManager.MOVEMENT_STEP_LENGTH); 
 
         TimeSinceLastShot = 0f;

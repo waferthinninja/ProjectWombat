@@ -50,7 +50,7 @@ public class TimeController : MonoBehaviour {
         }
     }
 
-    public float GetTurnTime()
+    public float GetTime()
     {
         return TimeSlider.value;
     }
