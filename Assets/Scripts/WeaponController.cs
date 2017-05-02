@@ -7,6 +7,7 @@ public class WeaponController : MonoBehaviour {
 
     public float MaxAngle; // in degrees
     public float Range;
+    public float Damage;
 
     public Color LaserColor;
     
@@ -59,16 +60,15 @@ public class WeaponController : MonoBehaviour {
             if (ship.Faction == _faction) continue;
 
             // check range
-            float distance = Vector3.Distance(transform.position, ship.transform.position);
-
+            float distance = Vector3.Distance(ship.transform.position, transform.position);
             float timeToTarget = distance / Projectile.GetComponent<ProjectileController>().MaxAcceleration;
-            // temporarily move object to provide lead
-            Debug.Log("P" + ship.transform.position);
-            ship.transform.Translate(ship.transform.forward * timeToTarget);
-            Vector3 target = ship.transform.position;
-            ship.transform.Translate(ship.transform.forward * -timeToTarget);
 
-            Debug.Log("T" + target);
+            // temporarily move object to provide lead   
+            Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.Acceleration * ship.MaxAcceleration, Color.red);         
+            ship.transform.Translate(ship.transform.forward * timeToTarget * ship.Acceleration * ship.MaxAcceleration);
+            Vector3 target = ship.transform.position;
+            ship.transform.Translate(ship.transform.forward * -timeToTarget * ship.Acceleration * ship.MaxAcceleration);
+ 
             distance = Vector3.Distance(transform.position, target);
             if (distance <= Range)
             {
@@ -95,8 +95,8 @@ public class WeaponController : MonoBehaviour {
         t.position = FirePoint.position;
         t.rotation = RotationPoint.rotation;
         ProjectileController projectile = t.GetComponent<ProjectileController>();
-        projectile.LayerMask = 1 << 10; //ugh
-        projectile.Damage = 40;
+        projectile.LayerMask = 1 << 10; //ugh - also wont work other way at the moment
+        projectile.Damage = Damage;
 
         LineRenderer renderer = projectile.GetComponent<LineRenderer>();
 

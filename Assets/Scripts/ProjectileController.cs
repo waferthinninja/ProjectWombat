@@ -37,7 +37,13 @@ public class ProjectileController : MobileObjectBase {
                 if (col.GetComponent<ShieldController>() != null)
                 {
                     ShieldController shield = col.GetComponent<ShieldController>();
-                    Damage = shield.ApplyDamage(Damage);
+                    
+                    float angle = Vector3.Angle(shield.RotationPoint.forward, -transform.forward);
+                    Debug.Log(angle);
+                    if (angle <= shield.Width * Mathf.Rad2Deg)
+                    {
+                        Damage = shield.ApplyDamage(Damage);
+                    }
                 }            
             }
 

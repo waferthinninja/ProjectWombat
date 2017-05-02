@@ -8,14 +8,18 @@ public class ShieldController : MonoBehaviour {
     public LineRenderer NEBeam;
     public LineRenderer SWBeam;
     public LineRenderer SEBeam;
+    
+    public Transform RotationPoint;
 
     public Color Color;
 
     [Range(0.0f, 1.57f)]
-    public float Width;
+    public float Width; // in radians - TODO convert to degrees?
     [Range(0.0f, 1.57f)]
-    public float Height;
+    public float Height; // in radians
     public float Radius;
+
+    public float MaxAngle; // how far it can rotate, in degrees
 
     private float currentWidth = 0;
     private float currentHeight = 0;
@@ -46,7 +50,23 @@ public class ShieldController : MonoBehaviour {
     {
         if (Target != null)
         {
-            transform.LookAt(Target);
+            // turn to face target
+
+            // check angle
+            float angle = Vector3.Angle(transform.forward, (Target.position - transform.position));
+            
+            if (angle < MaxAngle / 2f)
+            {
+                RotationPoint.LookAt(Target);
+            }
+            else
+            {
+                // if out of angle, turn as far as possible
+                RotationPoint.rotation = new Quaternion();
+                // cross product will tell us which way
+                Vector3 cross = Vector3.Cross(transform.forward, (Target.position - transform.position));
+                RotationPoint.Rotate(0, MaxAngle/2f * (cross.y < 0 ? -1 : 1), 0);
+            }
         }  
         
 

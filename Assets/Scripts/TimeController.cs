@@ -29,6 +29,9 @@ public class TimeController : MonoBehaviour {
 
     void Start()
     {
+        // set values on time slider
+        TimeSlider.maxValue = GameManager.NUM_MOVEMENT_STEPS;
+
         GameManager.Instance.RegisterOnStartOfPlanning_Late(OnStartOfPlanning);
         GameManager.Instance.RegisterOnStartOfProcessing(OnStartOfProcessing);
         GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
