@@ -22,10 +22,13 @@ public class TimeController : MonoBehaviour {
 
     public Slider TimeSlider; 
     private Action<float> OnTimeChange;
-    
+
+    private bool Paused;
+
     public void RegisterOnTimeChange(Action<float> action) { OnTimeChange += action; }
 
     public void UnregisterOnTimeChange(Action<float> action) { OnTimeChange -= action; }
+
 
     void Start()
     {
@@ -33,13 +36,19 @@ public class TimeController : MonoBehaviour {
         TimeSlider.maxValue = GameManager.NUM_MOVEMENT_STEPS;
 
         GameManager.Instance.RegisterOnStartOfPlanning_Late(OnStartOfPlanning);
-        GameManager.Instance.RegisterOnStartOfProcessing(OnStartOfProcessing);
-        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
+        GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
+        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
     }
 
     void Update()
     {
-        if (GameManager.Instance.GameState == GameState.Processing)
+        if (Paused)
+        {
+            return;
+        }
+        else
         {
             float baseTimeMultiplier = 1f / GameManager.MOVEMENT_STEP_LENGTH;
             TimeSlider.value += Time.deltaTime * baseTimeMultiplier;
@@ -47,41 +56,45 @@ public class TimeController : MonoBehaviour {
             // if we have reached the end of the turn, advance
             if (TimeSlider.value >= GameManager.NUM_MOVEMENT_STEPS)
             {
-                GameManager.Instance.StartPlaybackPhase();
+                Paused = true;
             }
-            ApplyTimeSlider();
         }
     }
-
+    
     public float GetTime()
     {
         return TimeSlider.value;
     }
 
+
     public void OnStartOfPlanning()
     {
         TimeSlider.value = 0;
-        ApplyTimeSlider();
+        Paused = true;
     }
 
-    public void OnStartOfProcessing()
+    public void OnStartOfOutcome()
     {
         TimeSlider.value = 0;
-        ApplyTimeSlider();
+        Paused = false;
     }
 
-    public void OnStartOfPlayback()
+    public void OnStartOfWaitingForOpponent()
     {
-        //TimeSlider.value = 0;
-        //ApplyTimeSlider();
+        TimeSlider.value = 0;
+        Paused = true;
     }
 
-
-    public void ApplyTimeSlider()
+    public void OnStartOfSimulation()
     {
-        if (OnTimeChange != null)
-        {
-            OnTimeChange(TimeSlider.value);
-        }
+        TimeSlider.value = 0;
+        Paused = false;
     }
+
+    public void OnStartOfEndOfTurn()
+    {
+        TimeSlider.value = 0;
+        Paused = true;
+    }
+       
 }

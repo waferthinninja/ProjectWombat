@@ -6,7 +6,7 @@ public class ProjectileController : MobileObjectBase {
 
     RaycastHit _hitInfo;
     Ray _ray;
-    float _lengthOfRay = 5f;
+    float _lengthOfRay = 2f;
 
     public int LayerMask;
 
@@ -20,10 +20,13 @@ public class ProjectileController : MobileObjectBase {
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
-        // only apply collisions in processing mode
-        if (GameManager.Instance.GameState == GameState.Processing)
+        base.Update();
+
+        // only apply collisions in Outcome mode
+        if (GameManager.Instance.GameState == GameState.Outcome
+         || GameManager.Instance.GameState == GameState.Simulation)
         {
             // Cast a ray 
             _ray = new Ray (transform.position, transform.forward );
@@ -39,12 +42,16 @@ public class ProjectileController : MobileObjectBase {
                     ShieldController shield = col.GetComponent<ShieldController>();
                     
                     float angle = Vector3.Angle(shield.RotationPoint.forward, -transform.forward);
-                    Debug.Log(angle);
+                    
                     if (angle <= shield.Width * Mathf.Rad2Deg)
                     {
                         Damage = shield.ApplyDamage(Damage);
                     }
-                }            
+                }  
+                else if (col.GetComponent<ChassisController>() != null)
+                {
+                    Damage = 0; // temp just kill
+                }      
             }
 
             if (Damage <= 0)

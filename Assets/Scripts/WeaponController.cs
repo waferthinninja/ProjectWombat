@@ -37,7 +37,7 @@ public class WeaponController : MonoBehaviour {
     {
         RedrawFireArcIfChanged();
 
-        if (GameManager.Instance.GameState == GameState.Processing)
+        if (GameManager.Instance.GameState == GameState.Outcome)
         {
             if (TimeSinceLastShot >= TimeBetweenShots)
             {
@@ -95,7 +95,9 @@ public class WeaponController : MonoBehaviour {
         t.position = FirePoint.position;
         t.rotation = RotationPoint.rotation;
         ProjectileController projectile = t.GetComponent<ProjectileController>();
-        projectile.LayerMask = 1 << 10; //ugh - also wont work other way at the moment
+
+        // at the moment no friendly fire, bullets will only hit enemies
+        projectile.LayerMask = (transform.gameObject.layer == GameManager.PLAYER_LAYER ? 1 << GameManager.ENEMY_LAYER : 1 << GameManager.PLAYER_LAYER);  
         projectile.Damage = Damage;
 
         LineRenderer renderer = projectile.GetComponent<LineRenderer>();

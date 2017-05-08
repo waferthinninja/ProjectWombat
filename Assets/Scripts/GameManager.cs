@@ -29,26 +29,34 @@ public class GameManager: MonoBehaviour {
     private static int _nextMobId = 0;
 
     public static readonly int NUM_MOVEMENT_STEPS = 12;
-    public static readonly float MOVEMENT_STEP_LENGTH = 0.5f;
+    public static readonly float TURN_LENGTH = 5f; // seconds
+    public static readonly float MOVEMENT_STEP_LENGTH = TURN_LENGTH / NUM_MOVEMENT_STEPS;
+    
+
+    public static readonly int PLAYER_LAYER = 9;
+    public static readonly int ENEMY_LAYER = 10;
 
     // callbacks
     private Action OnStartOfPlanning;
     private Action OnStartOfPlanning_Late;
+    private Action OnStartOfSimulation;
     private Action OnStartOfWaitingForOpponent;
-    private Action OnStartOfProcessing;
-    private Action OnStartOfPlayback;
+    private Action OnStartOfOutcome;
+    private Action OnStartOfEndOfTurn;
 
 
     public void RegisterOnStartOfPlanning_Late(Action action) { OnStartOfPlanning_Late += action; }
     public void RegisterOnStartOfPlanning(Action action) { OnStartOfPlanning += action; }
+    public void RegisterOnStartOfSimulation(Action action) { OnStartOfSimulation += action; }
     public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
-    public void RegisterOnStartOfProcessing(Action action) { OnStartOfProcessing += action; }
-    public void RegisterOnStartOfPlayback(Action action) { OnStartOfPlayback += action; }
+    public void RegisterOnStartOfOutcome(Action action) { OnStartOfOutcome += action; }
+    public void RegisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn += action; }
 
     public void UnregisterOnStartOfPlanning(Action action) { OnStartOfPlanning -= action; }
+    public void UnregisterOnStartOfSimulation(Action action) { OnStartOfSimulation -= action; }
     public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
-    public void UnregisterOnStartOfProcessing(Action action) { OnStartOfProcessing -= action; }
-    public void UnregisterOnStartOfPlayback(Action action) { OnStartOfPlayback -= action; }
+    public void UnregisterOnStartOfOutcome(Action action) { OnStartOfOutcome -= action; }
+    public void UnregisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn -= action; }
 
     void Start()
     {
@@ -59,10 +67,10 @@ public class GameManager: MonoBehaviour {
     
     void Update()
     {
-        // TEMP - auto cycle through phases
+        // TEMP - auto cycle through phase
         if (GameState == GameState.WaitingForOpponent)
         {
-            StartProcessingPhase();
+            StartOutcomePhase();
         }               
     }
 
@@ -71,6 +79,10 @@ public class GameManager: MonoBehaviour {
         Ships = FindObjectsOfType<ShipController>();
     }
 
+    public void StartSimulation()
+    {
+        StartSimulationPhase();
+    }
 
     public void SubmitOrders()
     {
@@ -97,6 +109,16 @@ public class GameManager: MonoBehaviour {
 
     }
 
+    public void StartSimulationPhase()
+    {
+        GameState = GameState.Simulation;
+
+        if (OnStartOfSimulation != null)
+        {
+            OnStartOfSimulation();
+        }
+    }
+
     public void StartWaitingForOpponentPhase()
     {
         GameState = GameState.WaitingForOpponent;
@@ -106,22 +128,22 @@ public class GameManager: MonoBehaviour {
             OnStartOfWaitingForOpponent();
         }
     }
-    public void StartProcessingPhase()
+    public void StartOutcomePhase()
     {
-        GameState = GameState.Processing;
+        GameState = GameState.Outcome;
 
-        if (OnStartOfProcessing != null)
+        if (OnStartOfOutcome != null)
         {
-            OnStartOfProcessing();
+            OnStartOfOutcome();
         }
     }
-    public void StartPlaybackPhase()
+    public void StartEndOfTurnPhase()
     {
-        GameState = GameState.Playback;
+        GameState = GameState.EndOfTurn;
 
-        if (OnStartOfPlayback != null)
+        if (OnStartOfEndOfTurn != null)
         {
-            OnStartOfPlayback();
+            OnStartOfEndOfTurn();
         }
     }
 

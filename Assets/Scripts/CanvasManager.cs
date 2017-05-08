@@ -19,10 +19,14 @@ public class CanvasManager : MonoBehaviour {
     }
     //END MAKE INSTANCE
 
+    public Text PhaseName;
     public PanelController ShipControlsPanel;
     public PanelController ShipDetailsPanel;
-    public PanelController PlanningPhaseControlPanel;
+    public PanelController PlanningPhaseControlPanelBR;
+    public PanelController PlanningPhaseControlPanelB;
     public PanelController PlaybackPhaseControlPanel;
+    public PanelController TimePanel;
+
 
     public ShipControlsController ShipControlsController;
     public ShipDetailsController ShipDetailsController;
@@ -31,9 +35,10 @@ public class CanvasManager : MonoBehaviour {
     {
 
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
+        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
         GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
-        GameManager.Instance.RegisterOnStartOfProcessing(OnStartOfProcessing);
-        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
     }
 	
 	void Update ()
@@ -55,29 +60,53 @@ public class CanvasManager : MonoBehaviour {
 
     public void OnStartOfPlanning()
     {
+        PhaseName.text = "Planning phase";
         ClearShipPanels();
         PlaybackPhaseControlPanel.SetActive(false);
-        PlanningPhaseControlPanel.SetActive(true);
+        PlanningPhaseControlPanelBR.SetActive(true);
+        PlanningPhaseControlPanelB.SetActive(true);
+        TimePanel.SetActive(false);
     }
 
-    public void OnStartOfProcessing()
+    public void OnStartOfSimulation()
     {
+        PhaseName.text = "Simulating...";
         ClearShipPanels();
-        PlanningPhaseControlPanel.SetActive(false);
         PlaybackPhaseControlPanel.SetActive(false);
+        PlanningPhaseControlPanelBR.SetActive(false);
+        PlanningPhaseControlPanelB.SetActive(false);
+        TimePanel.SetActive(true);
+    }
+
+    public void OnStartOfOutcome()
+    {
+        PhaseName.text = "Outcome";
+        ClearShipPanels();
+        PlanningPhaseControlPanelBR.SetActive(false);
+        PlanningPhaseControlPanelB.SetActive(false);
+        PlaybackPhaseControlPanel.SetActive(false);
+        TimePanel.SetActive(true);
     }
 
 
-    public void OnStartOfPlayback()
+    public void OnStartOfEndOfTurn()
     {
+        PhaseName.text = "Advancing to next turn...";
         ClearShipPanels();
-        PlaybackPhaseControlPanel.SetActive(true);
+        PlanningPhaseControlPanelBR.SetActive(false);
+        PlanningPhaseControlPanelB.SetActive(false);
+        PlaybackPhaseControlPanel.SetActive(false);
+        TimePanel.SetActive(false);
     }
 
     public void OnStartOfWaitingForOpponent()
     {
+
+        PhaseName.text = "Waiting for opponent...";
         ClearShipPanels();
-        PlanningPhaseControlPanel.SetActive(false);
+        PlanningPhaseControlPanelBR.SetActive(false);
+        PlanningPhaseControlPanelB.SetActive(false);
         PlaybackPhaseControlPanel.SetActive(false);
+        TimePanel.SetActive(false);
     }
 }

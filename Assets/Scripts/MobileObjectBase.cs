@@ -11,8 +11,7 @@ public class MobileObjectBase : MonoBehaviour {
     public float MaxTurn;
 
     // current settings
-    public float CurrentSpeed { get; private set; } // this is the speed as of last turn
-    public float Acceleration { get; private set; } // this is the delta speed applied this turn rather than real acceleration
+    public float Acceleration { get; private set; } 
     public float TurnProportion { get; private set; }
 
     public Vector3[] ProjectedPositions;
@@ -41,33 +40,29 @@ public class MobileObjectBase : MonoBehaviour {
 
         // register callbacks
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
-        GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfProcessing);
-        GameManager.Instance.RegisterOnStartOfPlayback(OnStartOfPlayback);
-        TimeController.Instance.RegisterOnTimeChange(OnTimeChange);
+        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
+        GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);        
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        if (GameManager.Instance.GameState == GameState.Outcome
+         || GameManager.Instance.GameState == GameState.Simulation)
+        {
+            // apply proportion of the turn
+            transform.Rotate(0, TurnProportion * MaxTurn * Time.deltaTime / GameManager.TURN_LENGTH, 0);
+
+            // move forward 1 seconds worth of movement in the new direction
+            transform.Translate(Vector3.forward * Acceleration * MaxAcceleration * Time.deltaTime);
+
+        }
     }
 
-    // callback called at the start of the playback phase
-    public void OnStartOfPlayback()
+    public void OnStartOfEndOfTurn()
     {
-        //transform.position = ProjectedPositions[0];
-    }
-
-    // callback called at the start of the playback phase
-    public void OnStartOfProcessing()
-    {
-        transform.position = ProjectedPositions[0];
-    }
-
-    // callback called at the start of the planning phase;
-    public void OnStartOfPlanning()
-    {
-
         DeathTime -= GameManager.NUM_MOVEMENT_STEPS;
         if (DeathTime <= 0)
         {
@@ -97,13 +92,38 @@ public class MobileObjectBase : MonoBehaviour {
         TurnProportion = 0;
         RecalculateProjections();
     }
+    
+    public void OnStartOfOutcome()
+    {
+        ResetToStartPosition();
+    }
+
+    public void OnStartOfSimulation()
+    {
+        ResetToStartPosition();
+    }
+    public void OnStartOfWaitingForOpponent()
+    {
+        ResetToStartPosition();
+    }
+
+    public void OnStartOfPlanning()
+    {
+        ResetToStartPosition();
+    }
+
+    private void ResetToStartPosition()
+    {
+        transform.position = ProjectedPositions[0];
+        transform.rotation = ProjectedRotations[0];
+    }
 
     private void KillSelf()
     {
         // must unsubscribe from events
         GameManager.Instance.UnregisterOnStartOfPlanning(OnStartOfPlanning);
-        GameManager.Instance.UnregisterOnStartOfPlanning(OnStartOfProcessing);
-        GameManager.Instance.UnregisterOnStartOfPlayback(OnStartOfPlayback);
+        GameManager.Instance.UnregisterOnStartOfPlanning(OnStartOfOutcome);
+        GameManager.Instance.UnregisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
         TimeController.Instance.UnregisterOnTimeChange(OnTimeChange);
 
         Destroy(this.transform.gameObject);
@@ -170,15 +190,20 @@ public class MobileObjectBase : MonoBehaviour {
         Vector3 pos = ProjectedPositions[0];
         Quaternion rot = ProjectedRotations[0];
 
+        int stepsPerStep = (int)(GameManager.TURN_LENGTH * 60f / GameManager.NUM_MOVEMENT_STEPS); // hack so we calculate more accurately but store less data
+        float stepLength = 1f / 60f;
+
         // now simulate the turns movement placing a point at the end of each
         for (int t = 1; t <= GameManager.NUM_MOVEMENT_STEPS; t++)
         {
-            // apply proportion of the turn
-            rot *= Quaternion.Euler(Vector3.up * TurnProportion * MaxTurn / GameManager.NUM_MOVEMENT_STEPS);
+            for (int x = 0; x < stepsPerStep; x++)
+            {
+                // apply proportion of the turn
+                rot *= Quaternion.Euler(Vector3.up * TurnProportion * MaxTurn * stepLength / GameManager.TURN_LENGTH);
 
-            // move forward 1 seconds worth of movement in the new direction
-            pos += rot * Vector3.forward * GameManager.MOVEMENT_STEP_LENGTH * (CurrentSpeed + Acceleration * MaxAcceleration);
-
+                // move forward 1 step in the new direction
+                pos += rot * Vector3.forward * stepLength * (Acceleration * MaxAcceleration);
+            }
             ProjectedPositions[t] = pos;
             ProjectedRotations[t] = rot;
         }

@@ -1,7 +1,8 @@
 ﻿public enum GameState
 {
     Planning,
+    Simulation,
     WaitingForOpponent,
-    Processing,
-    Playback
+    Outcome,
+    EndOfTurn
 }
