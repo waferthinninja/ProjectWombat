@@ -43,6 +43,7 @@ public class GameManager: MonoBehaviour {
     private Action OnStartOfWaitingForOpponent;
     private Action OnStartOfOutcome;
     private Action OnStartOfEndOfTurn;
+    private Action OnResetToStart;
 
 
     public void RegisterOnStartOfPlanning_Late(Action action) { OnStartOfPlanning_Late += action; }
@@ -52,11 +53,15 @@ public class GameManager: MonoBehaviour {
     public void RegisterOnStartOfOutcome(Action action) { OnStartOfOutcome += action; }
     public void RegisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn += action; }
 
+    public void RegisterOnResetToStart(Action action) { OnResetToStart += action; }
+
     public void UnregisterOnStartOfPlanning(Action action) { OnStartOfPlanning -= action; }
     public void UnregisterOnStartOfSimulation(Action action) { OnStartOfSimulation -= action; }
     public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
     public void UnregisterOnStartOfOutcome(Action action) { OnStartOfOutcome -= action; }
     public void UnregisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn -= action; }
+
+    public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
     void Start()
     {
@@ -94,9 +99,18 @@ public class GameManager: MonoBehaviour {
         return _nextMobId++;
     }
 
+    public void ResetToStart()
+    {
+        if (OnResetToStart != null)
+        {
+            OnResetToStart();
+        }
+    }
+
     public void StartPlanningPhase()
     {
         GameState = GameState.Planning;
+        ResetToStart();
 
         if (OnStartOfPlanning != null)
         {
@@ -112,6 +126,7 @@ public class GameManager: MonoBehaviour {
     public void StartSimulationPhase()
     {
         GameState = GameState.Simulation;
+        ResetToStart();
 
         if (OnStartOfSimulation != null)
         {
@@ -122,7 +137,8 @@ public class GameManager: MonoBehaviour {
     public void StartWaitingForOpponentPhase()
     {
         GameState = GameState.WaitingForOpponent;
-        
+        ResetToStart();
+
         if (OnStartOfWaitingForOpponent != null)
         {
             OnStartOfWaitingForOpponent();
@@ -131,6 +147,7 @@ public class GameManager: MonoBehaviour {
     public void StartOutcomePhase()
     {
         GameState = GameState.Outcome;
+        ResetToStart();
 
         if (OnStartOfOutcome != null)
         {
@@ -140,7 +157,7 @@ public class GameManager: MonoBehaviour {
     public void StartEndOfTurnPhase()
     {
         GameState = GameState.EndOfTurn;
-
+        
         if (OnStartOfEndOfTurn != null)
         {
             OnStartOfEndOfTurn();

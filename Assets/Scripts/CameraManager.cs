@@ -21,13 +21,13 @@ public class CameraManager : MonoBehaviour {
     public Transform FreeStartPosition;
     public Transform OverheadStartPosition;
 
-    private CameraMode _cameraMode;
+    public CameraMode CameraMode;
 
     private Dictionary<CameraMode, float> _cameraSpeed = new Dictionary<CameraMode, float>
     {
-        { CameraMode.Free, 20f },
+        { CameraMode.Free, 40f },
         { CameraMode.Follow, 0f },
-        { CameraMode.Overhead, 20f }
+        { CameraMode.Overhead, 40f }
     };
 
     // Use this for initialization
@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour {
 
     public void OnSelectedShipChange(ShipController ship)
     {
-        if (_cameraMode == CameraMode.Follow)
+        if (CameraMode == CameraMode.Follow)
         {
             SwitchToFollowMode(); // slight hack, this will move the camera to the new ship
         }
@@ -53,38 +53,38 @@ public class CameraManager : MonoBehaviour {
 
     public void MoveCameraUp(float deltaTime)
     {
-        float moveSpeed = _cameraSpeed[_cameraMode] * deltaTime;
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
         Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + moveSpeed);
     }
 
     public void MoveCameraDown(float deltaTime)
     {
-        float moveSpeed = _cameraSpeed[_cameraMode] * deltaTime;
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
         Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z - moveSpeed);
     }
 
     public void MoveCameraLeft(float deltaTime)
     {
-        float moveSpeed = _cameraSpeed[_cameraMode] * deltaTime;
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
         Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
     }
 
     public void MoveCameraRight(float deltaTime)
     { 
-        float moveSpeed = _cameraSpeed[_cameraMode] * deltaTime;
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
         Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
     }
 
     public void CycleCameraMode()
     {
-        if (_cameraMode == CameraMode.Free) SwitchToFollowMode();
-        else if (_cameraMode == CameraMode.Follow) SwitchToOverheadMode();
-        else if (_cameraMode == CameraMode.Overhead) SwitchToFreeMode();
+        if (CameraMode == CameraMode.Free) SwitchToFollowMode();
+        else if (CameraMode == CameraMode.Follow) SwitchToOverheadMode();
+        else if (CameraMode == CameraMode.Overhead) SwitchToFreeMode();
     }
 
     public void SwitchToFreeMode()
     {
-        _cameraMode = CameraMode.Free;
+        CameraMode = CameraMode.Free;
         Camera.main.transform.parent = FreeStartPosition;
         Camera.main.transform.localPosition = new Vector3();
         Camera.main.transform.rotation = new Quaternion();  
@@ -93,7 +93,7 @@ public class CameraManager : MonoBehaviour {
 
     public void SwitchToFollowMode()
     {
-        _cameraMode = CameraMode.Follow;
+        CameraMode = CameraMode.Follow;
 
         if (InputManager.Instance.SelectedShip == null)
         {
@@ -107,7 +107,7 @@ public class CameraManager : MonoBehaviour {
 
     public void SwitchToOverheadMode()
     {
-        _cameraMode = CameraMode.Overhead;
+        CameraMode = CameraMode.Overhead;
 
         Camera.main.transform.parent = OverheadStartPosition;
         Camera.main.transform.localPosition = new Vector3();

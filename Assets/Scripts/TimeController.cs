@@ -21,15 +21,9 @@ public class TimeController : MonoBehaviour {
     //END MAKE INSTANCE
 
     public Slider TimeSlider; 
-    private Action<float> OnTimeChange;
 
-    private bool Paused;
-
-    public void RegisterOnTimeChange(Action<float> action) { OnTimeChange += action; }
-
-    public void UnregisterOnTimeChange(Action<float> action) { OnTimeChange -= action; }
-
-
+    public bool Paused;
+    
     void Start()
     {
         // set values on time slider

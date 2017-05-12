@@ -3,12 +3,20 @@ using UnityEngine;
 
 public static class FactionColors
 {
+    public static Dictionary<Faction, Color> IconColor
+        = new Dictionary<Faction, Color>
+        {
+            { Faction.Friendly, Color.cyan },
+            { Faction.Enemy, new Color(0.9f, 0.4f, 0.2f) }
+        };
+
     public static Dictionary<Faction, Color> ShieldColor 
         = new Dictionary<Faction, Color>
         {
             { Faction.Friendly, Color.cyan },
             { Faction.Enemy, new Color(0.9f, 0.4f, 0.2f) }
         };
+
     public static Dictionary<Faction, Color> LaserColor
     = new Dictionary<Faction, Color>
     {

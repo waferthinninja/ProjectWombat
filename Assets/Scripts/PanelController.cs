@@ -11,7 +11,7 @@ public class PanelController : MonoBehaviour {
 
     private float currentPosition;
     private float targetPosition;
-    private float speed = 1000f;
+    private float speed = 1500f;
 
     private Vector3 basePosition;
 

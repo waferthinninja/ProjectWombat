@@ -25,24 +25,31 @@ public class ShieldController : MonoBehaviour {
     private float currentHeight = 0;
 
     public float MaxStrength = 100f;
-    private float _strength = 100f; // strength at start of turn
+    private float _strength;
+    private float _strengthAtStartOfTurn;
+
     private const float MAX_INTENSITY = 0.3f; 
 
     public MeshRenderer shieldRenderer;
+    private Collider _collider;
 
     public Transform Target;
-
-    private List<Tuple<float, float>> _damageThisTurn;
 
     // Use this for initialization
     void Start()
     {
         // get faction of ship 
         Color = FactionColors.ShieldColor[transform.parent.GetComponent<ShipController>().Faction];
-        _damageThisTurn = new List<Tuple<float, float>>();
+
+        _strength = MaxStrength;
+        _strengthAtStartOfTurn = _strength;
+        _collider = GetComponent<Collider>();
 
         SetShieldParams();
         SetBeamPositions();
+
+        GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
+        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
     }
 
     // Update is called once per frame
@@ -72,46 +79,38 @@ public class ShieldController : MonoBehaviour {
 
     }
 
+    public void OnResetToStart()
+    {
+        _strength = _strengthAtStartOfTurn;
+        EnableDisable(_strength > 0);
+    }
+
+    public void OnStartOfEndOfTurn()
+    {
+        _strengthAtStartOfTurn = _strength;
+    }
+
     public float ApplyDamage(float damage)
     {
-        float strBefore = GetStrength();
-        _damageThisTurn.Add(new Tuple<float, float>(TimeController.Instance.GetTime(), damage));
-        
+        _strength -= damage;
+
         SetShieldParams();
 
-        if (strBefore <= damage)
+        if (_strength <= 0)
         {
             // shields down - deactivate collider 
             Debug.Log("Shields down");
-            var collider = GetComponent<Collider>();
-            collider.enabled = false;
             EnableDisable(false);
 
             // return any damage which continues through 
-            return damage - strBefore;
+            return -_strength;
         }
         return 0;
     }
 
-    public float GetStrength()
-    {
-        float time = TimeController.Instance.GetTime();
-        float str = _strength;
-
-        foreach(var d in _damageThisTurn)
-        {
-            if (d.first <= time)
-            {
-                str -= d.second;
-            }
-        }
-
-        return str;
-    }
-
     private void SetShieldParams()
     {
-        float alpha = (GetStrength() / MaxStrength) * MAX_INTENSITY;
+        float alpha = (_strength / MaxStrength) * MAX_INTENSITY;
         Color c = new Color(Color.r, Color.g, Color.b, alpha);
         shieldRenderer.material.SetColor("_Color", c);
         if (currentWidth != Width)
@@ -129,6 +128,7 @@ public class ShieldController : MonoBehaviour {
 
     private void EnableDisable(bool enabled)
     {
+        _collider.enabled = enabled;
         shieldRenderer.enabled = enabled;
         NWBeam.enabled = enabled;
         NEBeam.enabled = enabled;
@@ -138,7 +138,6 @@ public class ShieldController : MonoBehaviour {
 
     private void SetBeamPositions()
     {
-
         // beams
         SetBeamPosition(-currentWidth, currentHeight, NWBeam);
         SetBeamPosition(currentWidth, currentHeight, NEBeam);
@@ -166,7 +165,12 @@ public class ShieldController : MonoBehaviour {
         shieldRenderer.transform.localScale = new Vector3(Radius*2, Radius*2, Radius*2);
 
         lr.numPositions = NUMPOINTS;
-        lr.SetPositions(points);
-     
+        lr.SetPositions(points);     
+    }
+
+    public void KillSelf()
+    {
+        GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
+        GameManager.Instance.UnregisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
     }
 }

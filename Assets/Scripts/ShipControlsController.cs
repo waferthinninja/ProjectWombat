@@ -48,9 +48,9 @@ public class ShipControlsController : MonoBehaviour {
         MinTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
         MaxTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
 
-        AccelerationSlider.value = _selectedShip.Acceleration;
+        AccelerationSlider.value = _selectedShip.SpeedProportion;
         MinAccelerationLabel.text = (0f).ToString("F0");
-        MaxAccelerationLabel.text = _selectedShip.MaxAcceleration.ToString("F0");
+        MaxAccelerationLabel.text = _selectedShip.MaxSpeed.ToString("F0");
 
         ShipControlsPanel.SetActive(true);
     }
@@ -88,7 +88,7 @@ public class ShipControlsController : MonoBehaviour {
     {
         if (_selectedShip == null) return;
 
-        _selectedShip.SetAcceleration(AccelerationSlider.value);
+        _selectedShip.SetSpeed(AccelerationSlider.value);
         Recalculate();
     }
 

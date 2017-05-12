@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ChassisController : MonoBehaviour {
 
+    ShipController ship; 
+
 	// Use this for initialization
 	void Start () {
-		
+        // store ref to the ship this is attached to
+        ship = transform.parent.GetComponent<ShipController>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

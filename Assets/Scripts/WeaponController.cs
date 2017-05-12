@@ -18,7 +18,9 @@ public class WeaponController : MonoBehaviour {
 
     public Transform Projectile;
     public float TimeBetweenShots;
-    public float TimeSinceLastShot;
+        
+    private float TimeSinceLastShot;
+    private float _timeSinceLastShotAtStart;
 
     private float lastMaxAngle;
     private float lastRange;
@@ -30,6 +32,8 @@ public class WeaponController : MonoBehaviour {
         // get faction of ship 
         _faction = transform.parent.GetComponent<ShipController>().Faction;
         LaserColor = FactionColors.LaserColor[_faction];
+
+        GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
     }
 
     // Update is called once per frame
@@ -37,7 +41,7 @@ public class WeaponController : MonoBehaviour {
     {
         RedrawFireArcIfChanged();
 
-        if (GameManager.Instance.GameState == GameState.Outcome)
+        if (TimeController.Instance.Paused == false)
         {
             if (TimeSinceLastShot >= TimeBetweenShots)
             {
@@ -46,8 +50,13 @@ public class WeaponController : MonoBehaviour {
                     Fire();
                 }
             }
-            TimeSinceLastShot += Time.deltaTime; // not sure here - am I trusting that time flowing same rate as time slider?
+            TimeSinceLastShot += Time.deltaTime; 
         }
+    }
+
+    public void OnResetToStart()
+    {
+        TimeSinceLastShot = _timeSinceLastShotAtStart;
     }
 
     private bool TargetInRange()
@@ -61,13 +70,13 @@ public class WeaponController : MonoBehaviour {
 
             // check range
             float distance = Vector3.Distance(ship.transform.position, transform.position);
-            float timeToTarget = distance / Projectile.GetComponent<ProjectileController>().MaxAcceleration;
+            float timeToTarget = distance / Projectile.GetComponent<ProjectileController>().MaxSpeed;
 
             // temporarily move object to provide lead   
-            Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.Acceleration * ship.MaxAcceleration, Color.red);         
-            ship.transform.Translate(ship.transform.forward * timeToTarget * ship.Acceleration * ship.MaxAcceleration);
+            Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.SpeedProportion * ship.MaxSpeed, Color.red);         
+            ship.transform.Translate(ship.transform.forward * timeToTarget * ship.SpeedProportion * ship.MaxSpeed);
             Vector3 target = ship.transform.position;
-            ship.transform.Translate(ship.transform.forward * -timeToTarget * ship.Acceleration * ship.MaxAcceleration);
+            ship.transform.Translate(ship.transform.forward * -timeToTarget * ship.SpeedProportion * ship.MaxSpeed);
  
             distance = Vector3.Distance(transform.position, target);
             if (distance <= Range)
@@ -104,8 +113,7 @@ public class WeaponController : MonoBehaviour {
 
         renderer.material.SetColor("_TintColor", LaserColor);
 
-        projectile.TimeOffset = TimeController.Instance.GetTime();
-        projectile.DeathTime = projectile.TimeOffset + Range / (projectile.MaxAcceleration * GameManager.MOVEMENT_STEP_LENGTH); 
+        projectile.CreatedThisTurn = true; 
 
         TimeSinceLastShot = 0f;
     }
