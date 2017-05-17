@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ChassisController : MonoBehaviour {
 
-    ShipController ship; 
+    public ShipController Ship; 
 
 	// Use this for initialization
 	void Start () {
         // store ref to the ship this is attached to
-        ship = transform.parent.GetComponent<ShipController>();
+        Ship = transform.parent.GetComponent<ShipController>();
 	}
 	
 

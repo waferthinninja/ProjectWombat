@@ -30,25 +30,24 @@ public class MobileObjectBase : MonoBehaviour
         _rotationAtStart = transform.rotation;
 
         // register callbacks
-        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
+        GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (TimeController.Instance.Paused == false)
+        if (TimeManager.Instance.Paused == false)
         {
             // apply proportion of the turn
             transform.Rotate(0, TurnProportion * MaxTurn * Time.deltaTime / GameManager.TURN_LENGTH, 0);
 
             // move forward 1 seconds worth of movement in the new direction
-            float speed = MinSpeed + SpeedProportion * (MaxSpeed - MinSpeed);
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion) * Time.deltaTime);
         }
     }
 
-    public void OnStartOfEndOfTurn()
+    public virtual void OnEndOfTurn()
     {
         CreatedThisTurn = false;        
 
@@ -61,7 +60,7 @@ public class MobileObjectBase : MonoBehaviour
         SpeedProportion = 0;
     }
 
-    public void OnResetToStart()
+    public virtual void OnResetToStart()
     {
         ResetToStartPosition();
     }
@@ -82,7 +81,7 @@ public class MobileObjectBase : MonoBehaviour
     protected virtual void KillSelf()
     {
         // must unsubscribe from events
-        GameManager.Instance.UnregisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
+        GameManager.Instance.UnregisterOnEndOfTurn(OnEndOfTurn);
         GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
 
         Destroy(this.transform.gameObject);

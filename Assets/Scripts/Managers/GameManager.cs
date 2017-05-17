@@ -42,7 +42,7 @@ public class GameManager: MonoBehaviour {
     private Action OnStartOfSimulation;
     private Action OnStartOfWaitingForOpponent;
     private Action OnStartOfOutcome;
-    private Action OnStartOfEndOfTurn;
+    private Action OnEndOfTurn;
     private Action OnResetToStart;
 
 
@@ -51,7 +51,7 @@ public class GameManager: MonoBehaviour {
     public void RegisterOnStartOfSimulation(Action action) { OnStartOfSimulation += action; }
     public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
     public void RegisterOnStartOfOutcome(Action action) { OnStartOfOutcome += action; }
-    public void RegisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn += action; }
+    public void RegisterOnEndOfTurn(Action action) { OnEndOfTurn += action; }
 
     public void RegisterOnResetToStart(Action action) { OnResetToStart += action; }
 
@@ -59,7 +59,7 @@ public class GameManager: MonoBehaviour {
     public void UnregisterOnStartOfSimulation(Action action) { OnStartOfSimulation -= action; }
     public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
     public void UnregisterOnStartOfOutcome(Action action) { OnStartOfOutcome -= action; }
-    public void UnregisterOnStartOfEndOfTurn(Action action) { OnStartOfEndOfTurn -= action; }
+    public void UnregisterOnEndOfTurn(Action action) { OnEndOfTurn -= action; }
 
     public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
@@ -67,7 +67,9 @@ public class GameManager: MonoBehaviour {
     {
         RefreshShipList();
 
-        StartPlanningPhase(); // TODO - replace with loading game
+        GameState = GameState.EndOfTurn; // Hack to ensure we start planning phase in first Update (i.e. after stuff has registered for events)
+        //TODO - replace with loading game
+        
     }    
     
     void Update()
@@ -76,7 +78,11 @@ public class GameManager: MonoBehaviour {
         if (GameState == GameState.WaitingForOpponent)
         {
             StartOutcomePhase();
-        }               
+        }     
+        else if (GameState == GameState.EndOfTurn)
+        {
+            StartPlanningPhase();
+        }          
     }
 
     public void RefreshShipList()
@@ -158,9 +164,9 @@ public class GameManager: MonoBehaviour {
     {
         GameState = GameState.EndOfTurn;
         
-        if (OnStartOfEndOfTurn != null)
+        if (OnEndOfTurn != null)
         {
-            OnStartOfEndOfTurn();
+            OnEndOfTurn();
         }
     }
 

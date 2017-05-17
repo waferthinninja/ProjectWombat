@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,55 +11,131 @@ public class ShipController : MobileObjectBase {
     public Faction Faction;
 
     public float MaxHullPoints;
-    private float _hullPointsAtStartOfTurn;
-    private float _hullPoints;
-
-
+    private float _hullPointsAtStart;
+    public float HullPoints { get; private set; }
+    
     public Vector3[] ProjectedPositions;
     public Quaternion[] ProjectedRotations;
 
     public LineRenderer ProjectedPath;
 
+    public List<ShieldController> Shields { get; private set; }
+    public List<WeaponController> Weapons { get; private set; }
+
+    private bool _dying;
 
     // Use this for initialization
     public override void Start ()
     {
         base.Start();
-        _hullPoints = MaxHullPoints;
-        _hullPointsAtStartOfTurn = _hullPoints;
+        HullPoints = MaxHullPoints;
+        _hullPointsAtStart = HullPoints;
         
+        GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
+
+        InitialiseProjections();
+        InitialiseShields();
+        InitialiseWeapons();
+    }
+
+    private void InitialiseWeapons()
+    {
+        Weapons = new List<WeaponController>();
+        foreach (Transform t in transform)
+        {
+            var weapon = t.GetComponent<WeaponController>();
+            if (weapon != null)
+            {
+                Weapons.Add(weapon);
+            }
+        }
+    }
+
+    private void InitialiseShields()
+    {
+        Shields = new List<ShieldController>();
+        foreach (Transform t in transform)
+        {
+            var shield = t.GetComponent<ShieldController>();
+            if (shield != null)
+            {
+                Shields.Add(shield);
+            }
+        }
+    }
+
+    // Update is called once per frame
+    new void Update ()
+    {
+        base.Update();
+	}
+    
+    private void InitialiseProjections()
+    {
         ProjectedPositions = new Vector3[GameManager.NUM_MOVEMENT_STEPS + 1];
         ProjectedRotations = new Quaternion[GameManager.NUM_MOVEMENT_STEPS + 1];
 
         ProjectedPositions[0] = transform.position;
         ProjectedRotations[0] = transform.rotation;
-        
+
         RecalculateProjections();
     }
-	
-	// Update is called once per frame
-	new void Update ()
-    {
-        base.Update();
-	}
-    
+
     public float ApplyDamage(float damage)
     {
-        _hullPoints -= damage;
-        if (_hullPoints <= 0)
+        HullPoints -= damage;
+        if (HullPoints <= 0)
         {
-            KillSelf();
-            return -_hullPoints; // return any damage which overkilled
+            SetDeath();
+            return -HullPoints; // return any damage which overkilled
         }
         return 0;
+    }
+
+    public void OnStartOfPlanning()
+    {
+        RecalculateProjections();
+    }
+
+    public override void OnResetToStart()
+    {
+        base.OnResetToStart();
+
+        _dying = false;
+        HullPoints = _hullPointsAtStart;
+    }
+
+    public override void OnEndOfTurn()
+    {
+        // actually dispose of ourselves if we died this turn
+        if (_dying)
+        {
+            KillSelf();
+        }
+
+        base.OnEndOfTurn();
+
+        _hullPointsAtStart = HullPoints;
+        ProjectedPositions[0] = transform.position;
+        ProjectedRotations[0] = transform.rotation;
+        RecalculateProjections();
+    }
+
+    private void SetDeath()
+    {
+        // since we might want to rewind, can't actually destroy the object, just set it to die at end of turn and TODO make it invisible and trigger explosions etc
+        _dying = true;
     }
 
     protected override void KillSelf()
     {
         // tell child objects to kill themselves (so we unregister any callbacks)
 
-        base.KillSelf();
 
+        GameManager.Instance.UnregisterOnStartOfPlanning(OnStartOfPlanning);
+        GameManager.Instance.UnregisterOnEndOfTurn(OnEndOfTurn);
+
+        base.KillSelf();
     }
 
     public void RecalculateProjections()
@@ -79,7 +156,7 @@ public class ShipController : MobileObjectBase {
                 rot *= Quaternion.Euler(Vector3.up * TurnProportion * MaxTurn * stepLength / GameManager.TURN_LENGTH);
 
                 // move forward 1 step in the new direction
-                pos += rot * Vector3.forward * stepLength * (SpeedProportion * MaxSpeed);
+                pos += rot * Vector3.forward * stepLength * Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion);
             }
             ProjectedPositions[t] = pos;
             ProjectedRotations[t] = rot;
@@ -91,6 +168,11 @@ public class ShipController : MobileObjectBase {
             ProjectedPath.numPositions = ProjectedPositions.Length;
             ProjectedPath.SetPositions(ProjectedPositions);
         }
+    }
+
+    public float GetSpeed()
+    {
+        return Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion);
     }
 
     public override void SetSpeed(float speedProportion)

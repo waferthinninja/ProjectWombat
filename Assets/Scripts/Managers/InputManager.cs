@@ -18,19 +18,14 @@ public class InputManager : MonoBehaviour {
         }
     }
     //END MAKE INSTANCE
-
-
-    public ShipControlsController ShipControlsController;
-    public ShipDetailsController ShipDetailsController;
-
-
+    
     public ShipController SelectedShip { get; private set; }
 
     private int _selectedShipIndex;
 
     private Action<ShipController> OnSelectedShipChange;
-
-
+    public void RegisterOnSelectedShipChange(Action<ShipController> action) { OnSelectedShipChange += action; }
+    
     // Use this for initialization
     void Start () {
 	}
@@ -91,11 +86,7 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public void RegisterOnSelectedShipChange(Action<ShipController> action)
-    {
-        OnSelectedShipChange += action;
-    }
-
+    
     
     public void SelectNextShip()
     {

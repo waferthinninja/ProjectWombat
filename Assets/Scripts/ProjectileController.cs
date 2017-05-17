@@ -6,7 +6,7 @@ public class ProjectileController : MobileObjectBase {
 
     RaycastHit _hitInfo;
     Ray _ray;
-    float _lengthOfRay = 2f;
+    //float _lengthOfRay = 2f;
 
     public int LayerMask;
 
@@ -19,7 +19,6 @@ public class ProjectileController : MobileObjectBase {
     public override void Start()
     {
         base.Start();
-        
         _distanceTravelled = 0;
     }
 
@@ -27,9 +26,8 @@ public class ProjectileController : MobileObjectBase {
     new void Update()
     {
         base.Update();        
-
-        // only apply collisions in Outcome mode
-        if (TimeController.Instance.Paused == false)
+        
+        if (TimeManager.Instance.Paused == false)
         {
             CheckForCollision();   
 
@@ -46,9 +44,10 @@ public class ProjectileController : MobileObjectBase {
         // Cast a ray 
         _ray = new Ray(transform.position, transform.forward);
 
+        float lengthOfRay = MaxSpeed * Time.deltaTime;
         Debug.DrawRay(transform.position, transform.forward, Color.white);
 
-        if (Physics.Raycast(_ray, out _hitInfo, _lengthOfRay, LayerMask))
+        if (Physics.Raycast(_ray, out _hitInfo, lengthOfRay, LayerMask))
         {
             print("Collided With " + _hitInfo.collider.gameObject.name);
             GameObject col = _hitInfo.collider.gameObject;
@@ -65,7 +64,8 @@ public class ProjectileController : MobileObjectBase {
             }
             else if (col.GetComponent<ChassisController>() != null)
             {
-                Damage = 0; // temp just kill
+                ChassisController c = col.GetComponent<ChassisController>();
+                Damage = c.Ship.ApplyDamage(Damage); 
             }
         }
 

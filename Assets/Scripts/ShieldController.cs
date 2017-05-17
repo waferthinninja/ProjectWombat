@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShieldController : MonoBehaviour {
 
+    public string Name;
+
     public LineRenderer NWBeam;
     public LineRenderer NEBeam;
     public LineRenderer SWBeam;
@@ -33,7 +35,8 @@ public class ShieldController : MonoBehaviour {
     public MeshRenderer shieldRenderer;
     private Collider _collider;
 
-    public Transform Target;
+    private ShipController _target;
+    private ShipController _targetAtStart; 
 
     // Use this for initialization
     void Start()
@@ -49,29 +52,32 @@ public class ShieldController : MonoBehaviour {
         SetBeamPositions();
 
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
-        GameManager.Instance.RegisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
+
+        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
+        GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (Target != null)
+        if (_target != null)
         {
             // turn to face target
 
             // check angle
-            float angle = Vector3.Angle(transform.forward, (Target.position - transform.position));
+            float angle = Vector3.Angle(transform.forward, (_target.transform.position - transform.position));
             
             if (angle < MaxAngle / 2f)
             {
-                RotationPoint.LookAt(Target);
+                RotationPoint.LookAt(_target.transform);
             }
             else
             {
                 // if out of angle, turn as far as possible
                 RotationPoint.rotation = new Quaternion();
                 // cross product will tell us which way
-                Vector3 cross = Vector3.Cross(transform.forward, (Target.position - transform.position));
+                Vector3 cross = Vector3.Cross(transform.forward, (_target.transform.position - transform.position));
                 RotationPoint.Rotate(0, MaxAngle/2f * (cross.y < 0 ? -1 : 1), 0);
             }
         }  
@@ -82,12 +88,21 @@ public class ShieldController : MonoBehaviour {
     public void OnResetToStart()
     {
         _strength = _strengthAtStartOfTurn;
+        _target = _targetAtStart;
         EnableDisable(_strength > 0);
+        SetShieldParams();
+        SetBeamPositions();
     }
 
-    public void OnStartOfEndOfTurn()
+    public void OnEndOfTurn()
     {
         _strengthAtStartOfTurn = _strength;
+    }
+
+
+    private void OnStartOfSimulation()
+    {
+        _targetAtStart = _target;
     }
 
     public float ApplyDamage(float damage)
@@ -168,9 +183,15 @@ public class ShieldController : MonoBehaviour {
         lr.SetPositions(points);     
     }
 
+    public void SetTarget(ShipController target)
+    {
+        _target = target;
+    }
+
     public void KillSelf()
     {
         GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
-        GameManager.Instance.UnregisterOnStartOfEndOfTurn(OnStartOfEndOfTurn);
+        GameManager.Instance.UnregisterOnStartOfSimulation(OnStartOfSimulation);
+        GameManager.Instance.UnregisterOnEndOfTurn(OnEndOfTurn);
     }
 }

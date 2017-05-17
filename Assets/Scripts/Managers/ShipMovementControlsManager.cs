@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ShipControlsController : MonoBehaviour {
+public class ShipMovementControlsManager : MonoBehaviour {
 
     public PanelController ShipControlsPanel;
 
@@ -12,9 +12,9 @@ public class ShipControlsController : MonoBehaviour {
     public Text MinTurnLabel;
     public Text MaxTurnLabel;
 
-    public Slider AccelerationSlider;
-    public Text MinAccelerationLabel;
-    public Text MaxAccelerationLabel;
+    public Slider SpeedSlider;
+    public Text MinSpeedLabel;
+    public Text MaxSpeedLabel;
 
     private ShipController _selectedShip;
 
@@ -34,7 +34,7 @@ public class ShipControlsController : MonoBehaviour {
         {
             ClearSelectedShip();
         }
-        else
+        else if (GameManager.Instance.GameState == GameState.Planning)
         {
             SelectShip(ship);
         }
@@ -48,11 +48,11 @@ public class ShipControlsController : MonoBehaviour {
         MinTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
         MaxTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
 
-        AccelerationSlider.value = _selectedShip.SpeedProportion;
-        MinAccelerationLabel.text = (0f).ToString("F0");
-        MaxAccelerationLabel.text = _selectedShip.MaxSpeed.ToString("F0");
+        SpeedSlider.value = _selectedShip.SpeedProportion;
+        MinSpeedLabel.text = _selectedShip.MinSpeed.ToString("F0");
+        MaxSpeedLabel.text = _selectedShip.MaxSpeed.ToString("F0");
 
-        ShipControlsPanel.SetActive(true);
+        ShipControlsPanel.SetActive(true);        
     }
 
     public void ClearSelectedShip()
@@ -72,7 +72,7 @@ public class ShipControlsController : MonoBehaviour {
     public void ZeroAcceleration()
     {
         if (_selectedShip == null) return;
-        AccelerationSlider.value = 0;
+        SpeedSlider.value = 0;
         ApplyAccelerationSliderChange();
     }
 
@@ -88,7 +88,7 @@ public class ShipControlsController : MonoBehaviour {
     {
         if (_selectedShip == null) return;
 
-        _selectedShip.SetSpeed(AccelerationSlider.value);
+        _selectedShip.SetSpeed(SpeedSlider.value);
         Recalculate();
     }
 

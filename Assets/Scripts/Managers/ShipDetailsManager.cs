@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipDetailsController : MonoBehaviour {
+public class ShipDetailsManager : MonoBehaviour {
 
     public PanelController ShipDetailsPanel;
     public Text ShipName;
+    public Text HullPoints;
 
     private ShipController _selectedShip;
     
@@ -39,7 +40,7 @@ public class ShipDetailsController : MonoBehaviour {
         ShipDetailsPanel.SetActive(true);
 
         ShipName.text = ship.ShipName;
-
+        HullPoints.text = string.Format("Hull points: {0}/{1}",  ship.HullPoints, ship.MaxHullPoints);
     }
 
     public void ClearSelectedShip()
