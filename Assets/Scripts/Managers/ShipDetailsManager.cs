@@ -19,7 +19,11 @@ public class ShipDetailsManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (_selectedShip != null)
+        {
+            ShipName.text = _selectedShip.ShipName;
+            HullPoints.text = string.Format("Hull points: {0}/{1}", _selectedShip.HullPoints, _selectedShip.MaxHullPoints);
+        }
 	}
 
     public void OnSelectedShipChange(ShipController ship)
@@ -38,15 +42,11 @@ public class ShipDetailsManager : MonoBehaviour {
     {
         _selectedShip = ship;
         ShipDetailsPanel.SetActive(true);
-
-        ShipName.text = ship.ShipName;
-        HullPoints.text = string.Format("Hull points: {0}/{1}",  ship.HullPoints, ship.MaxHullPoints);
     }
 
     public void ClearSelectedShip()
     {
         _selectedShip = null;
-
         ShipDetailsPanel.SetActive(false);
     }
 }

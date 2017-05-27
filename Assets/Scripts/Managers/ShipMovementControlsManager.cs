@@ -44,13 +44,15 @@ public class ShipMovementControlsManager : MonoBehaviour {
     {
         _selectedShip = ship;
 
-        TurnSlider.value = _selectedShip.TurnProportion;
-        MinTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
-        MaxTurnLabel.text = _selectedShip.MaxTurn.ToString("F0");
+        var _mob = ship.GetComponent<MobileObjectController>();
 
-        SpeedSlider.value = _selectedShip.SpeedProportion;
-        MinSpeedLabel.text = _selectedShip.MinSpeed.ToString("F0");
-        MaxSpeedLabel.text = _selectedShip.MaxSpeed.ToString("F0");
+        TurnSlider.value = _mob.TurnProportion;
+        MinTurnLabel.text = _mob.MaxTurn.ToString("F0");
+        MaxTurnLabel.text = _mob.MaxTurn.ToString("F0");
+
+        SpeedSlider.value = _mob.SpeedProportion;
+        MinSpeedLabel.text = _mob.MinSpeed.ToString("F0");
+        MaxSpeedLabel.text = _mob.MaxSpeed.ToString("F0");
 
         ShipControlsPanel.SetActive(true);        
     }

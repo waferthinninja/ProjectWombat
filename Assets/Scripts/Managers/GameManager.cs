@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager: MonoBehaviour {
@@ -22,7 +23,7 @@ public class GameManager: MonoBehaviour {
     public GameState GameState;
     
     // keep track of a list of ships
-    public ShipController[] Ships;
+    public List<ShipController> Ships;
 
     private TurnOrder _opponentOrders;
 
@@ -85,9 +86,14 @@ public class GameManager: MonoBehaviour {
         }          
     }
 
+    public void RemoveFromShipList(ShipController ship)
+    {
+        Ships.Remove(ship);
+    }
+
     public void RefreshShipList()
     {
-        Ships = FindObjectsOfType<ShipController>();
+        Ships = FindObjectsOfType<ShipController>().ToList();
     }
 
     public void StartSimulation()
@@ -132,12 +138,12 @@ public class GameManager: MonoBehaviour {
     public void StartSimulationPhase()
     {
         GameState = GameState.Simulation;
-        ResetToStart();
-
+        
         if (OnStartOfSimulation != null)
         {
             OnStartOfSimulation();
         }
+        ResetToStart();
     }
 
     public void StartWaitingForOpponentPhase()

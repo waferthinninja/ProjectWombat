@@ -25,7 +25,17 @@ public class InputManager : MonoBehaviour {
 
     private Action<ShipController> OnSelectedShipChange;
     public void RegisterOnSelectedShipChange(Action<ShipController> action) { OnSelectedShipChange += action; }
-    
+
+    private Action<ShipController> OnTargetSelected;
+    public void RegisterOnTargetSelected(Action<ShipController> action)
+    {
+        _targetSelectMode = true;
+        
+        OnTargetSelected += action;
+    }
+
+    private bool _targetSelectMode; 
+
     // Use this for initialization
     void Start () {
 	}
@@ -38,24 +48,34 @@ public class InputManager : MonoBehaviour {
             CameraManager.Instance.CycleCameraMode();
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             CameraManager.Instance.MoveCameraUp(Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             CameraManager.Instance.MoveCameraDown(Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             CameraManager.Instance.MoveCameraLeft(Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             CameraManager.Instance.MoveCameraRight(Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            CameraManager.Instance.RotateCameraLeft(Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            CameraManager.Instance.RotateCameraRight(Time.deltaTime);
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -68,26 +88,39 @@ public class InputManager : MonoBehaviour {
             var go = GetClickedGameObject();
             if (go != null && go.transform.parent != null && go.transform.parent.gameObject.GetComponent<ShipController>() != null)
             {
-                SelectShip(go.transform.parent.gameObject.GetComponent<ShipController>());
+                if (_targetSelectMode)
+                {
+                    TargetShip(go.transform.parent.gameObject.GetComponent<ShipController>());
+                }
+                else
+                {
+                    SelectShip(go.transform.parent.gameObject.GetComponent<ShipController>());
+                }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (SelectedShip != null)
+            if (_targetSelectMode)
             {
-                ClearSelectedShip();
+                TargetShip(null);
             }
             else
             {
-                //TODO - add confirmatio 
-                //Application.Quit();
+                if (SelectedShip != null)
+                {
+                    ClearSelectedShip();
+                }
+                else
+                {
+                    //TODO - add confirmation
+                    //Application.Quit();
+                }
             }
         }
     }
 
-    
-    
+       
     public void SelectNextShip()
     {
         if (SelectedShip == null)
@@ -97,12 +130,17 @@ public class InputManager : MonoBehaviour {
         else
         {
             _selectedShipIndex++;
-            if (_selectedShipIndex >= GameManager.Instance.Ships.Length)
+            if (_selectedShipIndex >= GameManager.Instance.Ships.Count)
             {
                 _selectedShipIndex = 0;
             }
         }
         
+        if (GameManager.Instance.Ships[_selectedShipIndex].IsDying)
+        {
+            SelectNextShip();
+        }
+
         SelectShip(_selectedShipIndex);
     }
 
@@ -115,6 +153,18 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    public void TargetShip(ShipController ship)
+    {
+        if (OnTargetSelected != null)
+        {
+            OnTargetSelected(ship);
+
+            // clear this action
+            OnTargetSelected = null;
+            _targetSelectMode = false;
+        }
+    }
+
     public void SelectShip(int index)
     {
         if (index < 0)
@@ -122,7 +172,7 @@ public class InputManager : MonoBehaviour {
             Debug.LogError("Tried to select ship index < 0");
             index = 0;
         }
-        if (index >= GameManager.Instance.Ships.Length)
+        if (index >= GameManager.Instance.Ships.Count)
         {
             Debug.LogError("Tried to select ship index out of bounds");
             index = 0;
@@ -134,7 +184,7 @@ public class InputManager : MonoBehaviour {
 
     public void SelectShip(ShipController ship)
     {
-        for (int i = 0; i < GameManager.Instance.Ships.Length; i++)
+        for (int i = 0; i < GameManager.Instance.Ships.Count; i++)
         {
             if (ship == GameManager.Instance.Ships[i])
             {

@@ -26,7 +26,7 @@ public class CameraManager : MonoBehaviour {
     private Dictionary<CameraMode, float> _cameraSpeed = new Dictionary<CameraMode, float>
     {
         { CameraMode.Free, 40f },
-        { CameraMode.Follow, 0f },
+        { CameraMode.Follow, 40f },
         { CameraMode.Overhead, 40f }
     };
 
@@ -51,6 +51,8 @@ public class CameraManager : MonoBehaviour {
         }
     }
 
+
+
     public void MoveCameraUp(float deltaTime)
     {
         float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
@@ -65,14 +67,44 @@ public class CameraManager : MonoBehaviour {
 
     public void MoveCameraLeft(float deltaTime)
     {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;        
+        Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, moveSpeed);
+
+
     }
 
     public void MoveCameraRight(float deltaTime)
     { 
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;        
         Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
+    }
+
+    public void RotateCameraLeft(float deltaTime)
+    {
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
+        if (CameraMode == CameraMode.Follow)
+        {
+            Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, moveSpeed);
+        }
+        else
+        {
+            Camera.main.transform.Rotate(Vector3.up, -moveSpeed);
+        }
+
+    }
+
+    public void RotateCameraRight(float deltaTime)
+    {
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
+        if (CameraMode == CameraMode.Follow)
+        {
+            Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, -moveSpeed);
+        }
+        else
+        {
+            Camera.main.transform.Rotate(Vector3.up, -moveSpeed);
+        }
+
     }
 
     public void CycleCameraMode()

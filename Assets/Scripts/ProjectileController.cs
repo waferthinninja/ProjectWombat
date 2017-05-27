@@ -2,54 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MobileObjectBase {
-
-    RaycastHit _hitInfo;
-    Ray _ray;
-    //float _lengthOfRay = 2f;
-
-    public int LayerMask;
+[RequireComponent(typeof(MobileObjectController))]
+public class ProjectileController : MonoBehaviour {
 
     public float Damage;
-
     public float Range;
 
+    private RaycastHit _hitInfo;
+    private Ray _ray;
+    public int LayerMask;
+    
     private float _distanceTravelled;
 
-    public override void Start()
+    private MobileObjectController _mob;
+
+    public void Awake()
     {
-        base.Start();
+        _mob = GetComponent<MobileObjectController>();
+        _mob.CreatedThisTurn = true;
         _distanceTravelled = 0;
     }
 
     // Update is called once per frame
-    new void Update()
+    void Update()
     {
-        base.Update();        
-        
         if (TimeManager.Instance.Paused == false)
         {
             CheckForCollision();   
 
-            _distanceTravelled += Time.deltaTime * MaxSpeed;
+            _distanceTravelled += Time.deltaTime * _mob.MaxSpeed;
             if (_distanceTravelled >= Range)
             {
-                KillSelf();
+                _mob.KillSelf();
             }
         }
     }
     
+    public float GetSpeed()
+    {
+        return _mob.MaxSpeed;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _mob.MaxSpeed = speed;
+        _mob.MinSpeed = speed;
+    }
+
     private void CheckForCollision()
     {
         // Cast a ray 
         _ray = new Ray(transform.position, transform.forward);
 
-        float lengthOfRay = MaxSpeed * Time.deltaTime;
+        float lengthOfRay = _mob.MaxSpeed * Time.deltaTime;
         Debug.DrawRay(transform.position, transform.forward, Color.white);
 
         if (Physics.Raycast(_ray, out _hitInfo, lengthOfRay, LayerMask))
         {
-            print("Collided With " + _hitInfo.collider.gameObject.name);
+            //print("Collided With " + _hitInfo.collider.gameObject.name);
             GameObject col = _hitInfo.collider.gameObject;
             if (col.GetComponent<ShieldController>() != null)
             {
@@ -62,9 +72,9 @@ public class ProjectileController : MobileObjectBase {
                     Damage = shield.ApplyDamage(Damage);
                 }
             }
-            else if (col.GetComponent<ChassisController>() != null)
+            else if (col.GetComponent<ShipSectionController>() != null)
             {
-                ChassisController c = col.GetComponent<ChassisController>();
+                ShipSectionController c = col.GetComponent<ShipSectionController>();
                 Damage = c.Ship.ApplyDamage(Damage); 
             }
         }
@@ -76,5 +86,9 @@ public class ProjectileController : MobileObjectBase {
 
     }
 
+    private void KillSelf()
+    {
+        _mob.KillSelf();
+    }
 
 }

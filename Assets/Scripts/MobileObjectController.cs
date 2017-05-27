@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MobileObjectBase : MonoBehaviour
+public class MobileObjectController : MonoBehaviour
 {    
     public int MobId { get; private set; }
     
@@ -77,8 +77,17 @@ public class MobileObjectBase : MonoBehaviour
         transform.rotation = _rotationAtStart;
     }
 
-    
-    protected virtual void KillSelf()
+    public float GetSpeed()
+    {
+        return Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion);
+    }
+
+    public float GetTurn()
+    {
+        return TurnProportion * MaxTurn;
+    }
+        
+    public void KillSelf()
     {
         // must unsubscribe from events
         GameManager.Instance.UnregisterOnEndOfTurn(OnEndOfTurn);
@@ -87,12 +96,12 @@ public class MobileObjectBase : MonoBehaviour
         Destroy(this.transform.gameObject);
     }
 
-    public virtual void SetSpeed(float speedProportion)
+    public void SetSpeed(float speedProportion)
     {
         SpeedProportion = speedProportion;        
     }
 
-    public virtual void SetTurn(float turn)
+    public void SetTurn(float turn)
     {
         TurnProportion = turn;
     }

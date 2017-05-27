@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TargetableComponentController))]
 public class WeaponController : MonoBehaviour {
 
     public string Name;
@@ -10,17 +11,22 @@ public class WeaponController : MonoBehaviour {
     public float Range;
     public float Damage;
     public float ProjectileSpeed;
-    
-    public LineRenderer FireArcIndicator;
+
+    public bool FreeFire { get; private set; } 
+
+    private LineRenderer _arcIndicator;
+    private MeshRenderer _meshRenderer;
 
     public Transform RotationPoint;
     public Transform FirePoint;
 
-    public Transform Projectile;
+    public ProjectileController Projectile;
 
     public float TimeBetweenShots;        
     private float _timeSinceLastShot;
     private float _timeSinceLastShotAtStart;
+    private bool _shotCharged;
+    private bool _shotChargedAtStart;
 
     private float _lastMaxAngle;
     private float _lastRange;
@@ -28,13 +34,26 @@ public class WeaponController : MonoBehaviour {
     private Faction _faction;
     private Color _laserColor;
 
+    private bool _dying;
+    private bool _showArc;
+
+    private TargetableComponentController _targeter;
+
+
     // Use this for initialization
     void Start ()
     {
+        FreeFire = true;
+        _showArc = true;
+        _targeter = GetComponent<TargetableComponentController>();
+
+        _arcIndicator = transform.Find("ArcIndicator").GetComponent<LineRenderer>();
+        _meshRenderer = GetComponentInChildren<MeshRenderer>();
+
         // get faction of ship 
         _faction = transform.parent.GetComponent<ShipController>().Faction;
         _laserColor = FactionColors.LaserColor[_faction];
-
+        
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
     }
 
@@ -45,35 +64,86 @@ public class WeaponController : MonoBehaviour {
 
         if (TimeManager.Instance.Paused == false)
         {
-            if (_timeSinceLastShot >= TimeBetweenShots)
+            if (_timeSinceLastShot >= TimeBetweenShots || _shotCharged)
             {
                 if (TargetInRange())
                 {
                     Fire();
                 }
+                else
+                {
+                    _shotCharged = true;
+                    _timeSinceLastShot = 0f;
+                }
             }
-            _timeSinceLastShot += Time.deltaTime; 
+            if (!_shotCharged)
+            {
+                _timeSinceLastShot += Time.deltaTime;
+            }
         }
+    }
+
+    public void RegisterForTargetCallback()
+    {
+        _targeter.RegisterForTargetCallback();
+    }
+
+    public void ToggleArc()
+    {
+        _showArc = !_showArc;
+        _arcIndicator.enabled = _showArc;
+    }
+
+    public void SetFreeFire(bool state)
+    {
+        FreeFire = state;
+    }
+       
+
+    public void Die()
+    {
+        // since we might want to rewind, can't actually destroy the object, just set it to die at end of turn and make it invisible and trigger explosions etc
+        _dying = true;
+
+        _meshRenderer.enabled = false;
+        
+    }
+
+    public void KillSelf()
+    {
+        _targeter.KillSelf();
+
+        GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
+
+        GameObject.Destroy(this.transform.gameObject);
     }
 
     public void OnResetToStart()
     {
+        if (_dying)
+        {
+            _dying = false;
+            _meshRenderer.enabled = true;
+        }
         _timeSinceLastShot = _timeSinceLastShotAtStart;
+        _shotCharged = _shotChargedAtStart;
     }
 
     private bool TargetInRange()
     {
-        for (int i = 0; i < GameManager.Instance.Ships.Length; i++)
+        for (int i = 0; i < GameManager.Instance.Ships.Count; i++)
         {
-            ShipController ship = GameManager.Instance.Ships[i];
-            
+            ShipController ship = GameManager.Instance.Ships[i];            
 
             // don't target friends
             if (ship.Faction == _faction) continue;
 
+            // don't target dead ships
+            if (ship.IsDying) continue;
+
             // check range
             float distance = Vector3.Distance(ship.transform.position, transform.position);
-            float timeToTarget = distance / Projectile.GetComponent<ProjectileController>().MaxSpeed;
+            float timeToTarget = distance / ProjectileSpeed;
             
             // temporarily move object to provide lead   
             //Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.GetSpeed(), Color.red);
@@ -104,25 +174,23 @@ public class WeaponController : MonoBehaviour {
     private void Fire()
     {
         // instantiate projectile 
-        Transform t = Instantiate(Projectile);
-        t.position = FirePoint.position;
-        t.rotation = RotationPoint.rotation;
+        ProjectileController t = Instantiate(Projectile);
+        t.transform.position = FirePoint.position;
+        t.transform.rotation = RotationPoint.rotation;
         ProjectileController projectile = t.GetComponent<ProjectileController>();
+        
 
         // at the moment no friendly fire, bullets will only hit enemies
         projectile.LayerMask = (transform.gameObject.layer == GameManager.PLAYER_LAYER ? 1 << GameManager.ENEMY_LAYER : 1 << GameManager.PLAYER_LAYER);  
         projectile.Damage = Damage;
         projectile.Range = Range;
-        projectile.MinSpeed = ProjectileSpeed;
-        projectile.MaxSpeed = ProjectileSpeed;
+        projectile.SetSpeed(ProjectileSpeed);
 
         LineRenderer renderer = projectile.GetComponent<LineRenderer>();
 
         renderer.material.SetColor("_TintColor", _laserColor);
-
-        projectile.CreatedThisTurn = true; 
-
-        _timeSinceLastShot = 0f;
+                
+        _timeSinceLastShot -= TimeBetweenShots;
     }
 
     private void RedrawFireArcIfChanged()
@@ -158,7 +226,7 @@ public class WeaponController : MonoBehaviour {
         }
 
         // set the points
-        FireArcIndicator.numPositions = points.Length;
-        FireArcIndicator.SetPositions(points);
+        _arcIndicator.numPositions = points.Length;
+        _arcIndicator.SetPositions(points);
     }
 }
