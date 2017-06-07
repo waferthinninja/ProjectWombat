@@ -32,7 +32,7 @@ public class UISelectionIndicator : MonoBehaviour
 
             rt.sizeDelta = new Vector2(visualRect.width, visualRect.height);
 
-            Text.text = InputManager.Instance.SelectedShip.ShipName;
+            Text.text = InputManager.Instance.SelectedShip.Name;
             Color factionColor = Color.white;
             factionColor = (InputManager.Instance.SelectedShip.Faction == Faction.Friendly ? Color.green : Color.red );
 

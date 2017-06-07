@@ -39,6 +39,15 @@ public class WeaponController : MonoBehaviour {
 
     private TargetableComponentController _targeter;
 
+    internal void InitialiseFromStruct(Weapon weapon)
+    {
+        Name = weapon.Name;
+        Range = weapon.Range;
+        Damage = weapon.Damage;
+        ProjectileSpeed = weapon.ProjectileSpeed;
+        TimeBetweenShots = weapon.TimeBetweenShots;
+        MaxAngle = weapon.MaxAngle;
+    }
 
     // Use this for initialization
     void Start ()
@@ -51,10 +60,13 @@ public class WeaponController : MonoBehaviour {
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         // get faction of ship 
-        _faction = transform.parent.GetComponent<ShipController>().Faction;
+        _faction = transform.parent.parent.GetComponent<ShipController>().Faction;
         _laserColor = FactionColors.LaserColor[_faction];
-        
+
+        transform.gameObject.layer = (_faction == Faction.Friendly ? GameManager.PLAYER_LAYER : GameManager.ENEMY_LAYER);
+
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
+        GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
 
     // Update is called once per frame
@@ -73,7 +85,7 @@ public class WeaponController : MonoBehaviour {
                 else
                 {
                     _shotCharged = true;
-                    _timeSinceLastShot = 0f;
+                    _timeSinceLastShot = TimeBetweenShots;
                 }
             }
             if (!_shotCharged)
@@ -104,7 +116,7 @@ public class WeaponController : MonoBehaviour {
     {
         // since we might want to rewind, can't actually destroy the object, just set it to die at end of turn and make it invisible and trigger explosions etc
         _dying = true;
-
+        _showArc = false;
         _meshRenderer.enabled = false;
         
     }
@@ -116,6 +128,12 @@ public class WeaponController : MonoBehaviour {
         GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
 
         GameObject.Destroy(this.transform.gameObject);
+    }
+
+    public void OnEndOfTurn()
+    {
+        _shotChargedAtStart = _shotCharged;
+        _timeSinceLastShotAtStart = _timeSinceLastShot;
     }
 
     public void OnResetToStart()
@@ -144,15 +162,18 @@ public class WeaponController : MonoBehaviour {
             // check range
             float distance = Vector3.Distance(ship.transform.position, transform.position);
             float timeToTarget = distance / ProjectileSpeed;
-            
+
+
             // temporarily move object to provide lead   
-            //Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.GetSpeed(), Color.red);
+            Debug.DrawRay(ship.transform.position + new Vector3(0,10,0), ship.transform.forward * timeToTarget * ship.GetSpeed(), Color.red);
             Vector3 lead = ship.transform.forward * timeToTarget * ship.GetSpeed();
-            ship.transform.Translate(lead);
+            ship.transform.position += lead;
             Vector3 target = ship.transform.position;
-            ship.transform.Translate(-lead);
+            ship.transform.position -= lead;
  
             distance = Vector3.Distance(transform.position, target);
+
+            //Debug.Log(string.Format("{1} distance: {0} ", distance, Name));
             if (distance <= Range)
             {
                 // check firing arc
@@ -173,12 +194,13 @@ public class WeaponController : MonoBehaviour {
 
     private void Fire()
     {
+        //Debug.Log("Firing " + Name  );
         // instantiate projectile 
         ProjectileController t = Instantiate(Projectile);
         t.transform.position = FirePoint.position;
         t.transform.rotation = RotationPoint.rotation;
         ProjectileController projectile = t.GetComponent<ProjectileController>();
-        
+
 
         // at the moment no friendly fire, bullets will only hit enemies
         projectile.LayerMask = (transform.gameObject.layer == GameManager.PLAYER_LAYER ? 1 << GameManager.ENEMY_LAYER : 1 << GameManager.PLAYER_LAYER);  
@@ -191,6 +213,7 @@ public class WeaponController : MonoBehaviour {
         renderer.material.SetColor("_TintColor", _laserColor);
                 
         _timeSinceLastShot -= TimeBetweenShots;
+        _shotCharged = false;
     }
 
     private void RedrawFireArcIfChanged()
@@ -209,7 +232,7 @@ public class WeaponController : MonoBehaviour {
     private void RedrawFireArc()
     {
         float anglePerPoint = 5f;
-        int pointsInArc = (int)(MaxAngle / anglePerPoint);
+        int pointsInArc = (int)(MaxAngle / anglePerPoint) + 1;
         if (pointsInArc < 2) pointsInArc = 2;
         Vector3[] points = new Vector3[pointsInArc + 2];
 
@@ -222,7 +245,7 @@ public class WeaponController : MonoBehaviour {
         {
             float angleInRads = Mathf.Deg2Rad * angle;
             points[i] = new Vector3(Range * Mathf.Sin(angleInRads), 0, Range * Mathf.Cos(angleInRads));
-            angle += (MaxAngle / pointsInArc);
+            angle += anglePerPoint;
         }
 
         // set the points

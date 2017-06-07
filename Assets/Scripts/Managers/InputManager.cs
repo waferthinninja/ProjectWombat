@@ -86,15 +86,24 @@ public class InputManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             var go = GetClickedGameObject();
-            if (go != null && go.transform.parent != null && go.transform.parent.gameObject.GetComponent<ShipController>() != null)
+            ShipController ship = null;
+            if (go != null)
+            {
+                while(ship == null && go.transform.parent != null)
+                {
+                    go = go.transform.parent.gameObject;
+                    ship = go.GetComponent<ShipController>();                    
+                }
+            }
+            if (ship != null)
             {
                 if (_targetSelectMode)
                 {
-                    TargetShip(go.transform.parent.gameObject.GetComponent<ShipController>());
+                    TargetShip(ship);
                 }
                 else
                 {
-                    SelectShip(go.transform.parent.gameObject.GetComponent<ShipController>());
+                    SelectShip(ship);
                 }
             }
         }
@@ -193,7 +202,7 @@ public class InputManager : MonoBehaviour {
         }
 
         SelectedShip = ship;
-        Debug.Log(String.Format("{0}(index {1}) selected", SelectedShip.ShipName, _selectedShipIndex));
+        //Debug.Log(String.Format("{0}(index {1}) selected", SelectedShip.ShipName, _selectedShipIndex));
 
         if (OnSelectedShipChange != null)
         {

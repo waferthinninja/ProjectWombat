@@ -46,7 +46,8 @@ public class ProjectileController : MonoBehaviour {
     public void SetSpeed(float speed)
     {
         _mob.MaxSpeed = speed;
-        _mob.MinSpeed = speed;
+        _mob.Acceleration = speed;
+        _mob.Deceleration = -speed;
     }
 
     private void CheckForCollision()

@@ -52,9 +52,10 @@ public class ShieldController : MonoBehaviour
         // TODO - get renderers automatically 
 
         _targeter = GetComponent<TargetableComponentController>();
-         
+
         // get faction of ship 
-        Color = FactionColors.ShieldColor[transform.parent.GetComponent<ShipController>().Faction];
+        var ship = transform.parent.parent.GetComponent<ShipController>();
+        Color = FactionColors.ShieldColor[ship.Faction];
 
         _strength = MaxStrength;
         _strengthAtStartOfTurn = _strength;
@@ -102,6 +103,17 @@ public class ShieldController : MonoBehaviour
         }  
         
 
+    }
+
+    internal void InitialiseFromStruct(Shield shield)
+    {
+        Name = shield.Name;
+        Width = shield.Width;
+        Height = shield.Height;
+        Radius = shield.Radius;
+        MaxStrength = shield.MaxStrength;
+        _strength = shield.CurrentStrength;
+        MaxAngle = shield.MaxAngle;
     }
 
     public ShipController GetTarget()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -21,12 +22,29 @@ public class ShipMovementControlsManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
+        GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
+
+    public void OnStartOfSimulation()
+    {
+        ClearSelectedControl();
+    }    
+
+    public void OnStartOfWaitingForOpponent()
+    {
+        ClearSelectedControl();
+    }
+
+    private static void ClearSelectedControl()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+    }
 
     public void OnSelectedShipChange(ShipController ship)
     {
@@ -51,8 +69,8 @@ public class ShipMovementControlsManager : MonoBehaviour {
         MaxTurnLabel.text = _mob.MaxTurn.ToString("F0");
 
         SpeedSlider.value = _mob.SpeedProportion;
-        MinSpeedLabel.text = _mob.MinSpeed.ToString("F0");
-        MaxSpeedLabel.text = _mob.MaxSpeed.ToString("F0");
+        MinSpeedLabel.text = _mob.GetMinSpeed().ToString("F1");
+        MaxSpeedLabel.text = _mob.GetMaxSpeed().ToString("F1");
 
         ShipControlsPanel.SetActive(true);        
     }

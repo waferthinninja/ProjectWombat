@@ -37,7 +37,7 @@ public class TargetableComponentController : MonoBehaviour {
 
     private void OnStartOfSimulation()
     {
-        Debug.Log(Target);
+//        Debug.Log(Target);
         _targetAtStart = Target;
     }
 

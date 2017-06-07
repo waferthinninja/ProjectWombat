@@ -64,17 +64,56 @@ public class GameManager: MonoBehaviour {
 
     public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
+    public bool SetupComplete; // TODO - turn this into a game phase
+
     void Start()
     {
-        RefreshShipList();
-
-        GameState = GameState.EndOfTurn; // Hack to ensure we start planning phase in first Update (i.e. after stuff has registered for events)
-        //TODO - replace with loading game
-        
+        GameState = GameState.EndOfTurn; // Hack to ensure we start planning phase in first Update (i.e. after stuff has registered for events)   
+                                        // TODO - make setup a separate game phase 
     }    
     
     void Update()
     {
+        // do scenario setup here (once we know all objects instantiated, registered etc)
+        if (!SetupComplete)
+        {
+            // Add some ships TODO - obviously this will be loaded from file at some point
+            Shield basicShieldTop = new Shield("Shield", ShieldType.Basic, "HardpointTop", 40f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 180);
+            Shield basicShieldLeft = new Shield("ShieldL", ShieldType.Basic, "HardpointLeft", 30f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 90);
+            Shield basicShieldRight = new Shield("ShieldR", ShieldType.Basic, "HardpointRight", 30f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 90);
+
+            Weapon pulseLaserTop = new Weapon("PulseLaser", WeaponType.PulseLaser, "HardpointTop", 50, 25, 70, 1, 60);
+            Weapon pulseLaserLeft = new Weapon("PulseLaserL", WeaponType.PulseLaser, "HardpointLeft", 50, 25, 70, 1, 75);
+            Weapon pulseLaserRight = new Weapon("PulseLaserR", WeaponType.PulseLaser, "HardpointRight", 50, 25, 70, 1, 75);
+
+            Ship ship = new Ship("GoodCorvette1", ShipType.Corvette, Faction.Friendly,
+                200, 200, 2.5f, 2.5f, 5, 10, 70,  -50,0,0,   0, 0, 0, 
+                new Shield[] { basicShieldLeft, basicShieldRight },
+                new Weapon[] { pulseLaserTop });
+            ShipFactory.Instance.Create(ship);
+
+            Ship ship2 = new Ship("GoodCorvette2", ShipType.Corvette, Faction.Friendly,
+                200, 180, 3f, 3f, 6, 12, 60,   50, 0, 0,   0, 0, 0, 
+                new Shield[] { basicShieldTop },
+                new Weapon[] { pulseLaserLeft, pulseLaserRight });
+             ShipFactory.Instance.Create(ship2);            
+
+            ship.Name = "EvilCorvette1";
+            ship.PosZ = 100;
+            ship.RotY = 180;
+            ship.Faction = Faction.Enemy;
+            ShipFactory.Instance.Create(ship);
+
+            ship2.Name = "EvilCorvette2";
+            ship2.PosZ = 100;
+            ship2.RotY = 180;
+            ship2.Faction = Faction.Enemy;
+            ShipFactory.Instance.Create(ship2);
+
+            RefreshShipList();
+            SetupComplete = true;
+        }
+
         // TEMP - auto cycle through phase
         if (GameState == GameState.WaitingForOpponent)
         {

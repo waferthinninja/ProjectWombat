@@ -67,8 +67,8 @@ public class CameraManager : MonoBehaviour {
 
     public void MoveCameraLeft(float deltaTime)
     {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;        
-        Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, moveSpeed);
+        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
+        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
 
     }

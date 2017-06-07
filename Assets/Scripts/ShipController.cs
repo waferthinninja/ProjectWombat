@@ -7,7 +7,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour {
 
     // ship details
-    public string ShipName;
+    public string Name;
 
     public Faction Faction;
 
@@ -55,6 +55,7 @@ public class ShipController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(transform.rotation.ToString());
     }
 
     private void InitialiseShipSections()
@@ -70,15 +71,34 @@ public class ShipController : MonoBehaviour {
         }
     }
 
+    internal void InitializeFromStruct(Ship ship)
+    {
+        Name = ship.Name;
+        transform.position = new Vector3(ship.PosX, ship.PosY, ship.PosZ);
+        transform.rotation = Quaternion.Euler(ship.RotX, ship.RotY, ship.RotZ);
+        _mob = GetComponent<MobileObjectController>();
+        _mob.Acceleration = ship.Acceleration;
+        _mob.Deceleration = ship.Deceleration;
+        _mob.MaxSpeed = ship.MaxSpeed;
+        _mob.SetStartSpeed(ship.CurrentSpeed);
+        Faction = ship.Faction;
+    }
+
     private void InitialiseWeapons()
     {
         Weapons = new List<WeaponController>();
         foreach (Transform t in transform)
         {
-            var weapon = t.GetComponent<WeaponController>();
-            if (weapon != null)
+            if (t.GetComponent<HardpointController>() != null)
             {
-                Weapons.Add(weapon);
+                foreach (Transform t1 in t)
+                {
+                    var weapon = t1.GetComponent<WeaponController>();
+                    if (weapon != null)
+                    {
+                        Weapons.Add(weapon);
+                    }
+                }
             }
         }
     }
@@ -88,10 +108,16 @@ public class ShipController : MonoBehaviour {
         Shields = new List<ShieldController>();
         foreach (Transform t in transform)
         {
-            var shield = t.GetComponent<ShieldController>();
-            if (shield != null)
+            if (t.GetComponent<HardpointController>() != null)
             {
-                Shields.Add(shield);
+                foreach (Transform t1 in t)
+                {
+                    var shield = t1.GetComponent<ShieldController>();
+                    if (shield != null)
+                    {
+                        Shields.Add(shield);
+                    }
+                }
             }
         }
     }

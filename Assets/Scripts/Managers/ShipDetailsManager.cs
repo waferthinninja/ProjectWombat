@@ -21,7 +21,7 @@ public class ShipDetailsManager : MonoBehaviour {
 	void Update () {
 		if (_selectedShip != null)
         {
-            ShipName.text = _selectedShip.ShipName;
+            ShipName.text = _selectedShip.Name;
             HullPoints.text = string.Format("Hull points: {0}/{1}", _selectedShip.HullPoints, _selectedShip.MaxHullPoints);
         }
 	}

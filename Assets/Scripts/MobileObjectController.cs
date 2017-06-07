@@ -6,7 +6,8 @@ public class MobileObjectController : MonoBehaviour
 {    
     public int MobId { get; private set; }
     
-    public float MinSpeed;
+    public float Acceleration;
+    public float Deceleration;
     public float MaxSpeed;
     public float MaxTurn;
 
@@ -20,6 +21,7 @@ public class MobileObjectController : MonoBehaviour
 
     private Vector3 _positionAtStart;
     private Quaternion _rotationAtStart;
+    private float _speedAtStart;
 
     // Use this for initialization
     public virtual void Start()
@@ -43,8 +45,27 @@ public class MobileObjectController : MonoBehaviour
             transform.Rotate(0, TurnProportion * MaxTurn * Time.deltaTime / GameManager.TURN_LENGTH, 0);
 
             // move forward 1 seconds worth of movement in the new direction
-            transform.Translate(Vector3.forward * Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion) * Time.deltaTime);
+            transform.Translate(Vector3.forward * GetSpeed() * Time.deltaTime);
         }
+    }
+
+    public float GetSpeed()
+    {
+        return Mathf.Lerp(GetMinSpeed(), GetMaxSpeed(), SpeedProportion);
+    }
+
+    public float GetMinSpeed()
+    {
+        return Mathf.Max(_speedAtStart - Deceleration, 0);
+    }
+    public float GetMaxSpeed()
+    {
+        return Mathf.Min(_speedAtStart + Acceleration, MaxSpeed);
+    }
+
+    public void SetStartSpeed(float speed)
+    {
+        _speedAtStart = speed;
     }
 
     public virtual void OnEndOfTurn()
@@ -54,10 +75,11 @@ public class MobileObjectController : MonoBehaviour
         // reset start position
         _positionAtStart = transform.position;
         _rotationAtStart = transform.rotation;
+        _speedAtStart = GetSpeed();
 
         // reset controls
         TurnProportion = 0;
-        SpeedProportion = 0;
+        SpeedProportion = 0.5f;
     }
 
     public virtual void OnResetToStart()
@@ -75,11 +97,7 @@ public class MobileObjectController : MonoBehaviour
 
         transform.position = _positionAtStart;
         transform.rotation = _rotationAtStart;
-    }
 
-    public float GetSpeed()
-    {
-        return Mathf.Lerp(MinSpeed, MaxSpeed, SpeedProportion);
     }
 
     public float GetTurn()
