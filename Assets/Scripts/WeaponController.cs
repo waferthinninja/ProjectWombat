@@ -22,6 +22,8 @@ public class WeaponController : MonoBehaviour {
 
     public ProjectileController Projectile;
 
+    public ParticleSystem MuzzleFlareParticleSystem;
+
     public float TimeBetweenShots;        
     private float _timeSinceLastShot;
     private float _timeSinceLastShotAtStart;
@@ -208,12 +210,15 @@ public class WeaponController : MonoBehaviour {
         projectile.Range = Range;
         projectile.SetSpeed(ProjectileSpeed);
 
+        /* TODO -replace this laser color setting now we are using quad based projectile
         LineRenderer renderer = projectile.GetComponent<LineRenderer>();
 
         renderer.material.SetColor("_TintColor", _laserColor);
-                
+        */
         _timeSinceLastShot -= TimeBetweenShots;
         _shotCharged = false;
+
+        MuzzleFlareParticleSystem.Play();
     }
 
     private void RedrawFireArcIfChanged()

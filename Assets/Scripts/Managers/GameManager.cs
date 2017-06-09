@@ -38,6 +38,7 @@ public class GameManager: MonoBehaviour {
     public static readonly int ENEMY_LAYER = 10;
 
     // callbacks
+    private Action OnEndOfSetup;
     private Action OnStartOfPlanning;
     private Action OnStartOfPlanning_Late;
     private Action OnStartOfSimulation;
@@ -46,7 +47,7 @@ public class GameManager: MonoBehaviour {
     private Action OnEndOfTurn;
     private Action OnResetToStart;
 
-
+    public void RegisterOnEndOfSetup(Action action) { OnEndOfSetup += action;  }
     public void RegisterOnStartOfPlanning_Late(Action action) { OnStartOfPlanning_Late += action; }
     public void RegisterOnStartOfPlanning(Action action) { OnStartOfPlanning += action; }
     public void RegisterOnStartOfSimulation(Action action) { OnStartOfSimulation += action; }
@@ -64,18 +65,17 @@ public class GameManager: MonoBehaviour {
 
     public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
-    public bool SetupComplete; // TODO - turn this into a game phase
+    private bool _setupComplete; 
 
     void Start()
     {
-        GameState = GameState.EndOfTurn; // Hack to ensure we start planning phase in first Update (i.e. after stuff has registered for events)   
-                                        // TODO - make setup a separate game phase 
+        GameState = GameState.Setup; 
     }    
     
     void Update()
     {
         // do scenario setup here (once we know all objects instantiated, registered etc)
-        if (!SetupComplete)
+        if (!_setupComplete)
         {
             // Add some ships TODO - obviously this will be loaded from file at some point
             Shield basicShieldTop = new Shield("Shield", ShieldType.Basic, "HardpointTop", 40f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 180);
@@ -111,7 +111,7 @@ public class GameManager: MonoBehaviour {
             ShipFactory.Instance.Create(ship2);
 
             RefreshShipList();
-            SetupComplete = true;
+            SetupComplete();
         }
 
         // TEMP - auto cycle through phase
@@ -123,6 +123,17 @@ public class GameManager: MonoBehaviour {
         {
             StartPlanningPhase();
         }          
+    }
+
+    public void SetupComplete()
+    {
+        _setupComplete = true;
+        if (OnEndOfSetup != null)
+        {
+            OnEndOfSetup();
+        }
+        OnEndOfSetup = null;
+        GameState = GameState.EndOfTurn;
     }
 
     public void RemoveFromShipList(ShipController ship)

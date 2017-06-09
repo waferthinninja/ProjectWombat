@@ -11,7 +11,7 @@ public class AIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
-
+        GameManager.Instance.RegisterOnEndOfSetup(OnEndOfSetup);
         
 	}
 
@@ -28,18 +28,17 @@ public class AIManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-        if (GameManager.Instance.SetupComplete)
+    public void OnEndOfSetup () {
+        
+        Ships = new List<ShipController>();
+        ShipController[] allShips = FindObjectsOfType<ShipController>();
+        foreach (ShipController ship in allShips)
         {
-            Ships = new List<ShipController>();
-            ShipController[] allShips = FindObjectsOfType<ShipController>();
-            foreach (ShipController ship in allShips)
+            if (ship.Faction == Faction.Enemy)
             {
-                if (ship.Faction == Faction.Enemy)
-                {
-                    Ships.Add(ship);
-                }
+                Ships.Add(ship);
             }
         }
+        
     }
 }

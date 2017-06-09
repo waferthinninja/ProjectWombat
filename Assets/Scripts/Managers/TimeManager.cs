@@ -40,6 +40,8 @@ public class TimeManager : MonoBehaviour {
         GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
         GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
+
+        Paused = true;
     }
 
     void Update()
