@@ -254,7 +254,7 @@ public class ShipController : MonoBehaviour {
         // set the line renderer points
         if (ProjectedPath != null)
         {
-            ProjectedPath.numPositions = ProjectedPositions.Length;
+            ProjectedPath.positionCount = ProjectedPositions.Length;
             ProjectedPath.SetPositions(ProjectedPositions);
         }
     }

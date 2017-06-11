@@ -172,7 +172,7 @@ public class ShieldController : MonoBehaviour
         points[2] = new Vector3(10f * Mathf.Sin(-angleInRads), 0, 10f * Mathf.Cos(-angleInRads));
 
         // set the points
-        ArcIndicator.numPositions = points.Length;
+        ArcIndicator.positionCount = points.Length;
         ArcIndicator.SetPositions(points);
     }
 
@@ -280,7 +280,7 @@ public class ShieldController : MonoBehaviour
 
         ShieldRenderer.transform.localScale = new Vector3(Radius*2, Radius*2, Radius*2);
 
-        lr.numPositions = numPoints;
+        lr.positionCount = numPoints;
         lr.SetPositions(points);     
     }
     

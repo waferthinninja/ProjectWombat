@@ -1,4 +1,6 @@
-﻿Shader "Custom/Shield"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/Shield"
 {
 	Properties
 	{
@@ -49,7 +51,7 @@
 
 				v2f o;
 				
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.objectPos = v.vertex.xyz;
 
 				float diff = 0.7 + _WidthAngle - abs(atan2(v.vertex.x, v.vertex.z));

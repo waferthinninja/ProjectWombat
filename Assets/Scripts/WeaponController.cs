@@ -210,11 +210,14 @@ public class WeaponController : MonoBehaviour {
         projectile.Range = Range;
         projectile.SetSpeed(ProjectileSpeed);
 
-        /* TODO -replace this laser color setting now we are using quad based projectile
-        LineRenderer renderer = projectile.GetComponent<LineRenderer>();
+        
+        MeshRenderer[] renderers = projectile.GetComponentsInChildren<MeshRenderer>();
 
-        renderer.material.SetColor("_TintColor", _laserColor);
-        */
+        foreach (MeshRenderer renderer in renderers)
+        {
+            renderer.material.SetColor("_TintColor", _laserColor);
+        }
+
         _timeSinceLastShot -= TimeBetweenShots;
         _shotCharged = false;
 
@@ -254,7 +257,7 @@ public class WeaponController : MonoBehaviour {
         }
 
         // set the points
-        _arcIndicator.numPositions = points.Length;
+        _arcIndicator.positionCount = points.Length;
         _arcIndicator.SetPositions(points);
     }
 }
