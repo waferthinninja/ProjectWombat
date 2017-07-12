@@ -41,13 +41,13 @@ public class WeaponController : MonoBehaviour {
 
     private TargetableComponentController _targeter;
 
-    internal void InitialiseFromStruct(Weapon weapon)
+    internal void InitialiseFromStruct(Weapon weapon, WeaponType type)
     {
         Name = weapon.Name;
-        Range = weapon.Range;
-        Damage = weapon.Damage;
-        ProjectileSpeed = weapon.ProjectileSpeed;
-        TimeBetweenShots = weapon.TimeBetweenShots;
+        Range = type.Range;
+        Damage = type.Damage;
+        ProjectileSpeed = type.ProjectileSpeed;
+        TimeBetweenShots = type.TimeBetweenShots;
         MaxAngle = weapon.MaxAngle;
     }
 
@@ -68,6 +68,8 @@ public class WeaponController : MonoBehaviour {
         transform.gameObject.layer = (_faction == Faction.Friendly ? GameManager.PLAYER_LAYER : GameManager.ENEMY_LAYER);
 
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
+        GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
 
@@ -76,7 +78,7 @@ public class WeaponController : MonoBehaviour {
     {
         RedrawFireArcIfChanged();
 
-        if (TimeManager.Instance.Paused == false)
+        if (TimeManager.Instance.Paused == false && !_dying)
         {
             if (_timeSinceLastShot >= TimeBetweenShots || _shotCharged)
             {
@@ -108,6 +110,12 @@ public class WeaponController : MonoBehaviour {
         _arcIndicator.enabled = _showArc;
     }
 
+    public void SetArc(bool enabled)
+    {
+        _showArc = enabled;
+        _arcIndicator.enabled = enabled;
+    }
+
     public void SetFreeFire(bool state)
     {
         FreeFire = state;
@@ -136,6 +144,15 @@ public class WeaponController : MonoBehaviour {
     {
         _shotChargedAtStart = _shotCharged;
         _timeSinceLastShotAtStart = _timeSinceLastShot;
+    }
+
+    public void OnStartOfOutcome()
+    {
+        SetArc(false);
+    }
+    public void OnStartOfPlanning()
+    {
+        SetArc(true);
     }
 
     public void OnResetToStart()

@@ -65,8 +65,8 @@ public class GameManager: MonoBehaviour {
 
     public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
-    private bool _setupComplete; 
-
+    private bool _setupComplete;
+    
     void Start()
     {
         GameState = GameState.Setup; 
@@ -77,39 +77,13 @@ public class GameManager: MonoBehaviour {
         // do scenario setup here (once we know all objects instantiated, registered etc)
         if (!_setupComplete)
         {
-            // Add some ships TODO - obviously this will be loaded from file at some point
-            Shield basicShieldTop = new Shield("Shield", ShieldType.Basic, "HardpointTop", 40f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 180);
-            Shield basicShieldLeft = new Shield("ShieldL", ShieldType.Basic, "HardpointLeft", 30f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 90);
-            Shield basicShieldRight = new Shield("ShieldR", ShieldType.Basic, "HardpointRight", 30f * Mathf.Deg2Rad, 0.8f, 7, 100, 100, 90);
+            Scenario scenario = ScenarioManager.Instance.GetSelectedScenario();
 
-            Weapon pulseLaserTop = new Weapon("PulseLaser", WeaponType.PulseLaser, "HardpointTop", 50, 25, 70, 1, 60);
-            Weapon pulseLaserLeft = new Weapon("PulseLaserL", WeaponType.PulseLaser, "HardpointLeft", 50, 25, 70, 1, 75);
-            Weapon pulseLaserRight = new Weapon("PulseLaserR", WeaponType.PulseLaser, "HardpointRight", 50, 25, 70, 1, 75);
-
-            Ship ship = new Ship("GoodCorvette1", ShipType.Corvette, Faction.Friendly,
-                200, 200, 2.5f, 2.5f, 5, 10, 70,  -50,0,0,   0, 0, 0, 
-                new Shield[] { basicShieldLeft, basicShieldRight },
-                new Weapon[] { pulseLaserTop });
-            ShipFactory.Instance.Create(ship);
-
-            Ship ship2 = new Ship("GoodCorvette2", ShipType.Corvette, Faction.Friendly,
-                200, 180, 3f, 3f, 6, 12, 60,   50, 0, 0,   0, 0, 0, 
-                new Shield[] { basicShieldTop },
-                new Weapon[] { pulseLaserLeft, pulseLaserRight });
-             ShipFactory.Instance.Create(ship2);            
-
-            ship.Name = "EvilCorvette1";
-            ship.PosZ = 100;
-            ship.RotY = 180;
-            ship.Faction = Faction.Enemy;
-            ShipFactory.Instance.Create(ship);
-
-            ship2.Name = "EvilCorvette2";
-            ship2.PosZ = 100;
-            ship2.RotY = 180;
-            ship2.Faction = Faction.Enemy;
-            ShipFactory.Instance.Create(ship2);
-
+            foreach (Ship ship in scenario.Ships)
+            {
+                ShipFactory.Instance.Create(ship);
+            }
+            
             RefreshShipList();
             SetupComplete();
         }
@@ -121,6 +95,25 @@ public class GameManager: MonoBehaviour {
         }     
         else if (GameState == GameState.EndOfTurn)
         {
+            // Check for victory/defeat
+            // for now the only criteria is last man standing
+            bool friendlyFound = false;
+            bool enemyFound = false;
+            foreach (ShipController ship in Ships)
+            {
+                if (ship.Faction == Faction.Friendly) friendlyFound = true;
+                if (ship.Faction == Faction.Enemy) enemyFound = true;
+            }
+            if (!friendlyFound)
+            {
+                Debug.Log("DEFEAT!"); // TODO - actual defeat stuff
+            }
+            else if (!enemyFound)
+            {
+                Debug.Log("VICTORY!"); // TODO - actual victory stuff
+            }
+            
+
             StartPlanningPhase();
         }          
     }

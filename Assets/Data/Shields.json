@@ -1,0 +1,5 @@
+[
+	{ "Name":"Weak Shield", "Width":45, "Height":45, "Strength":100},
+	{ "Name":"Medium Shield", "Width":45, "Height":45, "Strength":200},
+	{ "Name":"Strong Shield", "Width":45, "Height":45, "Strength":300}
+]

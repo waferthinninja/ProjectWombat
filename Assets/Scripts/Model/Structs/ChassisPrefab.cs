@@ -3,8 +3,8 @@ using UnityEngine;
 
 // hack to mimic dictionary entries but visible in inspector
 [Serializable]
-public struct ShipPrefab
+public struct ChassisPrefab
 {
-    public ShipType Type;
+    public string Type;
     public Transform Prefab;
 }

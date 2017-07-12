@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public struct WeaponPrefab
 {
-    public WeaponType Type;
+    public string Type;
     public Transform Prefab;
 }

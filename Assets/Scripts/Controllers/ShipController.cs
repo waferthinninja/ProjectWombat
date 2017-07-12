@@ -34,6 +34,8 @@ public class ShipController : MonoBehaviour {
     
     private MobileObjectController _mob;
 
+    private bool _showPath;
+
     // Use this for initialization
     public void Start ()
     {
@@ -43,6 +45,7 @@ public class ShipController : MonoBehaviour {
         _hullPointsAtStart = HullPoints;
         
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
 
@@ -71,17 +74,20 @@ public class ShipController : MonoBehaviour {
         }
     }
 
-    internal void InitializeFromStruct(Ship ship)
+    internal void InitializeFromStruct(Ship ship, ChassisType type)
     {
         Name = ship.Name;
         transform.position = new Vector3(ship.PosX, ship.PosY, ship.PosZ);
         transform.rotation = Quaternion.Euler(ship.RotX, ship.RotY, ship.RotZ);
         _mob = GetComponent<MobileObjectController>();
-        _mob.Acceleration = ship.Acceleration;
-        _mob.Deceleration = ship.Deceleration;
-        _mob.MaxSpeed = ship.MaxSpeed;
+        _mob.Acceleration = type.Acceleration;
+        _mob.Deceleration = type.Deceleration;
+        _mob.MaxSpeed = type.MaxSpeed;
         _mob.SetStartSpeed(ship.CurrentSpeed);
-        Faction = ship.Faction;
+        InitialiseProjections();
+        SetTurn(0f);
+        SetSpeed(0.5f);
+        Faction = ship.Faction == "Friendly" ? Faction.Friendly : Faction.Enemy;
     }
 
     private void InitialiseWeapons()
@@ -149,8 +155,20 @@ public class ShipController : MonoBehaviour {
     }
 
     public void OnStartOfPlanning()
-    {
+    {        
         RecalculateProjections();
+        SetShowPath(true);
+    }
+
+    public void OnStartOfOutcome()
+    {
+        SetShowPath(false);
+    }
+
+    public void SetShowPath(bool enabled)
+    {
+        _showPath = enabled;
+        ProjectedPath.enabled = enabled;
     }
 
     public void OnResetToStart()

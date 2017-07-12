@@ -1,0 +1,123 @@
+[
+	{ 
+		"Name": "Tutorial", 
+		"Ships": 
+		[ 
+			{
+				"Name":"Corvette1",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":0, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			},
+			{
+				"Name":"EvilCorvette1",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":0, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			}
+		] 
+	},
+	{ 
+		"Name": "Scenario 1", 
+		"Ships": 
+		[ 
+			{
+				"Name":"Corvette1",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-50, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			},
+			{
+				"Name":"Corvette2",
+				"ChassisType":"Corvette",
+				"Faction":"Friendly", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":50, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			},
+			{
+				"Name":"EvilCorvette1",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-50, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			},
+			{
+				"Name":"EvilCorvette2",
+				"ChassisType":"Corvette", 
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":50, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				]
+			}
+		] 
+	}
+
+]

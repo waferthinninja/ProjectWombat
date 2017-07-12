@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public struct ShieldPrefab
 {
-    public ShieldType Type;
+    public string Type;
     public Transform Prefab;
 }

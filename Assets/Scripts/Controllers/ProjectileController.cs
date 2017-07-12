@@ -16,6 +16,8 @@ public class ProjectileController : MonoBehaviour {
 
     private MobileObjectController _mob;
 
+    private List<Collision> _collisions;
+
     public void Awake()
     {
         _mob = GetComponent<MobileObjectController>();
@@ -26,6 +28,11 @@ public class ProjectileController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.GameState == GameState.Replay)
+        {
+            // in replay mode we don't follow the normal process
+            // instead we know where we start and end and what happens
+        }
         if (TimeManager.Instance.Paused == false)
         {
             CheckForCollision();   
@@ -68,7 +75,7 @@ public class ProjectileController : MonoBehaviour {
 
                 float angle = Vector3.Angle(shield.RotationPoint.forward, -transform.forward);
 
-                if (angle <= shield.Width * Mathf.Rad2Deg)
+                if (angle <= shield.Width)
                 {
                     Damage = shield.ApplyDamage(Damage);
                 }

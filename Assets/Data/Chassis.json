@@ -1,0 +1,3 @@
+[
+	{ "Name": "Corvette", "HullPoints":200, "Acceleration":2.5, "Deceleration":2.5, "MaxSpeed":10, "MaxTurn":90 }
+]

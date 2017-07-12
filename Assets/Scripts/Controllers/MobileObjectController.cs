@@ -31,6 +31,8 @@ public class MobileObjectController : MonoBehaviour
         _positionAtStart = transform.position;
         _rotationAtStart = transform.rotation;
 
+        SpeedProportion = 0.5f;
+
         // register callbacks
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
@@ -78,7 +80,7 @@ public class MobileObjectController : MonoBehaviour
         _speedAtStart = GetSpeed();
 
         // reset controls
-        TurnProportion = 0;
+        TurnProportion = 0f;
         SpeedProportion = 0.5f;
     }
 

@@ -21,33 +21,89 @@ public class ShipFactory : MonoBehaviour {
     //END MAKE INSTANCE
 
     // hack using structs to make "dictionary" appear in inspector
-    public ShipPrefab[] ShipPrefabs;
+    public ChassisPrefab[] ChassisPrefabs;
     public ShieldPrefab[] ShieldPrefabs;
     public WeaponPrefab[] WeaponPrefabs;
     
-    // the actual dictionaries
-    Dictionary<ShipType, Transform> _shipPrefabs;
-    Dictionary<ShieldType, Transform> _shieldPrefabs;
-    Dictionary<WeaponType, Transform> _weaponPrefabs;
+    // dictionaries mapping names to prefabs
+    Dictionary<string, Transform> _chassisPrefabs;
+    Dictionary<string, Transform> _shieldPrefabs;
+    Dictionary<string, Transform> _weaponPrefabs;
+
+    // dictionaries mapping names to data
+    Dictionary<string, ShieldType> _shieldTypes;
+    Dictionary<string, WeaponType> _weaponTypes;
+    Dictionary<string, ChassisType> _chassisTypes;
 
     public Transform OffscreenIndicatorPrefab;
     public Transform OffscreenIndicatorParent; // just a tidy place to put them 
 
+    public TextAsset WeaponData;
+    public TextAsset ShieldData;
+    public TextAsset ChassisData;    
+
     void Start()
     {
-        _shipPrefabs = new Dictionary<ShipType, Transform>();
-        for(int i = 0; i < ShipPrefabs.Length; i++)
+        // TODO - look into this whole thing, feels really ugly, but will do for now
+        LoadComponentData();
+
+        PopulateDictionaries();     
+        
+        // TODO - validate by comparing these, we should not have prefabs defined where there is no data and vice versa   
+    }
+
+    private void LoadComponentData()
+    {
+        LoadShieldTypeData();
+        LoadWeaponTypeData();
+        LoadChassisTypeData();
+    }
+
+    private void LoadShieldTypeData()
+    {
+        ShieldType[] types = JsonHelper.GetJsonArray<ShieldType>(ShieldData.text);
+        _shieldTypes = new Dictionary<string, ShieldType>();
+        foreach (ShieldType type in types)
         {
-            _shipPrefabs[ShipPrefabs[i].Type] = ShipPrefabs[i].Prefab;
+            _shieldTypes[type.Name] = type;
+        }
+    }
+
+    private void LoadWeaponTypeData()
+    {
+        WeaponType[] types = JsonHelper.GetJsonArray<WeaponType>(WeaponData.text);
+        _weaponTypes = new Dictionary<string, WeaponType>();
+        foreach (WeaponType type in types)
+        {
+            _weaponTypes[type.Name] = type;
+        }
+    }
+
+    private void LoadChassisTypeData()
+    {
+        ChassisType[] types = JsonHelper.GetJsonArray<ChassisType>(ChassisData.text);
+        _chassisTypes = new Dictionary<string, ChassisType>();
+        foreach (ChassisType type in types)
+        {
+            _chassisTypes[type.Name] = type;
+        }
+    }
+
+    private void PopulateDictionaries()
+    {
+        _chassisPrefabs = new Dictionary<string, Transform>();
+        for (int i = 0; i < ChassisPrefabs.Length; i++)
+        {
+            _chassisPrefabs[ChassisPrefabs[i].Type] = ChassisPrefabs[i].Prefab;
         }
 
-        _shieldPrefabs = new Dictionary<ShieldType, Transform>();
+        _shieldPrefabs = new Dictionary<string, Transform>();
         for (int i = 0; i < ShieldPrefabs.Length; i++)
         {
             _shieldPrefabs[ShieldPrefabs[i].Type] = ShieldPrefabs[i].Prefab;
         }
 
-        _weaponPrefabs = new Dictionary<WeaponType, Transform>();
+        _weaponPrefabs = new Dictionary<string, Transform>();
         for (int i = 0; i < WeaponPrefabs.Length; i++)
         {
             _weaponPrefabs[WeaponPrefabs[i].Type] = WeaponPrefabs[i].Prefab;
@@ -57,17 +113,17 @@ public class ShipFactory : MonoBehaviour {
     public void Create(Ship ship)
     {
         // instantiate the ship prefab
-        var shipClone = Instantiate(_shipPrefabs[ship.ShipType]);
+        var shipClone = Instantiate(_chassisPrefabs[ship.ChassisType]);
         shipClone.gameObject.name = ship.Name;
         ShipController shipController = shipClone.GetComponent<ShipController>();
-        shipController.InitializeFromStruct(ship);
+        shipController.InitializeFromStruct(ship, _chassisTypes[ship.ChassisType]);
 
         // instantiate each shield
         foreach (Shield shield in ship.Shields)
         {
             var shieldClone = Instantiate(_shieldPrefabs[shield.ShieldType]);
             ShieldController shieldController = shieldClone.GetComponent<ShieldController>();
-            shieldController.InitialiseFromStruct(shield);
+            shieldController.InitialiseFromStruct(shield, _shieldTypes[shield.ShieldType]);
 
             // attach to the right hardpoint -- TODO add checking here that the hardpoint exists
             var hardpoint = shipClone.transform.Find(shield.HardpointName);
@@ -79,7 +135,7 @@ public class ShipFactory : MonoBehaviour {
         {
             var weaponClone = Instantiate(_weaponPrefabs[weapon.WeaponType]);
             WeaponController weaponController = weaponClone.GetComponent<WeaponController>();
-            weaponController.InitialiseFromStruct(weapon);
+            weaponController.InitialiseFromStruct(weapon, _weaponTypes[weapon.WeaponType]);
             
             // attach to the right hardpoint -- TODO add checking here that the hardpoint exists
             var hardpoint = shipClone.transform.Find(weapon.HardpointName);
@@ -94,7 +150,7 @@ public class ShipFactory : MonoBehaviour {
         shipController.OffscreenIndicator = offscreenIndicatorController;
 
         // set the layer
-        int layer = ship.Faction == Faction.Friendly ? GameManager.PLAYER_LAYER : GameManager.ENEMY_LAYER;
+        int layer = ship.Faction == "Friendly" ? GameManager.PLAYER_LAYER : GameManager.ENEMY_LAYER;
         shipClone.gameObject.SetLayer(layer);
     }
 }

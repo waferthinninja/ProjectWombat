@@ -17,10 +17,10 @@ public class ShieldController : MonoBehaviour
 
     public Color Color;
 
-    [Range(0.0f, 1.57f)]
-    public float Width; // in radians - TODO convert to degrees?
-    [Range(0.0f, 1.57f)]
-    public float Height; // in radians
+    [Range(0f, 180f)]
+    public float Width; // in degrees
+    [Range(0f, 180f)]
+    public float Height; // in degrees
     public float Radius;
 
     public float MaxAngle; // how far it can rotate, in degrees
@@ -65,7 +65,8 @@ public class ShieldController : MonoBehaviour
         SetBeamPositions();
 
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
-
+        GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
+        GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
 
@@ -105,13 +106,13 @@ public class ShieldController : MonoBehaviour
 
     }
 
-    internal void InitialiseFromStruct(Shield shield)
+    internal void InitialiseFromStruct(Shield shield, ShieldType type)
     {
         Name = shield.Name;
-        Width = shield.Width;
-        Height = shield.Height;
+        Width = type.Width;
+        Height = type.Height;
         Radius = shield.Radius;
-        MaxStrength = shield.MaxStrength;
+        MaxStrength = type.Strength;
         _strength = shield.CurrentStrength;
         MaxAngle = shield.MaxAngle;
     }
@@ -147,6 +148,12 @@ public class ShieldController : MonoBehaviour
         ArcIndicator.enabled = _showArc;
     }
 
+    public void SetArc(bool enabled)
+    {
+        _showArc = enabled;
+        ArcIndicator.enabled = enabled;
+    }
+
     private void RedrawArcIfChanged()
     {
         // redraw fire arc indicator if maxangle or range has changed
@@ -167,7 +174,7 @@ public class ShieldController : MonoBehaviour
 
         float angle = MaxAngle / 2f;
         float angleInRads = Mathf.Deg2Rad * angle;
-        angleInRads += Width;
+        angleInRads += Width * Mathf.Deg2Rad;
         points[0] = new Vector3(10f * Mathf.Sin(angleInRads), 0, 10f * Mathf.Cos(angleInRads));
         points[2] = new Vector3(10f * Mathf.Sin(-angleInRads), 0, 10f * Mathf.Cos(-angleInRads));
 
@@ -205,7 +212,15 @@ public class ShieldController : MonoBehaviour
         _strengthAtStartOfTurn = _strength;
     }
 
-    
+    public void OnStartOfOutcome()
+    {
+        SetArc(false);
+    }
+
+    public void OnStartOfPlanning()
+    {
+        SetArc(true);
+    }
 
     public float ApplyDamage(float damage)
     {
@@ -238,8 +253,8 @@ public class ShieldController : MonoBehaviour
             currentHeight = Height;// * Time.deltaTime * speed;
         }
 
-        ShieldRenderer.material.SetFloat("_WidthAngle", currentWidth);
-        ShieldRenderer.material.SetFloat("_HeightAngle", currentHeight);
+        ShieldRenderer.material.SetFloat("_WidthAngle", currentWidth * Mathf.Deg2Rad);
+        ShieldRenderer.material.SetFloat("_HeightAngle", currentHeight * Mathf.Deg2Rad);
     }
 
     private void EnableDisable(bool enabled)
@@ -287,6 +302,8 @@ public class ShieldController : MonoBehaviour
     public void KillSelf()
     {
         GameManager.Instance.UnregisterOnResetToStart(OnResetToStart);
+        GameManager.Instance.UnregisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.UnregisterOnStartOfPlanning(OnStartOfPlanning);
         GameManager.Instance.UnregisterOnEndOfTurn(OnEndOfTurn);
 
         GameObject.Destroy(this.transform.gameObject);

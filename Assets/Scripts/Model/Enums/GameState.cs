@@ -5,5 +5,6 @@
     Simulation,
     WaitingForOpponent,
     Outcome,
+    Replay,
     EndOfTurn
 }
