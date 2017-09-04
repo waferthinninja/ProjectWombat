@@ -15,6 +15,7 @@ public class ShipComponentControlsManager : MonoBehaviour {
     // prefabs for individual items
     public Transform ShieldEntry;
     public Transform WeaponEntry;
+    public Transform PowerEntry;
 
     // Use this for initialization
     void Start ()
@@ -51,6 +52,10 @@ public class ShipComponentControlsManager : MonoBehaviour {
     private void PopulateEntries(ShipController ship)
     {
         ClearItems();
+
+        var powerEntry = Instantiate(PowerEntry);
+        powerEntry.SetParent(ContentPanel);
+        powerEntry.GetComponent<PowerEntryController>().Initialise(ship.Power);
 
         foreach (ShieldController s in ship.Shields)
         {

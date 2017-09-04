@@ -25,13 +25,15 @@ public struct Ship {
 
     public Weapon[] Weapons;
     public Shield[] Shields;
+    public PowerPlant PowerPlant;
 
     public Ship(string name, string chassisType, string faction,
         float currentHullPoints, float currentSpeed, 
         float posX, float posY, float posZ,        
         float rotX, float rotY, float rotZ,
         Weapon[] weapons,
-        Shield[] shields
+        Shield[] shields,
+        PowerPlant powerPlant
         )
     {
         Name = name;
@@ -46,7 +48,8 @@ public struct Ship {
         RotY = rotY;
         RotZ = rotZ;
         Weapons = weapons;
-        Shields = shields;        
+        Shields = shields;
+        PowerPlant = powerPlant;      
     }
 
 }

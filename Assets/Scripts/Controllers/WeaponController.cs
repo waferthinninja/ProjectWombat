@@ -8,11 +8,14 @@ public class WeaponController : MonoBehaviour {
 
     public string Name;
     public float MaxAngle; // in degrees
-    public float Range;
-    public float Damage;
+    public float BaseRange;
+    public float BaseDamage;
     public float ProjectileSpeed;
 
-    public bool FreeFire { get; private set; } 
+    public bool FreeFire { get; private set; }
+
+    public bool DamageBoosted { get; private set; }
+    public bool RangeBoosted { get; private set; }
 
     private LineRenderer _arcIndicator;
     private MeshRenderer _meshRenderer;
@@ -40,12 +43,12 @@ public class WeaponController : MonoBehaviour {
     private bool _showArc;
 
     private TargetableComponentController _targeter;
-
+    
     internal void InitialiseFromStruct(Weapon weapon, WeaponType type)
     {
         Name = weapon.Name;
-        Range = type.Range;
-        Damage = type.Damage;
+        BaseRange = type.Range;
+        BaseDamage = type.Damage;
         ProjectileSpeed = type.ProjectileSpeed;
         TimeBetweenShots = type.TimeBetweenShots;
         MaxAngle = weapon.MaxAngle;
@@ -57,6 +60,8 @@ public class WeaponController : MonoBehaviour {
         FreeFire = true;
         _showArc = true;
         _targeter = GetComponent<TargetableComponentController>();
+        DamageBoosted = false;
+        RangeBoosted = false;
 
         _arcIndicator = transform.Find("ArcIndicator").GetComponent<LineRenderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -104,6 +109,16 @@ public class WeaponController : MonoBehaviour {
         _targeter.RegisterForTargetCallback();
     }
 
+    public void ToggleDamageBoosted()
+    {
+        DamageBoosted = !DamageBoosted;
+    }
+
+    public void ToggleRangeBoosted()
+    {
+        RangeBoosted = !RangeBoosted;
+    }
+
     public void ToggleArc()
     {
         _showArc = !_showArc;
@@ -120,7 +135,15 @@ public class WeaponController : MonoBehaviour {
     {
         FreeFire = state;
     }
-       
+
+    public void SetRangeBoost(bool state)
+    {
+        RangeBoosted = state;
+    }
+    public void SetDamageBoost(bool state)
+    {
+        DamageBoosted = state;
+    }
 
     public void Die()
     {
@@ -166,6 +189,11 @@ public class WeaponController : MonoBehaviour {
         _shotCharged = _shotChargedAtStart;
     }
 
+    private float GetRange()
+    {
+        return BaseRange * (RangeBoosted ? 1.5f : 1f);
+    }
+
     private bool TargetInRange()
     {
         for (int i = 0; i < GameManager.Instance.Ships.Count; i++)
@@ -193,7 +221,7 @@ public class WeaponController : MonoBehaviour {
             distance = Vector3.Distance(transform.position, target);
 
             //Debug.Log(string.Format("{1} distance: {0} ", distance, Name));
-            if (distance <= Range)
+            if (distance <= GetRange())
             {
                 // check firing arc
                 float angle = Vector3.Angle(transform.forward, (target - transform.position));
@@ -223,8 +251,8 @@ public class WeaponController : MonoBehaviour {
 
         // at the moment no friendly fire, bullets will only hit enemies
         projectile.LayerMask = (transform.gameObject.layer == GameManager.PLAYER_LAYER ? 1 << GameManager.ENEMY_LAYER : 1 << GameManager.PLAYER_LAYER);  
-        projectile.Damage = Damage;
-        projectile.Range = Range;
+        projectile.Damage = BaseDamage;
+        projectile.Range = GetRange();
         projectile.SetSpeed(ProjectileSpeed);
 
         
@@ -243,19 +271,21 @@ public class WeaponController : MonoBehaviour {
 
     private void RedrawFireArcIfChanged()
     {
+        float range = GetRange();
         // redraw fire arc indicator if maxangle or range has changed
         if (Mathf.Abs(_lastMaxAngle - MaxAngle) > 0.001f
-            || Mathf.Abs(_lastRange - Range) > 0.001f)
+            || Mathf.Abs(_lastRange - range) > 0.001f)
         {
             RedrawFireArc();
         }
 
         _lastMaxAngle = MaxAngle;
-        _lastRange = Range;
+        _lastRange = range;
     }
 
     private void RedrawFireArc()
     {
+        float range = GetRange();
         float anglePerPoint = 5f;
         int pointsInArc = (int)(MaxAngle / anglePerPoint) + 1;
         if (pointsInArc < 2) pointsInArc = 2;
@@ -269,7 +299,7 @@ public class WeaponController : MonoBehaviour {
         for (int i = 1; i <= points.Length - 2; i++)
         {
             float angleInRads = Mathf.Deg2Rad * angle;
-            points[i] = new Vector3(Range * Mathf.Sin(angleInRads), 0, Range * Mathf.Cos(angleInRads));
+            points[i] = new Vector3(range * Mathf.Sin(angleInRads), 0, range * Mathf.Cos(angleInRads));
             angle += anglePerPoint;
         }
 

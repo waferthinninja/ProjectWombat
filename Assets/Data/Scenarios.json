@@ -19,7 +19,9 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+
 			},
 			{
 				"Name":"EvilCorvette1",
@@ -37,7 +39,8 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			}
 		] 
 	},
@@ -61,7 +64,8 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
 			{
 				"Name":"Corvette2",
@@ -79,7 +83,8 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
 			{
 				"Name":"EvilCorvette1",
@@ -97,7 +102,8 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
 			{
 				"Name":"EvilCorvette2",
@@ -115,7 +121,8 @@
 				"Shields":
 				[
 					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
-				]
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			}
 		] 
 	}

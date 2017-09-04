@@ -61,7 +61,7 @@ public class ShieldController : MonoBehaviour
         _strengthAtStartOfTurn = _strength;
         _collider = GetComponent<Collider>();
 
-        SetShieldParams();
+        SetShaderParams();
         SetBeamPositions();
 
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
@@ -103,6 +103,8 @@ public class ShieldController : MonoBehaviour
             }
         }  
         
+        //SetShaderParams();
+        //SetBeamPositions();
 
     }
 
@@ -203,7 +205,7 @@ public class ShieldController : MonoBehaviour
         _strength = _strengthAtStartOfTurn;
         EnableDisable(_strength > 0);
         ArcIndicator.enabled = _showArc;
-        SetShieldParams();
+        SetShaderParams();
         SetBeamPositions();
     }
 
@@ -226,7 +228,7 @@ public class ShieldController : MonoBehaviour
     {
         _strength -= damage;
 
-        SetShieldParams();
+        SetShaderParams();
 
         if (_strength <= 0)
         {
@@ -239,7 +241,7 @@ public class ShieldController : MonoBehaviour
         return 0;
     }
 
-    private void SetShieldParams()
+    private void SetShaderParams()
     {
         float alpha = (_strength / MaxStrength) * MAX_INTENSITY;
         Color c = new Color(Color.r, Color.g, Color.b, alpha);

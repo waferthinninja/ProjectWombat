@@ -34,13 +34,15 @@ public class ShipFactory : MonoBehaviour {
     Dictionary<string, ShieldType> _shieldTypes;
     Dictionary<string, WeaponType> _weaponTypes;
     Dictionary<string, ChassisType> _chassisTypes;
+    Dictionary<string, PowerPlantType> _powerPlantTypes;
 
     public Transform OffscreenIndicatorPrefab;
     public Transform OffscreenIndicatorParent; // just a tidy place to put them 
 
     public TextAsset WeaponData;
     public TextAsset ShieldData;
-    public TextAsset ChassisData;    
+    public TextAsset ChassisData;
+    public TextAsset PowerPlantData;  
 
     void Start()
     {
@@ -57,6 +59,7 @@ public class ShipFactory : MonoBehaviour {
         LoadShieldTypeData();
         LoadWeaponTypeData();
         LoadChassisTypeData();
+        LoadPowerPlantTypeData();
     }
 
     private void LoadShieldTypeData()
@@ -89,6 +92,16 @@ public class ShipFactory : MonoBehaviour {
         }
     }
 
+    private void LoadPowerPlantTypeData()
+    {
+        PowerPlantType[] types = JsonHelper.GetJsonArray<PowerPlantType>(PowerPlantData.text);
+        _powerPlantTypes = new Dictionary<string, PowerPlantType>();
+        foreach (PowerPlantType type in types)
+        {
+            _powerPlantTypes[type.Name] = type;
+        }
+    }
+
     private void PopulateDictionaries()
     {
         _chassisPrefabs = new Dictionary<string, Transform>();
@@ -118,6 +131,10 @@ public class ShipFactory : MonoBehaviour {
         ShipController shipController = shipClone.GetComponent<ShipController>();
         shipController.InitializeFromStruct(ship, _chassisTypes[ship.ChassisType]);
 
+        // initialise power plant
+        PowerController powerController = shipClone.GetComponentInChildren<PowerController>();
+        powerController.InitializeFromStruct(ship.PowerPlant, _powerPlantTypes[ship.PowerPlant.PowerPlantType]);
+
         // instantiate each shield
         foreach (Shield shield in ship.Shields)
         {
@@ -141,6 +158,7 @@ public class ShipFactory : MonoBehaviour {
             var hardpoint = shipClone.transform.Find(weapon.HardpointName);
             weaponClone.SetParent(hardpoint, false);
         }
+        
 
         // instantiate offscreen indicator
         var offscreenIndicatorClone = Instantiate(OffscreenIndicatorPrefab);

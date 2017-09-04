@@ -1,0 +1,5 @@
+[
+  { "Name": "Small Power Plant",  "MaxPower":3, "PowerPerTurn":1 },  
+	{ "Name": "Medium Power Plant", "MaxPower":5, "PowerPerTurn":1.5 },  
+	{ "Name": "Large Power Plant", "MaxPower":7, "PowerPerTurn":2 }
+]

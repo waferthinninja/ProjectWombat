@@ -22,6 +22,7 @@ public class ShipController : MonoBehaviour {
 
     public OffscreenIndicatorController OffscreenIndicator;
 
+    public PowerController Power { get; private set; }
     public List<ShieldController> Shields { get; private set; }
     public List<WeaponController> Weapons { get; private set; }
     public List<ShipSectionController> ShipSections { get; private set; }
@@ -50,6 +51,7 @@ public class ShipController : MonoBehaviour {
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
 
         InitialiseProjections();
+        InitialisePower();
         InitialiseShields();
         InitialiseWeapons();
         InitialiseShipSections();
@@ -85,6 +87,7 @@ public class ShipController : MonoBehaviour {
         _mob.MaxSpeed = type.MaxSpeed;
         _mob.SetStartSpeed(ship.CurrentSpeed);
         InitialiseProjections();
+        InitialisePower();
         SetTurn(0f);
         SetSpeed(0.5f);
         Faction = ship.Faction == "Friendly" ? Faction.Friendly : Faction.Enemy;
@@ -128,7 +131,11 @@ public class ShipController : MonoBehaviour {
         }
     }
 
-    
+    private void InitialisePower()
+    {
+        Power = GetComponentInChildren<PowerController>();        
+    }
+
     private void InitialiseProjections()
     {
 

@@ -11,7 +11,9 @@ public class WeaponEntryController : MonoBehaviour {
     private Button TargetButton;
     private Button ArcButton;
     private Toggle FreeFireToggle;
-    
+    private Toggle DamageBoostToggle;
+    private Toggle RangeBoostToggle;
+
     private Color labelColor;
     private Color buttonColor;
 
@@ -32,7 +34,14 @@ public class WeaponEntryController : MonoBehaviour {
         FreeFireToggle = transform.Find("FreeFireToggle").GetComponent<Toggle>();
         FreeFireToggle.isOn = Weapon.FreeFire;
         FreeFireToggle.onValueChanged.AddListener(ToggleFreeFire);
-
+        
+        DamageBoostToggle = transform.Find("DamageBoostToggle").GetComponent<Toggle>();
+        DamageBoostToggle.isOn = Weapon.DamageBoosted;
+        DamageBoostToggle.onValueChanged.AddListener(ToggleDamageBoost);
+        
+        RangeBoostToggle = transform.Find("RangeBoostToggle").GetComponent<Toggle>();
+        RangeBoostToggle.isOn = Weapon.RangeBoosted;
+        RangeBoostToggle.onValueChanged.AddListener(ToggleRangeBoost);
 
         // store text color so we can set back 
         labelColor = WeaponNameLabel.color;
@@ -47,6 +56,16 @@ public class WeaponEntryController : MonoBehaviour {
     public void ToggleFreeFire(bool state)
     {
         Weapon.SetFreeFire(state);
+    }
+
+    public void ToggleDamageBoost(bool state)
+    {
+        Weapon.SetDamageBoost(state);
+    }
+
+    public void ToggleRangeBoost(bool state)
+    {
+        Weapon.SetRangeBoost(state);
     }
 
     public void StartTargeting()

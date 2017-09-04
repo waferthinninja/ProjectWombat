@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class PowerController : MonoBehaviour {
 
-    public int MaxPower;
-    public int RechargePerTurn;
+    public float MaxPower;
+    public float PowerPerTurn;
 
-    public int CurrentPower { get; private set; }
+    public float CurrentPower { get; private set; }
 
 	// Use this for initialization
 	void Start () {
-        // temp 
-        CurrentPower = MaxPower / 2;
-
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
 	
@@ -23,7 +20,14 @@ public class PowerController : MonoBehaviour {
 		
 	}
 
-    public void ChangePower(int deltaPower)
+    public void InitializeFromStruct(PowerPlant powerPlant, PowerPlantType powerPlantType)
+    {
+        CurrentPower = powerPlant.CurrentPower;
+        MaxPower = powerPlantType.MaxPower;
+        PowerPerTurn = powerPlantType.PowerPerTurn;
+    }
+
+    public void ChangePower(float deltaPower)
     {
         CurrentPower += deltaPower;
         if (CurrentPower < 0)
@@ -43,6 +47,6 @@ public class PowerController : MonoBehaviour {
 
     private void ApplyRecharge()
     {
-        ChangePower(RechargePerTurn);
+        ChangePower(PowerPerTurn);
     }
 }
