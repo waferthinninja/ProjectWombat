@@ -3,15 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerController : MonoBehaviour {
+public class PowerController : MonoBehaviour, IComponentController {
 
     public float MaxPower;
     public float PowerPerTurn;
 
     public float CurrentPower { get; private set; }
 
-	// Use this for initialization
-	void Start () {
+    private Action OnPowerChange;
+    
+    public void RegisterOnPowerChange(Action action) { OnPowerChange += action; }
+    public void UnregisterOnPowerChange(Action action) { OnPowerChange -= action; }
+
+    // Use this for initialization
+    void Start () {
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
     }
 	
@@ -38,6 +43,20 @@ public class PowerController : MonoBehaviour {
         {
             CurrentPower = MaxPower;
         }
+        if (OnPowerChange != null)
+        {
+            OnPowerChange();
+        }
+    }
+
+    public bool TryPowerSpend(float spentPower)
+    {
+        if (CurrentPower - spentPower >= -0.0001f) // handle floating point bullshit
+        {
+            ChangePower(-spentPower);
+            return true;
+        }
+        return false;
     }
 
     public void OnEndOfTurn()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TargetableComponentController))]
-public class WeaponController : MonoBehaviour {
+public class WeaponController : MonoBehaviour, IComponentController {
 
     public string Name;
     public float MaxAngle; // in degrees
@@ -44,6 +44,10 @@ public class WeaponController : MonoBehaviour {
 
     private TargetableComponentController _targeter;
     
+    public PowerController PowerPlant;
+    public float DamageBoostCost = 1f; // hard coded for now, could make this variable?
+    public float RangeBoostCost = 1f; // hard coded for now, could make this variable?
+
     internal void InitialiseFromStruct(Weapon weapon, WeaponType type)
     {
         Name = weapon.Name;
@@ -71,6 +75,8 @@ public class WeaponController : MonoBehaviour {
         _laserColor = FactionColors.LaserColor[_faction];
 
         transform.gameObject.layer = (_faction == Faction.Friendly ? GameManager.PLAYER_LAYER : GameManager.ENEMY_LAYER);
+
+        PowerPlant = GetComponentInParent<ShipController>().GetComponentInChildren<PowerController>(); // for now assumes one power plant per ship
 
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
@@ -108,17 +114,7 @@ public class WeaponController : MonoBehaviour {
     {
         _targeter.RegisterForTargetCallback();
     }
-
-    public void ToggleDamageBoosted()
-    {
-        DamageBoosted = !DamageBoosted;
-    }
-
-    public void ToggleRangeBoosted()
-    {
-        RangeBoosted = !RangeBoosted;
-    }
-
+    
     public void ToggleArc()
     {
         _showArc = !_showArc;
@@ -139,10 +135,12 @@ public class WeaponController : MonoBehaviour {
     public void SetRangeBoost(bool state)
     {
         RangeBoosted = state;
+        PowerPlant.ChangePower(state ? -RangeBoostCost : RangeBoostCost);
     }
     public void SetDamageBoost(bool state)
     {
         DamageBoosted = state;
+        PowerPlant.ChangePower(state ? -DamageBoostCost : DamageBoostCost);
     }
 
     public void Die()

@@ -17,6 +17,8 @@ public class ShipComponentControlsManager : MonoBehaviour {
     public Transform WeaponEntry;
     public Transform PowerEntry;
 
+    private List<IComponentEntryController> _componentControllers;
+
     // Use this for initialization
     void Start ()
     {
@@ -46,7 +48,16 @@ public class ShipComponentControlsManager : MonoBehaviour {
         _selectedShip = ship;
         PopulateEntries(ship);
 
+        // subscribe to power level changes
+        _selectedShip.Power.RegisterOnPowerChange(OnPowerChange);
+
         ShipComponentControlsPanel.SetActive(true);
+    }
+
+    private void OnPowerChange()
+    {
+        // power has changed, need to activate/deactivate controls as appropriate
+        ActivatePoweredControls();
     }
 
     private void PopulateEntries(ShipController ship)
@@ -61,19 +72,37 @@ public class ShipComponentControlsManager : MonoBehaviour {
         {
             var entry = Instantiate(ShieldEntry);
             entry.SetParent(ContentPanel);
-            entry.GetComponent<ShieldEntryController>().Initialise(s);
+            var controller = entry.GetComponent<ShieldEntryController>();
+            controller.Initialise(s);
+            _componentControllers.Add(controller);
         }
 
         foreach (WeaponController w in ship.Weapons)
         {
             var entry = Instantiate(WeaponEntry);
             entry.SetParent(ContentPanel);
-            entry.GetComponent<WeaponEntryController>().Initialise(w);
+            var controller = entry.GetComponent<WeaponEntryController>();
+            controller.Initialise(w);
+            _componentControllers.Add(controller);
+        }
+
+        ActivatePoweredControls();
+    }
+
+    private void ActivatePoweredControls()
+    {
+        foreach(var controller in _componentControllers)
+        {
+            controller.ActivatePoweredControls();
         }
     }
 
     private void ClearSelectedShip()
     {
+        if (_selectedShip != null)
+        {
+            _selectedShip.Power.UnregisterOnPowerChange(OnPowerChange);
+        }
         ClearItems();
     }
 
@@ -83,5 +112,6 @@ public class ShipComponentControlsManager : MonoBehaviour {
         {
             Destroy(t.gameObject);
         }
+        _componentControllers = new List<IComponentEntryController>();
     }
 }

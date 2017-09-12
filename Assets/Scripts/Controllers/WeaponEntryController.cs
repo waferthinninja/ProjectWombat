@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponEntryController : MonoBehaviour {
+public class WeaponEntryController : MonoBehaviour, IComponentEntryController {
     
     private WeaponController Weapon;
 
@@ -14,14 +14,17 @@ public class WeaponEntryController : MonoBehaviour {
     private Toggle DamageBoostToggle;
     private Toggle RangeBoostToggle;
 
+
     private Color labelColor;
     private Color buttonColor;
 
-    // TODO (or at least consider) - so much copied code between this and shield version, refactor?
 
-    public void Initialise(WeaponController weapon)
+    // TODO (or at least consider) - so much copied code between this and shield version, refactor?
+    
+
+    public void Initialise(IComponentController weapon)
     {
-        Weapon = weapon;
+        Weapon = (WeaponController)weapon;
         WeaponNameLabel = transform.Find("WeaponName").GetComponent<Text>();
         WeaponNameLabel.text = Weapon.Name;
         
@@ -33,16 +36,16 @@ public class WeaponEntryController : MonoBehaviour {
 
         FreeFireToggle = transform.Find("FreeFireToggle").GetComponent<Toggle>();
         FreeFireToggle.isOn = Weapon.FreeFire;
-        FreeFireToggle.onValueChanged.AddListener(ToggleFreeFire);
+        FreeFireToggle.onValueChanged.AddListener(SetFreeFire);
         
         DamageBoostToggle = transform.Find("DamageBoostToggle").GetComponent<Toggle>();
         DamageBoostToggle.isOn = Weapon.DamageBoosted;
-        DamageBoostToggle.onValueChanged.AddListener(ToggleDamageBoost);
+        DamageBoostToggle.onValueChanged.AddListener(SetDamageBoost);
         
         RangeBoostToggle = transform.Find("RangeBoostToggle").GetComponent<Toggle>();
         RangeBoostToggle.isOn = Weapon.RangeBoosted;
-        RangeBoostToggle.onValueChanged.AddListener(ToggleRangeBoost);
-
+        RangeBoostToggle.onValueChanged.AddListener(SetRangeBoost);
+        
         // store text color so we can set back 
         labelColor = WeaponNameLabel.color;
         buttonColor = TargetButton.GetComponentInChildren<Text>().color;
@@ -53,19 +56,19 @@ public class WeaponEntryController : MonoBehaviour {
         Weapon.ToggleArc();
     }
 
-    public void ToggleFreeFire(bool state)
+    public void SetFreeFire(bool state)
     {
         Weapon.SetFreeFire(state);
     }
 
-    public void ToggleDamageBoost(bool state)
+    public void SetDamageBoost(bool state)
     {
-        Weapon.SetDamageBoost(state);
+        Weapon.SetDamageBoost(state);           
     }
 
-    public void ToggleRangeBoost(bool state)
+    public void SetRangeBoost(bool state)
     {
-        Weapon.SetRangeBoost(state);
+        Weapon.SetRangeBoost(state);       
     }
 
     public void StartTargeting()
@@ -85,6 +88,12 @@ public class WeaponEntryController : MonoBehaviour {
         WeaponNameLabel.color = labelColor;
         TargetButton.GetComponentInChildren<Text>().color = buttonColor;
 
+    }
+
+    public void ActivatePoweredControls()
+    {
+        DamageBoostToggle.interactable = Weapon.DamageBoosted || (Weapon.PowerPlant.CurrentPower + 0.00001f > Weapon.DamageBoostCost);
+        RangeBoostToggle.interactable = Weapon.RangeBoosted || (Weapon.PowerPlant.CurrentPower + 0.00001f > Weapon.RangeBoostCost);        
     }
 
 }

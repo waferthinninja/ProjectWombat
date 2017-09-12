@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(TargetableComponentController))]
-public class ShieldController : MonoBehaviour
+public class ShieldController : MonoBehaviour, IComponentController
 {
     public string Name;
 
@@ -46,6 +46,13 @@ public class ShieldController : MonoBehaviour
 
     private TargetableComponentController _targeter;
 
+    public bool Recharging { get; private set; }
+
+    public PowerController PowerPlant;
+
+    public float RechargeCost = 1f; // hard coded for now, make variable
+    public float RechargeAmount = 50f; // hard coded for now, make variable
+
     // Use this for initialization
     void Start()
     {
@@ -64,6 +71,8 @@ public class ShieldController : MonoBehaviour
         SetShaderParams();
         SetBeamPositions();
 
+        PowerPlant = GetComponentInParent<ShipController>().GetComponentInChildren<PowerController>(); // for now assumes one power plant per ship
+        
         GameManager.Instance.RegisterOnResetToStart(OnResetToStart);
         GameManager.Instance.RegisterOnStartOfPlanning(OnStartOfPlanning);
         GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
@@ -154,6 +163,12 @@ public class ShieldController : MonoBehaviour
     {
         _showArc = enabled;
         ArcIndicator.enabled = enabled;
+    }
+
+    public void SetRecharging(bool state)
+    {
+        Recharging = state;
+        PowerPlant.ChangePower(state ? -RechargeCost : RechargeCost);
     }
 
     private void RedrawArcIfChanged()

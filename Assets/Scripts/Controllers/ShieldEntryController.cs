@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShieldEntryController : MonoBehaviour {
+public class ShieldEntryController : MonoBehaviour, IComponentEntryController
+{
 
     private ShieldController Shield;
     private Text ShieldNameLabel;
     private Button TargetButton;
     private Button ArcButton;
     private Slider DirectionSlider;
+    private Toggle RechargeToggle;
 
     private Color labelColor;
     private Color buttonColor;
-
-    public void Initialise(ShieldController shield)
+    
+    
+    public void Initialise(IComponentController shield)
     {
-        Shield = shield;
+        Shield = (ShieldController)shield;
         ShieldNameLabel = transform.Find("ShieldName").GetComponent<Text>();
         ShieldNameLabel.text = Shield.Name;
 
@@ -31,6 +34,11 @@ public class ShieldEntryController : MonoBehaviour {
         DirectionSlider.value = Shield.GetRotationProportion();
         DirectionSlider.interactable = (Shield.GetTarget() == null);
 
+        RechargeToggle = transform.Find("RechargeToggle").GetComponent<Toggle>();
+        RechargeToggle.isOn = Shield.Recharging;
+        RechargeToggle.onValueChanged.AddListener(SetRecharging);
+
+
         // store text color so we can set back 
         labelColor = ShieldNameLabel.color;
         buttonColor = TargetButton.GetComponentInChildren<Text>().color;
@@ -44,6 +52,11 @@ public class ShieldEntryController : MonoBehaviour {
     public void ToggleArc()
     {
         Shield.ToggleArc();
+    }
+
+    public void SetRecharging(bool state)
+    {
+        Shield.SetRecharging(state);
     }
 
     public void StartTargeting()
@@ -63,6 +76,11 @@ public class ShieldEntryController : MonoBehaviour {
         ShieldNameLabel.color = labelColor;
         TargetButton.GetComponentInChildren<Text>().color = buttonColor;
 
-        DirectionSlider.interactable = (Shield.GetTarget() == null); 
+        DirectionSlider.interactable = (Shield.GetTarget() == null);
+    }
+
+    public void ActivatePoweredControls()
+    {
+        RechargeToggle.interactable = Shield.Recharging || (Shield.PowerPlant.CurrentPower + 0.00001f > Shield.RechargeCost);
     }
 }
