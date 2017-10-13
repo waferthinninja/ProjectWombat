@@ -43,45 +43,49 @@ public class InputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.C))
+        // disable most controls during intro
+        if (GameManager.Instance.GameState == GameState.CutScene)
         {
-            CameraManager.Instance.CycleCameraMode();
+
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        // keyboard
+        if (Input.GetKeyDown(KeyCode.C))        { CameraManager.Instance.CycleCameraMode(); }
+        if (Input.GetKey(KeyCode.UpArrow))      { CameraManager.Instance.GetCurrentCamera().MoveCameraForward(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.DownArrow))    { CameraManager.Instance.GetCurrentCamera().MoveCameraBackward(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.LeftArrow))    { CameraManager.Instance.GetCurrentCamera().MoveCameraLeft(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.RightArrow))   { CameraManager.Instance.GetCurrentCamera().MoveCameraRight(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.W))            { CameraManager.Instance.GetCurrentCamera().MoveCameraForward(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.S))            { CameraManager.Instance.GetCurrentCamera().MoveCameraBackward(Time.deltaTime); }        
+        if (Input.GetKey(KeyCode.A))            { CameraManager.Instance.GetCurrentCamera().MoveCameraLeft(Time.deltaTime); }        
+        if (Input.GetKey(KeyCode.D))            { CameraManager.Instance.GetCurrentCamera().MoveCameraRight(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.Q))            { CameraManager.Instance.GetCurrentCamera().RotateCameraLeft(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.E))            { CameraManager.Instance.GetCurrentCamera().RotateCameraRight(Time.deltaTime); }
+        if (Input.GetKey(KeyCode.Backspace))    { CameraManager.Instance.GetCurrentCamera().ResetCamera(); }
+        if (Input.GetKeyDown(KeyCode.Tab))      { SelectNextShip(); }
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CameraManager.Instance.MoveCameraUp(Time.deltaTime);
+            if (_targetSelectMode)
+            {
+                TargetShip(null);
+            }
+            else
+            {
+                if (SelectedShip != null)
+                {
+                    ClearSelectedShip();
+                }
+                else
+                {
+                    //TODO - add confirmation
+                    //Application.Quit();
+                }
+            }
         }
-
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            CameraManager.Instance.MoveCameraDown(Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            CameraManager.Instance.MoveCameraLeft(Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            CameraManager.Instance.MoveCameraRight(Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            CameraManager.Instance.RotateCameraLeft(Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            CameraManager.Instance.RotateCameraRight(Time.deltaTime);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            SelectNextShip();
-        }
+        
+        // mouse
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)     { CameraManager.Instance.GetCurrentCamera().ZoomCameraOut(Time.deltaTime); }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)     { CameraManager.Instance.GetCurrentCamera().ZoomCameraIn(Time.deltaTime); }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -108,25 +112,7 @@ public class InputManager : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (_targetSelectMode)
-            {
-                TargetShip(null);
-            }
-            else
-            {
-                if (SelectedShip != null)
-                {
-                    ClearSelectedShip();
-                }
-                else
-                {
-                    //TODO - add confirmation
-                    //Application.Quit();
-                }
-            }
-        }
+        
     }
 
        

@@ -421,7 +421,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1120785268333600}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fca149536eb9e524d9118741165c9770, type: 3}
   m_Name: 
@@ -433,14 +433,18 @@ MonoBehaviour:
   SEBeam: {fileID: 120650119623121240}
   RotationPoint: {fileID: 4483147134627416}
   Color: {r: 0.26113755, g: 0.81655836, b: 1, a: 0.209}
-  Width: 0.555
-  Height: 0.791
+  Width: 30
+  Height: 30
   Radius: 7
   MaxAngle: 180
+  ActivationSpeed: 30
   MaxStrength: 100
   ComponentRenderer: {fileID: 23686946126088380}
   ShieldRenderer: {fileID: 23777584968295426}
   ArcIndicator: {fileID: 120456042277201784}
+  PowerPlant: {fileID: 0}
+  RechargeCost: 1
+  RechargeAmount: 50
 --- !u!120 &120342443524709986
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -475,7 +479,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.05
@@ -524,6 +528,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!120 &120456042277201784
@@ -610,6 +615,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!120 &120545047793405116
@@ -695,6 +701,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
 --- !u!120 &120650119623121240
@@ -731,7 +738,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.05
@@ -780,6 +787,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!120 &120706774723559166
@@ -816,7 +824,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.05
@@ -865,6 +873,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!120 &120825740324584804
@@ -901,7 +910,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.05
@@ -950,6 +959,7 @@ LineRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
+    generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!135 &135839411583893056

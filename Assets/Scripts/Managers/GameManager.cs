@@ -28,11 +28,9 @@ public class GameManager: MonoBehaviour {
     private TurnOrder _opponentOrders;
 
     private static int _nextMobId = 0;
-
-    public static readonly int NUM_MOVEMENT_STEPS = 12;
-    public static readonly float TURN_LENGTH = 5f; // seconds
-    public static readonly float MOVEMENT_STEP_LENGTH = TURN_LENGTH / NUM_MOVEMENT_STEPS;
     
+    public static readonly float TURN_LENGTH = 5f; // seconds   
+    public int FramesPerTurn { get; private set; } 
 
     public static readonly int PLAYER_LAYER = 9;
     public static readonly int ENEMY_LAYER = 10;
@@ -44,6 +42,7 @@ public class GameManager: MonoBehaviour {
     private Action OnStartOfSimulation;
     private Action OnStartOfWaitingForOpponent;
     private Action OnStartOfOutcome;
+    private Action OnStartOfReplay;
     private Action OnEndOfTurn;
     private Action OnResetToStart;
 
@@ -53,6 +52,7 @@ public class GameManager: MonoBehaviour {
     public void RegisterOnStartOfSimulation(Action action) { OnStartOfSimulation += action; }
     public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
     public void RegisterOnStartOfOutcome(Action action) { OnStartOfOutcome += action; }
+    public void RegisterOnStartOfReplay(Action action) { OnStartOfReplay += action; }
     public void RegisterOnEndOfTurn(Action action) { OnEndOfTurn += action; }
 
     public void RegisterOnResetToStart(Action action) { OnResetToStart += action; }
@@ -61,15 +61,22 @@ public class GameManager: MonoBehaviour {
     public void UnregisterOnStartOfSimulation(Action action) { OnStartOfSimulation -= action; }
     public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
     public void UnregisterOnStartOfOutcome(Action action) { OnStartOfOutcome -= action; }
+    public void UnregisterOnStartOfReplay(Action action) { OnStartOfReplay -= action; }
     public void UnregisterOnEndOfTurn(Action action) { OnEndOfTurn -= action; }
 
     public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
 
     private bool _setupComplete;
-    
+
+
+    void Awake()
+    {
+        FramesPerTurn = (int)TURN_LENGTH * (int)(1.0f / Time.fixedDeltaTime);
+    }
+
     void Start()
     {
-        GameState = GameState.Setup; 
+        GameState = GameState.Setup;
     }    
     
     void Update()
@@ -209,6 +216,18 @@ public class GameManager: MonoBehaviour {
             OnStartOfOutcome();
         }
     }
+
+    public void StartReplayPhase()
+    {
+        GameState = GameState.Replay;
+        ResetToStart();
+
+        if (OnStartOfReplay != null)
+        {
+            OnStartOfReplay();
+        }
+    }
+
     public void StartEndOfTurnPhase()
     {
         GameState = GameState.EndOfTurn;

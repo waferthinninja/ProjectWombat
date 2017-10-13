@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MobileObjectController))]
@@ -16,6 +17,7 @@ public class ShipController : MonoBehaviour {
     public float HullPoints { get; private set; }
     
     public Vector3[] ProjectedPositions;
+    public Vector3[] ProjectedPositionsForLine;
     public Quaternion[] ProjectedRotations;
 
     public LineRenderer ProjectedPath;
@@ -63,6 +65,14 @@ public class ShipController : MonoBehaviour {
         //Debug.Log(transform.rotation.ToString());
     }
 
+    public void ActivateComponents()
+    {
+        foreach (ShieldController s in Shields)
+        {
+            s.enabled = true;
+        }
+    }
+
     private void InitialiseShipSections()
     {
         ShipSections = new List<ShipSectionController>();
@@ -95,40 +105,43 @@ public class ShipController : MonoBehaviour {
 
     private void InitialiseWeapons()
     {
-        Weapons = new List<WeaponController>();
-        foreach (Transform t in transform)
-        {
-            if (t.GetComponent<HardpointController>() != null)
-            {
-                foreach (Transform t1 in t)
-                {
-                    var weapon = t1.GetComponent<WeaponController>();
-                    if (weapon != null)
-                    {
-                        Weapons.Add(weapon);
-                    }
-                }
-            }
-        }
+        Weapons = transform.GetComponentsInChildren<WeaponController>().ToList();
+        
+
+        //foreach (Transform t in transform)
+        //{
+        //    if (t.GetComponent<HardpointController>() != null)
+        //    {
+        //        foreach (Transform t1 in t)
+        //        {
+        //            var weapon = t1.GetComponent<WeaponController>();
+        //            if (weapon != null)
+        //            {
+        //                Weapons.Add(weapon);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     private void InitialiseShields()
     {
-        Shields = new List<ShieldController>();
-        foreach (Transform t in transform)
-        {
-            if (t.GetComponent<HardpointController>() != null)
-            {
-                foreach (Transform t1 in t)
-                {
-                    var shield = t1.GetComponent<ShieldController>();
-                    if (shield != null)
-                    {
-                        Shields.Add(shield);
-                    }
-                }
-            }
-        }
+        Shields = transform.GetComponentsInChildren<ShieldController>().ToList();
+        //Shields = new List<ShieldController>();
+        //foreach (Transform t in transform)
+        //{
+        //    if (t.GetComponent<HardpointController>() != null)
+        //    {
+        //        foreach (Transform t1 in t)
+        //        {
+        //            var shield = t1.GetComponent<ShieldController>();
+        //            if (shield != null)
+        //            {
+        //                Shields.Add(shield);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     private void InitialisePower()
@@ -138,13 +151,13 @@ public class ShipController : MonoBehaviour {
 
     private void InitialiseProjections()
     {
-
         ProjectedPath.material.SetColor("_TintColor", FactionColors.PathColor[Faction]);
-
-        ProjectedPositions = new Vector3[GameManager.NUM_MOVEMENT_STEPS + 1];
-        ProjectedRotations = new Quaternion[GameManager.NUM_MOVEMENT_STEPS + 1];
+        ProjectedPositions = new Vector3[GameManager.Instance.FramesPerTurn + 1];
+        ProjectedPositionsForLine = new Vector3[GameManager.Instance.FramesPerTurn / 10 + 1];
+        ProjectedRotations = new Quaternion[GameManager.Instance.FramesPerTurn + 1];
 
         ProjectedPositions[0] = transform.position;
+        ProjectedPositionsForLine[0] = transform.position;
         ProjectedRotations[0] = transform.rotation;
 
         RecalculateProjections();
@@ -201,6 +214,7 @@ public class ShipController : MonoBehaviour {
 
         _hullPointsAtStart = HullPoints;
         ProjectedPositions[0] = transform.position;
+        ProjectedPositionsForLine[0] = transform.position;
         ProjectedRotations[0] = transform.rotation;
         RecalculateProjections();
     }
@@ -256,31 +270,31 @@ public class ShipController : MonoBehaviour {
         Vector3 pos = ProjectedPositions[0];
         Quaternion rot = ProjectedRotations[0];
 
-        int stepsPerStep = (int)(GameManager.TURN_LENGTH * 60f / GameManager.NUM_MOVEMENT_STEPS); // hack so we calculate more accurately but store less data
-        float stepLength = 1f / 60f;
-
         float turn = GetTurn();
         float speed = GetSpeed();
         // now simulate the turns movement placing a point at the end of each
-        for (int t = 1; t <= GameManager.NUM_MOVEMENT_STEPS; t++)
+        for (int t = 1; t <= GameManager.Instance.FramesPerTurn; t++)
         {
-            for (int x = 0; x < stepsPerStep; x++)
-            {
-                // apply proportion of the turn
-                rot *= Quaternion.Euler(Vector3.up * turn * stepLength / GameManager.TURN_LENGTH);
+            // apply proportion of the turn
+            rot *= Quaternion.Euler(Vector3.up * turn * Time.fixedDeltaTime / GameManager.TURN_LENGTH);
 
-                // move forward 1 step in the new direction
-                pos += rot * Vector3.forward * stepLength * speed;
-            }
+            // move forward 1 step in the new direction
+            pos += rot * Vector3.forward * Time.fixedDeltaTime * speed;
+           
             ProjectedPositions[t] = pos;
             ProjectedRotations[t] = rot;
+
+            if (t % 10 == 0)
+            {
+                ProjectedPositionsForLine[t/10] = pos;
+            }
         }
 
         // set the line renderer points
         if (ProjectedPath != null)
         {
-            ProjectedPath.positionCount = ProjectedPositions.Length;
-            ProjectedPath.SetPositions(ProjectedPositions);
+            ProjectedPath.positionCount = ProjectedPositionsForLine.Length;
+            ProjectedPath.SetPositions(ProjectedPositionsForLine);
         }
     }
 

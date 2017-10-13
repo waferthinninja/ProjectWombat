@@ -143,7 +143,7 @@ public class ShipFactory : MonoBehaviour {
             shieldController.InitialiseFromStruct(shield, _shieldTypes[shield.ShieldType]);
 
             // attach to the right hardpoint -- TODO add checking here that the hardpoint exists
-            var hardpoint = shipClone.transform.Find(shield.HardpointName);
+            var hardpoint = shipClone.transform.FindRecursive(shield.HardpointName);
             shieldClone.SetParent(hardpoint, false);
         }
 
@@ -155,7 +155,7 @@ public class ShipFactory : MonoBehaviour {
             weaponController.InitialiseFromStruct(weapon, _weaponTypes[weapon.WeaponType]);
             
             // attach to the right hardpoint -- TODO add checking here that the hardpoint exists
-            var hardpoint = shipClone.transform.Find(weapon.HardpointName);
+            var hardpoint = shipClone.transform.FindRecursive(weapon.HardpointName);
             weaponClone.SetParent(hardpoint, false);
         }
         

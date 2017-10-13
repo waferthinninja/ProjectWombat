@@ -37,6 +37,7 @@ public class InterfaceManager : MonoBehaviour {
         GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
         GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
         GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.RegisterOnStartOfReplay(OnStartOfReplay);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
 
         TimeManager.Instance.RegisterOnEndOfPlayback(OnEndOfPlayback);
@@ -103,13 +104,21 @@ public class InterfaceManager : MonoBehaviour {
         ClearAllPanels();
     }
 
+    public void OnStartOfReplay()
+    {
+        PhaseName.text = "Outcome";
+        ClearAllPanels();
+        TimePanel.SetActive(true);
+    }
+
     public void OnEndOfPlayback()
     {
         if (GameManager.Instance.GameState == GameState.Simulation)
         {
             PostSimulationControlPanel.SetActive(true);
         }
-        else if (GameManager.Instance.GameState == GameState.Outcome)
+        else if (GameManager.Instance.GameState == GameState.Outcome 
+            || GameManager.Instance.GameState == GameState.Replay)
         {
             PostOutcomeControlPanel.SetActive(true);
             OutcomePhaseControlPanel.SetActive(true);

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,133 +17,62 @@ public class CameraManager : MonoBehaviour {
         }
     }
     //END MAKE INSTANCE
-    
-    public Transform FreeStartPosition;
-    public Transform OverheadStartPosition;
 
-    public CameraMode CameraMode;
-
-    private Dictionary<CameraMode, float> _cameraSpeed = new Dictionary<CameraMode, float>
-    {
-        { CameraMode.Free, 40f },
-        { CameraMode.Follow, 40f },
-        { CameraMode.Overhead, 40f }
-    };
+    public CameraController[] UserCameras;
+    public CutSceneCameraController CutSceneCamera;
+    private int _currentCameraIndex;
+        
+    public Action OnCameraChange;
+    public void RegisterOnCameraChange(Action action) { OnCameraChange += action; }
 
     // Use this for initialization
     void Start ()
     {
-        SwitchToOverheadMode();
-        InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
-
+        SetUserCamera(0);        
 	}
-	
-	// Update is called once per frame
-	void Update ()
+	    
+    public void SetUserCamera(int index)
     {
-    }
-
-    public void OnSelectedShipChange(ShipController ship)
-    {
-        if (CameraMode == CameraMode.Follow)
+        _currentCameraIndex = index % UserCameras.Length;
+        for (int i = 0; i < UserCameras.Length; i++)
         {
-            SwitchToFollowMode(); // slight hack, this will move the camera to the new ship
+            if (i == _currentCameraIndex)
+            {
+                UserCameras[i].Activate();
+            }
+            else
+            {
+                UserCameras[i].Deactivate();
+            }
         }
-    }
-
-
-
-    public void MoveCameraUp(float deltaTime)
-    {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + moveSpeed);
-    }
-
-    public void MoveCameraDown(float deltaTime)
-    {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z - moveSpeed);
-    }
-
-    public void MoveCameraLeft(float deltaTime)
-    {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
-
-    }
-
-    public void MoveCameraRight(float deltaTime)
-    { 
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;        
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + moveSpeed, Camera.main.transform.position.y, Camera.main.transform.position.z);
-    }
-
-    public void RotateCameraLeft(float deltaTime)
-    {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        if (CameraMode == CameraMode.Follow)
+        if (OnCameraChange != null)
         {
-            Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, moveSpeed);
+            OnCameraChange();
         }
-        else
-        {
-            Camera.main.transform.Rotate(Vector3.up, -moveSpeed);
-        }
-
-    }
-
-    public void RotateCameraRight(float deltaTime)
-    {
-        float moveSpeed = _cameraSpeed[CameraMode] * deltaTime;
-        if (CameraMode == CameraMode.Follow)
-        {
-            Camera.main.transform.RotateAround(InputManager.Instance.SelectedShip.transform.position, Vector3.up, -moveSpeed);
-        }
-        else
-        {
-            Camera.main.transform.Rotate(Vector3.up, -moveSpeed);
-        }
-
     }
 
     public void CycleCameraMode()
     {
-        if (CameraMode == CameraMode.Free) SwitchToFollowMode();
-        else if (CameraMode == CameraMode.Follow) SwitchToOverheadMode();
-        else if (CameraMode == CameraMode.Overhead) SwitchToFreeMode();
+        SetUserCamera(++_currentCameraIndex);        
+    }    
+
+    public CameraController GetCurrentCamera()
+    {
+        return UserCameras[_currentCameraIndex];
     }
 
-    public void SwitchToFreeMode()
+    public void ActivateCutSceneCamera()
     {
-        CameraMode = CameraMode.Free;
-        Camera.main.transform.parent = FreeStartPosition;
-        Camera.main.transform.localPosition = new Vector3();
-        Camera.main.transform.rotation = new Quaternion();  
-
-    }
-
-    public void SwitchToFollowMode()
-    {
-        CameraMode = CameraMode.Follow;
-
-        if (InputManager.Instance.SelectedShip == null)
+        foreach (var camera in UserCameras)
         {
-            InputManager.Instance.SelectNextShip();
+            camera.Deactivate();
         }
-
-        Camera.main.transform.parent = InputManager.Instance.SelectedShip.transform.Find("CameraPoint");
-        Camera.main.transform.localPosition = new Vector3();
-        Camera.main.transform.rotation = new Quaternion();
+        CutSceneCamera.Activate();
     }
 
-    public void SwitchToOverheadMode()
+    public void DeactivateCutSceneCamera()
     {
-        CameraMode = CameraMode.Overhead;
-
-        Camera.main.transform.parent = OverheadStartPosition;
-        Camera.main.transform.localPosition = new Vector3();
-        Camera.main.transform.rotation = new Quaternion();
+        UserCameras[_currentCameraIndex].Activate();
+        CutSceneCamera.Deactivate();
     }
-
 }

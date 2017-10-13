@@ -1,6 +1,7 @@
 ﻿public enum GameState
 {
     Setup,
+    CutScene,
     Planning,
     Simulation,
     WaitingForOpponent,

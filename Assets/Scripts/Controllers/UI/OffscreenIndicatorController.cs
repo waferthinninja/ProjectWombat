@@ -24,7 +24,7 @@ public class OffscreenIndicatorController : MonoBehaviour {
 
         Vector3 tScreenPos = Camera.main.WorldToScreenPoint(Target.position);
 
-        if (onScreen(tScreenPos) || CameraManager.Instance.CameraMode == CameraMode.Follow)
+        if (onScreen(tScreenPos) || CameraManager.Instance.GetCurrentCamera() is FollowCameraController)
         {
             // make it invisible
             _image.enabled = false;

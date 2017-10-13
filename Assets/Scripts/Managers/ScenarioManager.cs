@@ -27,7 +27,7 @@ public class ScenarioManager : MonoBehaviour {
     public TextAsset ScenarioData; // temp, will prob move scenario loading into its own class
 
     private Scenario[] _scenarios;
-    private int _selectedScenarioIndex = 0;
+    private int _selectedScenarioIndex = 1;
 
     void Start () {
         _scenarios = JsonHelper.GetJsonArray<Scenario>(ScenarioData.text);

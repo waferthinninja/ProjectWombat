@@ -23,10 +23,12 @@ public class ShieldController : MonoBehaviour, IComponentController
     public float Height; // in degrees
     public float Radius;
 
-    public float MaxAngle; // how far it can rotate, in degrees
+    public float MaxAngle; // how far it can rotate, in degrees  
 
     private float currentWidth = 0;
     private float currentHeight = 0;
+
+    public float ActivationSpeed = 20f;
 
     public float MaxStrength = 100f;
     private float _strength;
@@ -110,11 +112,43 @@ public class ShieldController : MonoBehaviour, IComponentController
                 Vector3 cross = Vector3.Cross(transform.forward, (target.transform.position - transform.position));
                 RotationPoint.Rotate(0, MaxAngle/2f * (cross.y < 0 ? -1 : 1), 0);
             }
-        }  
-        
-        //SetShaderParams();
-        //SetBeamPositions();
+        }
 
+        if (currentHeight != Height || currentWidth != Width)
+        {
+            AdjustSize();
+            SetShaderParams();
+            SetBeamPositions();
+        }
+
+    }
+
+    private void AdjustSize()
+    {
+        if (currentHeight < 0.1f)
+            currentHeight = 0.1f;
+        if (currentWidth < Width)
+        {
+            currentWidth += ActivationSpeed * Time.deltaTime;
+        }
+        else if (currentWidth > Width)
+        {
+            currentWidth -= ActivationSpeed * Time.deltaTime;
+        }
+        else
+        {
+            if (currentHeight < Height)
+            {
+                currentHeight += ActivationSpeed * Time.deltaTime;
+            }
+            else if (currentHeight > Height)
+            {
+                currentHeight -= ActivationSpeed * Time.deltaTime;
+            }
+        }
+        // clamp in case of overshoot
+        currentHeight = currentHeight.Clamp(0, Height);
+        currentWidth = currentWidth.Clamp(0, Width);
     }
 
     internal void InitialiseFromStruct(Shield shield, ShieldType type)
@@ -123,6 +157,8 @@ public class ShieldController : MonoBehaviour, IComponentController
         Width = type.Width;
         Height = type.Height;
         Radius = shield.Radius;
+        currentWidth = 0;
+        currentHeight = 0;
         MaxStrength = type.Strength;
         _strength = shield.CurrentStrength;
         MaxAngle = shield.MaxAngle;
@@ -261,14 +297,14 @@ public class ShieldController : MonoBehaviour, IComponentController
         float alpha = (_strength / MaxStrength) * MAX_INTENSITY;
         Color c = new Color(Color.r, Color.g, Color.b, alpha);
         ShieldRenderer.material.SetColor("_Color", c);
-        if (currentWidth != Width)
-        {
-            currentWidth = Width;// * Time.deltaTime * speed;
-        }
-        if (currentHeight != Height)
-        {
-            currentHeight = Height;// * Time.deltaTime * speed;
-        }
+        //if (currentWidth != Width)
+        //{
+        //    currentWidth = Width;// * Time.deltaTime * speed;
+        //}
+        //if (currentHeight != Height)
+        //{
+        //    currentHeight = Height;// * Time.deltaTime * speed;
+        //}
 
         ShieldRenderer.material.SetFloat("_WidthAngle", currentWidth * Mathf.Deg2Rad);
         ShieldRenderer.material.SetFloat("_HeightAngle", currentHeight * Mathf.Deg2Rad);
@@ -295,9 +331,14 @@ public class ShieldController : MonoBehaviour, IComponentController
 
     void SetBeamPosition(float angle1, float angle2, LineRenderer lr)
     {
+        angle1 = angle1 * Mathf.Deg2Rad;
+
+        angle2 = angle2 * Mathf.Deg2Rad;
         Vector3 p1 = new Vector3(Mathf.Cos(angle1), 0, -Mathf.Sin(angle1));
         Vector3 p2 = new Vector3(0, Mathf.Cos(angle2), Mathf.Sin(angle2));
+
         
+
         // cross product
         Vector3 cp = Vector3.Cross(p1, p2);
         cp.Normalize();

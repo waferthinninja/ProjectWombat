@@ -30,21 +30,23 @@ public class TimeManager : MonoBehaviour {
 
     public void UnregisterOnEndOfPlayback(Action action) { OnEndOfPlayback += action; }
 
+
     void Start()
     {
         // set values on time slider
-        TimeSlider.maxValue = GameManager.NUM_MOVEMENT_STEPS;
+        TimeSlider.maxValue = GameManager.Instance.FramesPerTurn;
 
         GameManager.Instance.RegisterOnStartOfPlanning_Late(OnStartOfPlanning);
         GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
         GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
         GameManager.Instance.RegisterOnStartOfOutcome(OnStartOfOutcome);
+        GameManager.Instance.RegisterOnStartOfReplay(OnStartOfReplay);
         GameManager.Instance.RegisterOnEndOfTurn(OnEndOfTurn);
 
         Paused = true;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Paused)
         {
@@ -52,21 +54,20 @@ public class TimeManager : MonoBehaviour {
         }
         else
         {
-            float baseTimeMultiplier = 1f / GameManager.MOVEMENT_STEP_LENGTH;
-            TimeSlider.value += Time.deltaTime * baseTimeMultiplier;
-
             // if we have reached the end of the turn, advance
-            if (TimeSlider.value >= GameManager.NUM_MOVEMENT_STEPS)
+            if (TimeSlider.value == GameManager.Instance.FramesPerTurn)
             {
                 Paused = true;
                 EndOfPlayback();
             }
+
+            TimeSlider.value += 1;            
         }
     }
     
-    public float GetTime()
+    public int GetFrameNumber()
     {
-        return TimeSlider.value;
+        return (int)TimeSlider.value;
     }
 
 
@@ -77,6 +78,12 @@ public class TimeManager : MonoBehaviour {
     }
 
     public void OnStartOfOutcome()
+    {
+        TimeSlider.value = 0;
+        Paused = false;
+    }
+
+    public void OnStartOfReplay()
     {
         TimeSlider.value = 0;
         Paused = false;

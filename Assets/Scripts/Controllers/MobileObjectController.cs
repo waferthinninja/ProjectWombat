@@ -18,18 +18,22 @@ public class MobileObjectController : MonoBehaviour
     public bool CreatedThisTurn; // this is set if the object came into existence during the turn (projectiles mainly)    
 
     protected bool _active;
-
-    private Vector3 _positionAtStart;
-    private Quaternion _rotationAtStart;
+    
     private float _speedAtStart;
 
+    private Vector3[] _positions;
+    private Quaternion[] _rotations;
+
     // Use this for initialization
-    public virtual void Start()
+    public void Start()
     {
         MobId = GameManager.Instance.GetMobId();
 
-        _positionAtStart = transform.position;
-        _rotationAtStart = transform.rotation;
+        _positions = new Vector3[GameManager.Instance.FramesPerTurn + 1];
+        _rotations = new Quaternion[GameManager.Instance.FramesPerTurn + 1];
+        
+        _positions[0] = transform.position;
+        _rotations[0] = transform.rotation;
 
         SpeedProportion = 0.5f;
 
@@ -39,15 +43,28 @@ public class MobileObjectController : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    public void FixedUpdate()
     {
-        if (TimeManager.Instance.Paused == false)
+        if (GameManager.Instance.GameState == GameState.Replay)
+        {
+            // retrieve and apply positions from stored values
+            transform.position = _positions[TimeManager.Instance.GetFrameNumber()];
+            transform.rotation = _rotations[TimeManager.Instance.GetFrameNumber()];
+        }
+        else if (TimeManager.Instance.Paused == false)
         {
             // apply proportion of the turn
-            transform.Rotate(0, TurnProportion * MaxTurn * Time.deltaTime / GameManager.TURN_LENGTH, 0);
+            transform.Rotate(0, TurnProportion * MaxTurn * Time.fixedDeltaTime / GameManager.TURN_LENGTH, 0);
 
             // move forward 1 seconds worth of movement in the new direction
-            transform.Translate(Vector3.forward * GetSpeed() * Time.deltaTime);
+            transform.Translate(Vector3.forward * GetSpeed() * Time.fixedDeltaTime);
+
+            // if we are in "outcome" mode, we must store positions
+            if (GameManager.Instance.GameState == GameState.Outcome)
+            {
+                _positions[TimeManager.Instance.GetFrameNumber()] = transform.position;
+                _rotations[TimeManager.Instance.GetFrameNumber()] = transform.rotation;
+            }
         }
     }
 
@@ -75,8 +92,8 @@ public class MobileObjectController : MonoBehaviour
         CreatedThisTurn = false;        
 
         // reset start position
-        _positionAtStart = transform.position;
-        _rotationAtStart = transform.rotation;
+        _positions[0] = transform.position;
+        _rotations[0] = transform.rotation;
         _speedAtStart = GetSpeed();
 
         // reset controls
@@ -97,8 +114,8 @@ public class MobileObjectController : MonoBehaviour
             return;
         }
 
-        transform.position = _positionAtStart;
-        transform.rotation = _rotationAtStart;
+        transform.position = _positions[0];
+        transform.rotation = _rotations[0];
 
     }
 

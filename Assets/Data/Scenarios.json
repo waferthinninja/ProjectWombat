@@ -54,7 +54,251 @@
 				"Faction":"Friendly",
 				"CurrentHullPoints":200,
 				"CurrentSpeed":5,
-				"PosX":-50, "PosY":0, "PosZ":-50,
+				"PosX":-125, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+      {
+        "Name": "Corvette2",
+        "ChassisType": "Corvette",
+        "Faction": "Friendly",
+        "CurrentHullPoints": 200,
+        "CurrentSpeed": 5,
+        "PosX": -100,
+        "PosY": 0,
+        "PosZ": -50,
+        "RotX": 0,
+        "RotY": 0,
+        "RotZ": 0,
+        "Weapons": [
+          {
+            "Name": "LaserL",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointLeft",
+            "MaxAngle": 80
+          },
+          {
+            "Name": "LaserR",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointRight",
+            "MaxAngle": 80
+          }
+        ],
+        "Shields": [
+          {
+            "Name": "FrontSheild",
+            "ShieldType": "Weak Shield",
+            "HardpointName": "HardpointTop",
+            "Radius": 7,
+            "CurrentStrength": 100,
+            "MaxAngle": 120
+          }
+        ],
+        "PowerPlant": {
+          "Name": "PowerPlant",
+          "PowerPlantType": "Small Power Plant",
+          "CurrentPower": 2
+        }
+      },
+      {
+				"Name":"Corvette3",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-75, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+      {
+        "Name": "Corvette4",
+        "ChassisType": "Corvette",
+        "Faction": "Friendly",
+        "CurrentHullPoints": 200,
+        "CurrentSpeed": 5,
+        "PosX": -50,
+        "PosY": 0,
+        "PosZ": -50,
+        "RotX": 0,
+        "RotY": 0,
+        "RotZ": 0,
+        "Weapons": [
+          {
+            "Name": "LaserL",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointLeft",
+            "MaxAngle": 80
+          },
+          {
+            "Name": "LaserR",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointRight",
+            "MaxAngle": 80
+          }
+        ],
+        "Shields": [
+          {
+            "Name": "FrontSheild",
+            "ShieldType": "Weak Shield",
+            "HardpointName": "HardpointTop",
+            "Radius": 7,
+            "CurrentStrength": 100,
+            "MaxAngle": 120
+          }
+        ],
+        "PowerPlant": {
+          "Name": "PowerPlant",
+          "PowerPlantType": "Small Power Plant",
+          "CurrentPower": 2
+        }
+      },
+      {
+				"Name":"Corvette5",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-25, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+      {
+        "Name": "Corvette6",
+        "ChassisType": "Corvette",
+        "Faction": "Friendly",
+        "CurrentHullPoints": 200,
+        "CurrentSpeed": 5,
+        "PosX": 25,
+        "PosY": 0,
+        "PosZ": -50,
+        "RotX": 0,
+        "RotY": 0,
+        "RotZ": 0,
+        "Weapons": [
+          {
+            "Name": "LaserL",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointLeft",
+            "MaxAngle": 80
+          },
+          {
+            "Name": "LaserR",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointRight",
+            "MaxAngle": 80
+          }
+        ],
+        "Shields": [
+          {
+            "Name": "FrontSheild",
+            "ShieldType": "Weak Shield",
+            "HardpointName": "HardpointTop",
+            "Radius": 7,
+            "CurrentStrength": 100,
+            "MaxAngle": 120
+          }
+        ],
+        "PowerPlant": {
+          "Name": "PowerPlant",
+          "PowerPlantType": "Small Power Plant",
+          "CurrentPower": 2
+        }
+      },
+      {
+				"Name":"Corvette7",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":50, "PosY":0, "PosZ":-50,
+				"RotX":0,"RotY":0, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+      {
+        "Name": "Corvette8",
+        "ChassisType": "Corvette",
+        "Faction": "Friendly",
+        "CurrentHullPoints": 200,
+        "CurrentSpeed": 5,
+        "PosX": 75,
+        "PosY": 0,
+        "PosZ": -50,
+        "RotX": 0,
+        "RotY": 0,
+        "RotZ": 0,
+        "Weapons": [
+          {
+            "Name": "LaserL",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointLeft",
+            "MaxAngle": 80
+          },
+          {
+            "Name": "LaserR",
+            "WeaponType": "Small Pulse Laser",
+            "HardpointName": "HardpointRight",
+            "MaxAngle": 80
+          }
+        ],
+        "Shields": [
+          {
+            "Name": "FrontSheild",
+            "ShieldType": "Weak Shield",
+            "HardpointName": "HardpointTop",
+            "Radius": 7,
+            "CurrentStrength": 100,
+            "MaxAngle": 120
+          }
+        ],
+        "PowerPlant": {
+          "Name": "PowerPlant",
+          "PowerPlantType": "Small Power Plant",
+          "CurrentPower": 2
+        }
+      },
+      {
+				"Name":"Corvette9",
+				"ChassisType":"Corvette", 
+				"Faction":"Friendly",
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":100, "PosY":0, "PosZ":-50,
 				"RotX":0,"RotY":0, "RotZ":0, 
 				"Weapons":
 				[ 
@@ -68,12 +312,12 @@
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
 			{
-				"Name":"Corvette2",
+				"Name":"Corvette10",
 				"ChassisType":"Corvette",
 				"Faction":"Friendly", 
 				"CurrentHullPoints":200,
 				"CurrentSpeed":5,
-				"PosX":50, "PosY":0, "PosZ":-50,
+				"PosX":125, "PosY":0, "PosZ":-50,
 				"RotX":0,"RotY":0, "RotZ":0, 
 				"Weapons":
 				[ 
@@ -92,7 +336,7 @@
 				"Faction":"Enemy", 
 				"CurrentHullPoints":200,
 				"CurrentSpeed":5,
-				"PosX":-50, "PosY":0, "PosZ":50,
+				"PosX":-125, "PosY":0, "PosZ":50,
 				"RotX":0,"RotY":180, "RotZ":0, 
 				"Weapons":
 				[ 
@@ -111,7 +355,155 @@
 				"Faction":"Enemy", 
 				"CurrentHullPoints":200,
 				"CurrentSpeed":5,
+				"PosX":-100, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},{
+				"Name":"EvilCorvette3",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-75, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+			{
+				"Name":"EvilCorvette4",
+				"ChassisType":"Corvette", 
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-50, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},{
+				"Name":"EvilCorvette5",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":-25, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+			{
+				"Name":"EvilCorvette6",
+				"ChassisType":"Corvette", 
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":25, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},{
+				"Name":"EvilCorvette7",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
 				"PosX":50, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+			{
+				"Name":"EvilCorvette8",
+				"ChassisType":"Corvette", 
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":75, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},{
+				"Name":"EvilCorvette9",
+				"ChassisType":"Corvette",
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":100, "PosY":0, "PosZ":50,
+				"RotX":0,"RotY":180, "RotZ":0, 
+				"Weapons":
+				[ 
+					{"Name":"LaserL", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointLeft", "MaxAngle":80},
+					{"Name":"LaserR", "WeaponType":"Small Pulse Laser", "HardpointName":"HardpointRight", "MaxAngle":80} 
+				],
+				"Shields":
+				[
+					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+				],
+				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
+			},
+			{
+				"Name":"EvilCorvette10",
+				"ChassisType":"Corvette", 
+				"Faction":"Enemy", 
+				"CurrentHullPoints":200,
+				"CurrentSpeed":5,
+				"PosX":125, "PosY":0, "PosZ":50,
 				"RotX":0,"RotY":180, "RotZ":0, 
 				"Weapons":
 				[ 
