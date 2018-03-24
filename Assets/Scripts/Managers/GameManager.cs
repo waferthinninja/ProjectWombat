@@ -1,243 +1,270 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers.ShipComponents;
+using Model.Enums;
+using Model.Orders;
 using UnityEngine;
 
-public class GameManager: MonoBehaviour {
-
-    //MAKE INSTANCE
-    private static GameManager _instance;
-
-    public static GameManager Instance
+namespace Managers
+{
+    public class GameManager : MonoBehaviour
     {
-        get
+        //MAKE INSTANCE
+        private static GameManager _instance;
+
+        public static readonly float TURN_LENGTH = 5f; // seconds   
+
+        public static readonly int PLAYER_LAYER = 9;
+        public static readonly int ENEMY_LAYER = 10;
+        private static int _nextMobId;
+
+        // callbacks
+        private Action _onEndOfSetup;
+        private Action _onEndOfTurn;
+        private Action _onResetToStart;
+        private Action _onStartOfOutcome;
+        private Action _onStartOfPlanning;
+        private Action _onStartOfPlanning_Late;
+        private Action _onStartOfReplay;
+        private Action _onStartOfSimulation;
+        private Action _onStartOfWaitingForOpponent;
+
+        private TurnOrder _opponentOrders;
+
+        private bool _setupComplete;
+        //END MAKE INSTANCE
+
+        public GameState GameState;
+
+        // keep track of a list of ships
+        public List<ShipController> Ships;
+
+        public static GameManager Instance
         {
-            if (_instance == null)
-                _instance = GameObject.FindObjectOfType<GameManager>();
-            return _instance;
-        }
-    }
-    //END MAKE INSTANCE
-
-    public GameState GameState;
-    
-    // keep track of a list of ships
-    public List<ShipController> Ships;
-
-    private TurnOrder _opponentOrders;
-
-    private static int _nextMobId = 0;
-    
-    public static readonly float TURN_LENGTH = 5f; // seconds   
-    public int FramesPerTurn { get; private set; } 
-
-    public static readonly int PLAYER_LAYER = 9;
-    public static readonly int ENEMY_LAYER = 10;
-
-    // callbacks
-    private Action OnEndOfSetup;
-    private Action OnStartOfPlanning;
-    private Action OnStartOfPlanning_Late;
-    private Action OnStartOfSimulation;
-    private Action OnStartOfWaitingForOpponent;
-    private Action OnStartOfOutcome;
-    private Action OnStartOfReplay;
-    private Action OnEndOfTurn;
-    private Action OnResetToStart;
-
-    public void RegisterOnEndOfSetup(Action action) { OnEndOfSetup += action;  }
-    public void RegisterOnStartOfPlanning_Late(Action action) { OnStartOfPlanning_Late += action; }
-    public void RegisterOnStartOfPlanning(Action action) { OnStartOfPlanning += action; }
-    public void RegisterOnStartOfSimulation(Action action) { OnStartOfSimulation += action; }
-    public void RegisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent += action; }
-    public void RegisterOnStartOfOutcome(Action action) { OnStartOfOutcome += action; }
-    public void RegisterOnStartOfReplay(Action action) { OnStartOfReplay += action; }
-    public void RegisterOnEndOfTurn(Action action) { OnEndOfTurn += action; }
-
-    public void RegisterOnResetToStart(Action action) { OnResetToStart += action; }
-
-    public void UnregisterOnStartOfPlanning(Action action) { OnStartOfPlanning -= action; }
-    public void UnregisterOnStartOfSimulation(Action action) { OnStartOfSimulation -= action; }
-    public void UnregisterOnStartOfWaitingForOpponent(Action action) { OnStartOfWaitingForOpponent -= action; }
-    public void UnregisterOnStartOfOutcome(Action action) { OnStartOfOutcome -= action; }
-    public void UnregisterOnStartOfReplay(Action action) { OnStartOfReplay -= action; }
-    public void UnregisterOnEndOfTurn(Action action) { OnEndOfTurn -= action; }
-
-    public void UnregisterOnResetToStart(Action action) { OnResetToStart -= action; }
-
-    private bool _setupComplete;
-
-
-    void Awake()
-    {
-        FramesPerTurn = (int)TURN_LENGTH * (int)(1.0f / Time.fixedDeltaTime);
-    }
-
-    void Start()
-    {
-        GameState = GameState.Setup;
-    }    
-    
-    void Update()
-    {
-        // do scenario setup here (once we know all objects instantiated, registered etc)
-        if (!_setupComplete)
-        {
-            Scenario scenario = ScenarioManager.Instance.GetSelectedScenario();
-
-            foreach (Ship ship in scenario.Ships)
+            get
             {
-                ShipFactory.Instance.Create(ship);
+                if (_instance == null)
+                    _instance = FindObjectOfType<GameManager>();
+                return _instance;
             }
-            
-            RefreshShipList();
-            SetupComplete();
         }
 
-        // TEMP - auto cycle through phase
-        if (GameState == GameState.WaitingForOpponent)
+        public int FramesPerTurn { get; private set; }
+
+        public void RegisterOnEndOfSetup(Action action)
         {
-            StartOutcomePhase();
-        }     
-        else if (GameState == GameState.EndOfTurn)
+            _onEndOfSetup += action;
+        }
+
+        public void RegisterOnStartOfPlanning_Late(Action action)
         {
-            // Check for victory/defeat
-            // for now the only criteria is last man standing
-            bool friendlyFound = false;
-            bool enemyFound = false;
-            foreach (ShipController ship in Ships)
+            _onStartOfPlanning_Late += action;
+        }
+
+        public void RegisterOnStartOfPlanning(Action action)
+        {
+            _onStartOfPlanning += action;
+        }
+
+        public void RegisterOnStartOfSimulation(Action action)
+        {
+            _onStartOfSimulation += action;
+        }
+
+        public void RegisterOnStartOfWaitingForOpponent(Action action)
+        {
+            _onStartOfWaitingForOpponent += action;
+        }
+
+        public void RegisterOnStartOfOutcome(Action action)
+        {
+            _onStartOfOutcome += action;
+        }
+
+        public void RegisterOnStartOfReplay(Action action)
+        {
+            _onStartOfReplay += action;
+        }
+
+        public void RegisterOnEndOfTurn(Action action)
+        {
+            _onEndOfTurn += action;
+        }
+
+        public void RegisterOnResetToStart(Action action)
+        {
+            _onResetToStart += action;
+        }
+
+        public void UnregisterOnStartOfPlanning(Action action)
+        {
+            _onStartOfPlanning -= action;
+        }
+
+        public void UnregisterOnStartOfSimulation(Action action)
+        {
+            _onStartOfSimulation -= action;
+        }
+
+        public void UnregisterOnStartOfWaitingForOpponent(Action action)
+        {
+            _onStartOfWaitingForOpponent -= action;
+        }
+
+        public void UnregisterOnStartOfOutcome(Action action)
+        {
+            _onStartOfOutcome -= action;
+        }
+
+        public void UnregisterOnStartOfReplay(Action action)
+        {
+            _onStartOfReplay -= action;
+        }
+
+        public void UnregisterOnEndOfTurn(Action action)
+        {
+            _onEndOfTurn -= action;
+        }
+
+        public void UnregisterOnResetToStart(Action action)
+        {
+            _onResetToStart -= action;
+        }
+
+        private void Awake()
+        {
+            FramesPerTurn = (int) TURN_LENGTH * (int) (1.0f / Time.fixedDeltaTime);
+        }
+
+        private void Start()
+        {
+            GameState = GameState.Setup;
+        }
+
+        private void Update()
+        {
+            // do scenario setup here (once we know all objects instantiated, registered etc)
+            if (!_setupComplete)
             {
-                if (ship.Faction == Faction.Friendly) friendlyFound = true;
-                if (ship.Faction == Faction.Enemy) enemyFound = true;
+                var scenario = ScenarioManager.Instance.GetSelectedScenario();
+
+                foreach (var ship in scenario.Ships) ShipFactory.Instance.Create(ship);
+
+                RefreshShipList();
+                SetupComplete();
             }
-            if (!friendlyFound)
+
+            // TEMP - auto cycle through phase
+            if (GameState == GameState.WaitingForOpponent)
             {
-                Debug.Log("DEFEAT!"); // TODO - actual defeat stuff
+                StartOutcomePhase();
             }
-            else if (!enemyFound)
+            else if (GameState == GameState.EndOfTurn)
             {
-                Debug.Log("VICTORY!"); // TODO - actual victory stuff
+                // Check for victory/defeat
+                // for now the only criteria is last man standing
+                var friendlyFound = false;
+                var enemyFound = false;
+                foreach (var ship in Ships)
+                {
+                    if (ship.Faction == Faction.Friendly) friendlyFound = true;
+                    if (ship.Faction == Faction.Enemy) enemyFound = true;
+                }
+
+                if (!friendlyFound)
+                    Debug.Log("DEFEAT!"); // TODO - actual defeat stuff
+                else if (!enemyFound) Debug.Log("VICTORY!"); // TODO - actual victory stuff
+
+
+                StartPlanningPhase();
             }
-            
-
-            StartPlanningPhase();
-        }          
-    }
-
-    public void SetupComplete()
-    {
-        _setupComplete = true;
-        if (OnEndOfSetup != null)
-        {
-            OnEndOfSetup();
-        }
-        OnEndOfSetup = null;
-        GameState = GameState.EndOfTurn;
-    }
-
-    public void RemoveFromShipList(ShipController ship)
-    {
-        Ships.Remove(ship);
-    }
-
-    public void RefreshShipList()
-    {
-        Ships = FindObjectsOfType<ShipController>().ToList();
-    }
-
-    public void StartSimulation()
-    {
-        StartSimulationPhase();
-    }
-
-    public void SubmitOrders()
-    {
-        StartWaitingForOpponentPhase(); // TEMP - add confirmation      
-    }
-
-    public int GetMobId()
-    {
-        return _nextMobId++;
-    }
-
-    public void ResetToStart()
-    {
-        if (OnResetToStart != null)
-        {
-            OnResetToStart();
-        }
-    }
-
-    public void StartPlanningPhase()
-    {
-        GameState = GameState.Planning;
-        ResetToStart();
-
-        if (OnStartOfPlanning != null)
-        {
-            OnStartOfPlanning();
-        }
-        if (OnStartOfPlanning_Late != null)
-        {
-            OnStartOfPlanning_Late();
         }
 
-    }
-
-    public void StartSimulationPhase()
-    {
-        GameState = GameState.Simulation;
-        
-        if (OnStartOfSimulation != null)
+        public void SetupComplete()
         {
-            OnStartOfSimulation();
+            _setupComplete = true;
+            if (_onEndOfSetup != null) _onEndOfSetup();
+            _onEndOfSetup = null;
+            GameState = GameState.EndOfTurn;
         }
-        ResetToStart();
-    }
 
-    public void StartWaitingForOpponentPhase()
-    {
-        GameState = GameState.WaitingForOpponent;
-        ResetToStart();
-
-        if (OnStartOfWaitingForOpponent != null)
+        public void RemoveFromShipList(ShipController ship)
         {
-            OnStartOfWaitingForOpponent();
+            Ships.Remove(ship);
         }
-    }
-    public void StartOutcomePhase()
-    {
-        GameState = GameState.Outcome;
-        ResetToStart();
 
-        if (OnStartOfOutcome != null)
+        public void RefreshShipList()
         {
-            OnStartOfOutcome();
+            Ships = FindObjectsOfType<ShipController>().ToList();
         }
-    }
 
-    public void StartReplayPhase()
-    {
-        GameState = GameState.Replay;
-        ResetToStart();
-
-        if (OnStartOfReplay != null)
+        public void StartSimulation()
         {
-            OnStartOfReplay();
+            StartSimulationPhase();
         }
-    }
 
-    public void StartEndOfTurnPhase()
-    {
-        GameState = GameState.EndOfTurn;
-        
-        if (OnEndOfTurn != null)
+        public void SubmitOrders()
         {
-            OnEndOfTurn();
+            StartWaitingForOpponentPhase(); // TEMP - add confirmation      
+        }
+
+        public int GetMobId()
+        {
+            return _nextMobId++;
+        }
+
+        public void ResetToStart()
+        {
+            if (_onResetToStart != null) _onResetToStart();
+        }
+
+        public void StartPlanningPhase()
+        {
+            GameState = GameState.Planning;
+            ResetToStart();
+
+            if (_onStartOfPlanning != null) _onStartOfPlanning();
+            if (_onStartOfPlanning_Late != null) _onStartOfPlanning_Late();
+        }
+
+        public void StartSimulationPhase()
+        {
+            GameState = GameState.Simulation;
+
+            if (_onStartOfSimulation != null) _onStartOfSimulation();
+            ResetToStart();
+        }
+
+        public void StartWaitingForOpponentPhase()
+        {
+            GameState = GameState.WaitingForOpponent;
+            ResetToStart();
+
+            if (_onStartOfWaitingForOpponent != null) _onStartOfWaitingForOpponent();
+        }
+
+        public void StartOutcomePhase()
+        {
+            GameState = GameState.Outcome;
+            ResetToStart();
+
+            if (_onStartOfOutcome != null) _onStartOfOutcome();
+        }
+
+        public void StartReplayPhase()
+        {
+            GameState = GameState.Replay;
+            ResetToStart();
+
+            if (_onStartOfReplay != null) _onStartOfReplay();
+        }
+
+        public void StartEndOfTurnPhase()
+        {
+            GameState = GameState.EndOfTurn;
+
+            if (_onEndOfTurn != null) _onEndOfTurn();
         }
     }
-
 }
-
-

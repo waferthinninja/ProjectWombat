@@ -1,8 +1,13 @@
-﻿[System.Serializable]
-public struct ShieldType
+﻿using System;
+
+namespace Model.Structs
 {
-    public string Name;
-    public float Width;
-    public float Height;
-    public float Strength;
+    [Serializable]
+    public struct ShieldType
+    {
+        public string Name;
+        public float Width;
+        public float Height;
+        public float Strength;
+    }
 }

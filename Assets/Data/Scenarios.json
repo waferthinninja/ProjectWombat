@@ -18,7 +18,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 
@@ -38,7 +38,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			}
@@ -63,7 +63,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -95,7 +95,7 @@
         ],
         "Shields": [
           {
-            "Name": "FrontSheild",
+            "Name": "FrontShield",
             "ShieldType": "Weak Shield",
             "HardpointName": "HardpointTop",
             "Radius": 7,
@@ -124,7 +124,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -156,7 +156,7 @@
         ],
         "Shields": [
           {
-            "Name": "FrontSheild",
+            "Name": "FrontShield",
             "ShieldType": "Weak Shield",
             "HardpointName": "HardpointTop",
             "Radius": 7,
@@ -185,7 +185,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -217,7 +217,7 @@
         ],
         "Shields": [
           {
-            "Name": "FrontSheild",
+            "Name": "FrontShield",
             "ShieldType": "Weak Shield",
             "HardpointName": "HardpointTop",
             "Radius": 7,
@@ -246,7 +246,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -278,7 +278,7 @@
         ],
         "Shields": [
           {
-            "Name": "FrontSheild",
+            "Name": "FrontShield",
             "ShieldType": "Weak Shield",
             "HardpointName": "HardpointTop",
             "Radius": 7,
@@ -307,7 +307,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -326,7 +326,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -345,7 +345,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -364,7 +364,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},{
@@ -382,7 +382,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -401,7 +401,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},{
@@ -419,7 +419,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -438,7 +438,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},{
@@ -456,7 +456,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -475,7 +475,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},{
@@ -493,7 +493,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			},
@@ -512,7 +512,7 @@
 				],
 				"Shields":
 				[
-					{"Name":"FrontSheild","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
+					{"Name":"FrontShield","ShieldType":"Weak Shield", "HardpointName":"HardpointTop", "Radius":7, "CurrentStrength":100, "MaxAngle":120 }
 				],
 				"PowerPlant":{ "Name":"PowerPlant", "PowerPlantType": "Small Power Plant", "CurrentPower":2 }
 			}

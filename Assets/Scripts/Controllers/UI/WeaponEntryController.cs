@@ -1,99 +1,101 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Controllers.ShipComponents;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponEntryController : MonoBehaviour, IComponentEntryController {
-    
-    private WeaponController Weapon;
-
-    private Text WeaponNameLabel;
-    private Button TargetButton;
-    private Button ArcButton;
-    private Toggle FreeFireToggle;
-    private Toggle DamageBoostToggle;
-    private Toggle RangeBoostToggle;
-
-
-    private Color labelColor;
-    private Color buttonColor;
-
-
-    // TODO (or at least consider) - so much copied code between this and shield version, refactor?
-    
-
-    public void Initialise(IComponentController weapon)
+namespace Controllers.UI
+{
+    public class WeaponEntryController : MonoBehaviour, IComponentEntryController
     {
-        Weapon = (WeaponController)weapon;
-        WeaponNameLabel = transform.Find("WeaponName").GetComponent<Text>();
-        WeaponNameLabel.text = Weapon.Name;
-        
-        TargetButton = transform.Find("TargetButton").GetComponent<Button>();
-        TargetButton.onClick.AddListener(StartTargeting);
+        private Button _arcButton;
+        private Color _buttonColor;
+        private Toggle _damageBoostToggle;
+        private Toggle _freeFireToggle;
 
-        ArcButton = transform.Find("ArcButton").GetComponent<Button>();
-        ArcButton.onClick.AddListener(ToggleArc);
+        private Color _labelColor;
+        private Toggle _rangeBoostToggle;
+        private Button _targetButton;
 
-        FreeFireToggle = transform.Find("FreeFireToggle").GetComponent<Toggle>();
-        FreeFireToggle.isOn = Weapon.FreeFire;
-        FreeFireToggle.onValueChanged.AddListener(SetFreeFire);
-        
-        DamageBoostToggle = transform.Find("DamageBoostToggle").GetComponent<Toggle>();
-        DamageBoostToggle.isOn = Weapon.DamageBoosted;
-        DamageBoostToggle.onValueChanged.AddListener(SetDamageBoost);
-        
-        RangeBoostToggle = transform.Find("RangeBoostToggle").GetComponent<Toggle>();
-        RangeBoostToggle.isOn = Weapon.RangeBoosted;
-        RangeBoostToggle.onValueChanged.AddListener(SetRangeBoost);
-        
-        // store text color so we can set back 
-        labelColor = WeaponNameLabel.color;
-        buttonColor = TargetButton.GetComponentInChildren<Text>().color;
+        private WeaponController _weapon;
+
+        private Text _weaponNameLabel;
+
+        // TODO (or at least consider) - so much copied code between this and shield version, refactor?
+
+
+        public void Initialise(IComponentController weapon)
+        {
+            _weapon = (WeaponController) weapon;
+            _weaponNameLabel = transform.Find("WeaponName").GetComponent<Text>();
+            _weaponNameLabel.text = _weapon.Name;
+
+            _targetButton = transform.Find("TargetButton").GetComponent<Button>();
+            _targetButton.onClick.AddListener(StartTargeting);
+
+            _arcButton = transform.Find("ArcButton").GetComponent<Button>();
+            _arcButton.onClick.AddListener(ToggleArc);
+
+            _freeFireToggle = transform.Find("FreeFireToggle").GetComponent<Toggle>();
+            _freeFireToggle.isOn = _weapon.FreeFire;
+            _freeFireToggle.onValueChanged.AddListener(SetFreeFire);
+
+            _damageBoostToggle = transform.Find("DamageBoostToggle").GetComponent<Toggle>();
+            _damageBoostToggle.isOn = _weapon.DamageBoosted;
+            _damageBoostToggle.onValueChanged.AddListener(SetDamageBoost);
+
+            _rangeBoostToggle = transform.Find("RangeBoostToggle").GetComponent<Toggle>();
+            _rangeBoostToggle.isOn = _weapon.RangeBoosted;
+            _rangeBoostToggle.onValueChanged.AddListener(SetRangeBoost);
+
+            // store text color so we can set back 
+            _labelColor = _weaponNameLabel.color;
+            _buttonColor = _targetButton.GetComponentInChildren<Text>().color;
+        }
+
+        public void ActivatePoweredControls()
+        {
+            _damageBoostToggle.interactable = _weapon.DamageBoosted ||
+                                              _weapon.PowerPlant.CurrentPower + 0.00001f > _weapon.DamageBoostCost;
+            _rangeBoostToggle.interactable = _weapon.RangeBoosted ||
+                                             _weapon.PowerPlant.CurrentPower + 0.00001f > _weapon.RangeBoostCost;
+        }
+
+        public void ToggleArc()
+        {
+            _weapon.ToggleArc();
+        }
+
+        public void SetFreeFire(bool state)
+        {
+            _weapon.SetFreeFire(state);
+        }
+
+        public void SetDamageBoost(bool state)
+        {
+            _weapon.SetDamageBoost(state);
+        }
+
+        public void SetRangeBoost(bool state)
+        {
+            _weapon.SetRangeBoost(state);
+        }
+
+        public void StartTargeting()
+        {
+            // register for callbacks
+            InputManager.Instance.RegisterOnTargetSelected(StopTargeting);
+            _weapon.RegisterForTargetCallback();
+
+            // indicate that we are targeting - for now set text to red
+            _weaponNameLabel.color = Color.red;
+            _targetButton.GetComponentInChildren<Text>().color = Color.red;
+        }
+
+        public void StopTargeting(ShipController ship)
+        {
+            // set color back
+            _weaponNameLabel.color = _labelColor;
+            _targetButton.GetComponentInChildren<Text>().color = _buttonColor;
+        }
     }
-
-    public void ToggleArc()
-    {
-        Weapon.ToggleArc();
-    }
-
-    public void SetFreeFire(bool state)
-    {
-        Weapon.SetFreeFire(state);
-    }
-
-    public void SetDamageBoost(bool state)
-    {
-        Weapon.SetDamageBoost(state);           
-    }
-
-    public void SetRangeBoost(bool state)
-    {
-        Weapon.SetRangeBoost(state);       
-    }
-
-    public void StartTargeting()
-    {
-        // register for callbacks
-        InputManager.Instance.RegisterOnTargetSelected(StopTargeting);
-        Weapon.RegisterForTargetCallback();
-
-        // indicate that we are targeting - for now set text to red
-        WeaponNameLabel.color = Color.red;
-        TargetButton.GetComponentInChildren<Text>().color = Color.red;
-    }
-
-    public void StopTargeting(ShipController ship)
-    {
-        // set color back
-        WeaponNameLabel.color = labelColor;
-        TargetButton.GetComponentInChildren<Text>().color = buttonColor;
-
-    }
-
-    public void ActivatePoweredControls()
-    {
-        DamageBoostToggle.interactable = Weapon.DamageBoosted || (Weapon.PowerPlant.CurrentPower + 0.00001f > Weapon.DamageBoostCost);
-        RangeBoostToggle.interactable = Weapon.RangeBoosted || (Weapon.PowerPlant.CurrentPower + 0.00001f > Weapon.RangeBoostCost);        
-    }
-
 }

@@ -1,5 +1,6 @@
-﻿
-public interface IComponentController
+﻿namespace Controllers.ShipComponents
 {
+    public interface IComponentController
+    {
+    }
 }
-

@@ -1,78 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Model.UI;
 using UnityEngine;
 
-public class PanelController : MonoBehaviour {
-
-    public PanelDirection Direction;
-    public float Width;
-    public float Height;
-    public bool Active;
-
-    private float currentPosition;
-    private float targetPosition;
-    private float speed = 1500f;
-
-    private Vector3 basePosition;
-
-	// Use this for initialization
-	void Start () {
-        basePosition = transform.localPosition ;
-        SetActive(Active);
-        currentPosition = targetPosition;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        MoveTowardsTarget();
-    }
-
-    void MoveTowardsTarget()
+namespace Controllers.UI
+{
+    public class PanelController : MonoBehaviour
     {
-        if (currentPosition < targetPosition)
+        private Vector3 _basePosition;
+
+        private float _currentPosition;
+        private readonly float _speed = 1500f;
+        private float _targetPosition;
+        public bool Active;
+
+        public PanelDirection Direction;
+        public float Height;
+        public float Width;
+
+        // Use this for initialization
+        private void Start()
         {
-            currentPosition += speed * Time.deltaTime;
-            if (currentPosition > targetPosition)
+            _basePosition = transform.localPosition;
+            SetActive(Active);
+            _currentPosition = _targetPosition;
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            MoveTowardsTarget();
+        }
+
+        private void MoveTowardsTarget()
+        {
+            if (_currentPosition < _targetPosition)
             {
-                currentPosition = targetPosition;
+                _currentPosition += _speed * Time.deltaTime;
+                if (_currentPosition > _targetPosition) _currentPosition = _targetPosition;
             }
-        }
-        else if (currentPosition > targetPosition)
-        {
-            currentPosition -= speed * Time.deltaTime;
-            if (currentPosition < targetPosition)
+            else if (_currentPosition > _targetPosition)
             {
-                currentPosition = targetPosition;
+                _currentPosition -= _speed * Time.deltaTime;
+                if (_currentPosition < _targetPosition) _currentPosition = _targetPosition;
             }
-        }
-        SetPosition();
-    }
 
-    void SetPosition()
-    {
-        if (Direction == PanelDirection.TopDown)
-        {
-            transform.localPosition = new Vector3(0, -currentPosition) + basePosition;
+            SetPosition();
         }
-        else if (Direction == PanelDirection.BottomUp)
-        {
-            transform.localPosition = new Vector3(0, currentPosition) + basePosition;
-        }
-        else if (Direction == PanelDirection.LeftToRight)
-        {
-            transform.localPosition = new Vector3(currentPosition, 0) + basePosition;
-        }
-        else if (Direction == PanelDirection.RightToLeft)
-        {
-            transform.localPosition = new Vector3(-currentPosition, 0) + basePosition;
-        }
-    }
 
-    public void SetActive(bool active)
-    {
-        Active = active;
-        float size = (Direction == PanelDirection.TopDown || Direction == PanelDirection.BottomUp ? Height : Width);
-            
-        targetPosition = (active ? 0 : -size);
+        private void SetPosition()
+        {
+            if (Direction == PanelDirection.TopDown)
+                transform.localPosition = new Vector3(0, -_currentPosition) + _basePosition;
+            else if (Direction == PanelDirection.BottomUp)
+                transform.localPosition = new Vector3(0, _currentPosition) + _basePosition;
+            else if (Direction == PanelDirection.LeftToRight)
+                transform.localPosition = new Vector3(_currentPosition, 0) + _basePosition;
+            else if (Direction == PanelDirection.RightToLeft)
+                transform.localPosition = new Vector3(-_currentPosition, 0) + _basePosition;
+        }
+
+        public void SetActive(bool active)
+        {
+            Active = active;
+            var size = Direction == PanelDirection.TopDown || Direction == PanelDirection.BottomUp ? Height : Width;
+
+            _targetPosition = active ? 0 : -size;
+        }
     }
 }

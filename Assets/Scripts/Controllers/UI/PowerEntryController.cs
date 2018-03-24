@@ -1,41 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Controllers.ShipComponents;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerEntryController : MonoBehaviour, IComponentEntryController {
-
-    private PowerController _powerController;
-
-    private Text PowerNameLabel;
-    private Text RechargeLabel;
-    private Text PowerLevelLabel;
-
-    public void Initialise(IComponentController powerController)
+namespace Controllers.UI
+{
+    public class PowerEntryController : MonoBehaviour, IComponentEntryController
     {
-        _powerController = (PowerController)powerController;
-        _powerController.RegisterOnPowerChange(OnPowerChange);
-        
-        PowerNameLabel = transform.Find("EntryTitle").GetComponent<Text>();
-        PowerNameLabel.text = "Power"; // hard coded for now?
+        private PowerController _powerController;
+        private Text _powerLevelLabel;
 
-        RechargeLabel = transform.Find("RechargeRate").GetComponent<Text>();
-        RechargeLabel.text = string.Format("Rechg: ({0}/t)", _powerController.PowerPerTurn);
+        private Text _powerNameLabel;
+        private Text _rechargeLabel;
 
-        PowerLevelLabel = transform.Find("PowerLevel").GetComponent<Text>();
-        PowerLevelLabel.text = string.Format("{0}/{1}", _powerController.CurrentPower, _powerController.MaxPower);
+        public void Initialise(IComponentController powerController)
+        {
+            _powerController = (PowerController) powerController;
+            _powerController.RegisterOnPowerChange(OnPowerChange);
+
+            _powerNameLabel = transform.Find("EntryTitle").GetComponent<Text>();
+            _powerNameLabel.text = "Power"; // hard coded for now?
+
+            _rechargeLabel = transform.Find("RechargeRate").GetComponent<Text>();
+            _rechargeLabel.text = string.Format("Rechg: ({0}/t)", _powerController.PowerPerTurn);
+
+            _powerLevelLabel = transform.Find("PowerLevel").GetComponent<Text>();
+            _powerLevelLabel.text = string.Format("{0}/{1}", _powerController.CurrentPower, _powerController.MaxPower);
+        }
+
+        public void ActivatePoweredControls()
+        {
+        }
+
+        public void OnPowerChange()
+        {
+            _powerLevelLabel.text = string.Format("{0}/{1}", _powerController.CurrentPower, _powerController.MaxPower);
+        }
+
+        private void OnDestroy()
+        {
+            _powerController.UnregisterOnPowerChange(OnPowerChange);
+        }
     }
-
-    public void OnPowerChange()
-    {
-        PowerLevelLabel.text = string.Format("{0}/{1}", _powerController.CurrentPower, _powerController.MaxPower);
-    }
-
-    void OnDestroy()
-    {
-        _powerController.UnregisterOnPowerChange(OnPowerChange);
-    }
-
-    public void ActivatePoweredControls()
-    { }
 }

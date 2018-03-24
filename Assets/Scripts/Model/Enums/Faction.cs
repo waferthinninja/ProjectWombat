@@ -1,5 +1,8 @@
-﻿public enum Faction
+﻿namespace Model.Enums
 {
-    Friendly,
-    Enemy
+    public enum Faction
+    {
+        Friendly,
+        Enemy
+    }
 }

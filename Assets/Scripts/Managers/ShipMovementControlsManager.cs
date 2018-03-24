@@ -1,122 +1,121 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Controllers;
+using Controllers.ShipComponents;
+using Controllers.UI;
+using Model.Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-public class ShipMovementControlsManager : MonoBehaviour {
-
-    public PanelController ShipControlsPanel;
-
-    public Slider TurnSlider;
-    public Text MinTurnLabel;
-    public Text MaxTurnLabel;
-
-    public Slider SpeedSlider;
-    public Text MinSpeedLabel;
-    public Text MaxSpeedLabel;
-
-    private ShipController _selectedShip;
-
-    // Use this for initialization
-    void Start () {
-        InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
-        GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
-        GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
-    }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
-    public void OnStartOfSimulation()
+namespace Managers
+{
+    public class ShipMovementControlsManager : MonoBehaviour
     {
-        ClearSelectedControl();
-    }    
+        private ShipController _selectedShip;
+        public Text MaxSpeedLabel;
+        public Text MaxTurnLabel;
+        public Text MinSpeedLabel;
+        public Text MinTurnLabel;
 
-    public void OnStartOfWaitingForOpponent()
-    {
-        ClearSelectedControl();
-    }
+        public PanelController ShipControlsPanel;
 
-    private static void ClearSelectedControl()
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-    }
+        public Slider SpeedSlider;
 
-    public void OnSelectedShipChange(ShipController ship)
-    {
-        if (ship == null)
+        public Slider TurnSlider;
+
+        // Use this for initialization
+        private void Start()
         {
-            ClearSelectedShip();
+            InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
+            GameManager.Instance.RegisterOnStartOfSimulation(OnStartOfSimulation);
+            GameManager.Instance.RegisterOnStartOfWaitingForOpponent(OnStartOfWaitingForOpponent);
         }
-        else if (GameManager.Instance.GameState == GameState.Planning)
+
+        // Update is called once per frame
+        private void Update()
         {
-            SelectShip(ship);
         }
-    }
 
-    public void SelectShip(ShipController ship)
-    {
-        _selectedShip = ship;
+        public void OnStartOfSimulation()
+        {
+            ClearSelectedControl();
+        }
 
-        var _mob = ship.GetComponent<MobileObjectController>();
+        public void OnStartOfWaitingForOpponent()
+        {
+            ClearSelectedControl();
+        }
 
-        TurnSlider.value = _mob.TurnProportion;
-        MinTurnLabel.text = _mob.MaxTurn.ToString("F0");
-        MaxTurnLabel.text = _mob.MaxTurn.ToString("F0");
+        private static void ClearSelectedControl()
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
 
-        SpeedSlider.value = _mob.SpeedProportion;
-        MinSpeedLabel.text = _mob.GetMinSpeed().ToString("F1");
-        MaxSpeedLabel.text = _mob.GetMaxSpeed().ToString("F1");
+        public void OnSelectedShipChange(ShipController ship)
+        {
+            if (ship == null)
+                ClearSelectedShip();
+            else if (GameManager.Instance.GameState == GameState.Planning) SelectShip(ship);
+        }
 
-        ShipControlsPanel.SetActive(true);        
-    }
+        public void SelectShip(ShipController ship)
+        {
+            _selectedShip = ship;
 
-    public void ClearSelectedShip()
-    {
-        _selectedShip = null;
+            var _mob = ship.GetComponent<MobileObjectController>();
 
-        ShipControlsPanel.SetActive(false);
-    }
+            TurnSlider.value = _mob.TurnProportion;
+            MinTurnLabel.text = _mob.MaxTurn.ToString("F0");
+            MaxTurnLabel.text = _mob.MaxTurn.ToString("F0");
 
-    public void ZeroTurn()
-    {
-        if (_selectedShip == null) return;
-        TurnSlider.value = 0;
-        ApplyTurnSliderChange();
+            SpeedSlider.value = _mob.SpeedProportion;
+            MinSpeedLabel.text = _mob.GetMinSpeed().ToString("F1");
+            MaxSpeedLabel.text = _mob.GetMaxSpeed().ToString("F1");
 
-    }
-    public void ZeroAcceleration()
-    {
-        if (_selectedShip == null) return;
-        SpeedSlider.value = 0;
-        ApplyAccelerationSliderChange();
-    }
+            ShipControlsPanel.SetActive(true);
+        }
 
-    public void ApplyTurnSliderChange()
-    {
-        if (_selectedShip == null) return;
+        public void ClearSelectedShip()
+        {
+            _selectedShip = null;
 
-        _selectedShip.SetTurn(TurnSlider.value);
-        Recalculate();
-    }
+            ShipControlsPanel.SetActive(false);
+        }
 
-    public void ApplyAccelerationSliderChange()
-    {
-        if (_selectedShip == null) return;
+        public void ZeroTurn()
+        {
+            if (_selectedShip == null) return;
+            TurnSlider.value = 0;
+            ApplyTurnSliderChange();
+        }
 
-        _selectedShip.SetSpeed(SpeedSlider.value);
-        Recalculate();
-    }
+        public void ZeroAcceleration()
+        {
+            if (_selectedShip == null) return;
+            SpeedSlider.value = 0;
+            ApplyAccelerationSliderChange();
+        }
 
-    private void Recalculate()
-    {
-        if (_selectedShip == null) return;
+        public void ApplyTurnSliderChange()
+        {
+            if (_selectedShip == null) return;
 
-        _selectedShip.RecalculateProjections();
+            _selectedShip.SetTurn(TurnSlider.value);
+            Recalculate();
+        }
 
+        public void ApplyAccelerationSliderChange()
+        {
+            if (_selectedShip == null) return;
+
+            _selectedShip.SetSpeed(SpeedSlider.value);
+            Recalculate();
+        }
+
+        private void Recalculate()
+        {
+            if (_selectedShip == null) return;
+
+            _selectedShip.RecalculateProjections();
+        }
     }
 }

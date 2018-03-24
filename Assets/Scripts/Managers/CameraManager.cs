@@ -1,78 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
+using Controllers.Cameras;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour {
-    
-    //MAKE INSTANCE
-    private static CameraManager _instance;
-
-    public static CameraManager Instance
+namespace Managers
+{
+    public class CameraManager : MonoBehaviour
     {
-        get
+        //MAKE INSTANCE
+        private static CameraManager _instance;
+        private int _currentCameraIndex;
+
+        private Action _onCameraChange;
+
+        public CutSceneCameraController CutSceneCamera;
+        //END MAKE INSTANCE
+
+        public CameraController[] UserCameras;
+
+        public static CameraManager Instance
         {
-            if (_instance == null)
-                _instance = GameObject.FindObjectOfType<CameraManager>();
-            return _instance;
-        }
-    }
-    //END MAKE INSTANCE
-
-    public CameraController[] UserCameras;
-    public CutSceneCameraController CutSceneCamera;
-    private int _currentCameraIndex;
-        
-    public Action OnCameraChange;
-    public void RegisterOnCameraChange(Action action) { OnCameraChange += action; }
-
-    // Use this for initialization
-    void Start ()
-    {
-        SetUserCamera(0);        
-	}
-	    
-    public void SetUserCamera(int index)
-    {
-        _currentCameraIndex = index % UserCameras.Length;
-        for (int i = 0; i < UserCameras.Length; i++)
-        {
-            if (i == _currentCameraIndex)
+            get
             {
-                UserCameras[i].Activate();
-            }
-            else
-            {
-                UserCameras[i].Deactivate();
+                if (_instance == null)
+                    _instance = FindObjectOfType<CameraManager>();
+                return _instance;
             }
         }
-        if (OnCameraChange != null)
+
+        public void RegisterOnCameraChange(Action action)
         {
-            OnCameraChange();
+            _onCameraChange += action;
         }
-    }
 
-    public void CycleCameraMode()
-    {
-        SetUserCamera(++_currentCameraIndex);        
-    }    
-
-    public CameraController GetCurrentCamera()
-    {
-        return UserCameras[_currentCameraIndex];
-    }
-
-    public void ActivateCutSceneCamera()
-    {
-        foreach (var camera in UserCameras)
+        public void UnregisterOnCameraChange(Action action)
         {
-            camera.Deactivate();
+            _onCameraChange -= action;
         }
-        CutSceneCamera.Activate();
-    }
 
-    public void DeactivateCutSceneCamera()
-    {
-        UserCameras[_currentCameraIndex].Activate();
-        CutSceneCamera.Deactivate();
+        // Use this for initialization
+        private void Start()
+        {
+            SetUserCamera(0);
+        }
+
+        private void SetUserCamera(int index)
+        {
+            _currentCameraIndex = index % UserCameras.Length;
+            for (var i = 0; i < UserCameras.Length; i++)
+                if (i == _currentCameraIndex)
+                    UserCameras[i].Activate();
+                else
+                    UserCameras[i].Deactivate();
+            if (_onCameraChange != null) _onCameraChange();
+        }
+
+        public void CycleCameraMode()
+        {
+            SetUserCamera(++_currentCameraIndex);
+        }
+
+        public CameraController GetCurrentCamera()
+        {
+            return UserCameras[_currentCameraIndex];
+        }
+
+        public void ActivateCutSceneCamera()
+        {
+            foreach (var cam in UserCameras) cam.Deactivate();
+            CutSceneCamera.Activate();
+        }
+
+        public void DeactivateCutSceneCamera()
+        {
+            UserCameras[_currentCameraIndex].Activate();
+            CutSceneCamera.Deactivate();
+        }
     }
 }

@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class ShipOrder {
+namespace Model.Orders
+{
+    public class ShipOrder
+    {
+        public float Acceleration;
 
-    public int ShipId;
-    public float Acceleration;
-    public float Turn;
+        public List<ComponentOrder> ComponentOrders;
 
-    public List<ComponentOrder> ComponentOrders;
-
+        public int ShipId;
+        public float Turn;
+    }
 }

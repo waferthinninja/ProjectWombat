@@ -1,8 +1,11 @@
-﻿
-[System.Serializable]
-public struct Scenario {
+﻿using System;
 
-    public string Name;
-    public Ship[] Ships;
-
+namespace Model.Structs
+{
+    [Serializable]
+    public struct Scenario
+    {
+        public string Name;
+        public Ship[] Ships;
+    }
 }

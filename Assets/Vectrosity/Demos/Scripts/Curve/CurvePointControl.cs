@@ -1,13 +1,18 @@
 using UnityEngine;
 
-public class CurvePointControl : MonoBehaviour {
+namespace Vectrosity.Demos.Scripts.Curve
+{
+    public class CurvePointControl : MonoBehaviour
+    {
+        public GameObject controlObject;
+        public GameObject controlObject2;
 
-	public int objectNumber;
-	public GameObject controlObject;
-	public GameObject controlObject2;
-	
-	void OnMouseDrag () {
-		transform.position = DrawCurve.cam.ScreenToViewportPoint (Input.mousePosition);
-		DrawCurve.use.UpdateLine (objectNumber, Input.mousePosition, gameObject);
-	}
+        public int objectNumber;
+
+        private void OnMouseDrag()
+        {
+            transform.position = DrawCurve.cam.ScreenToViewportPoint(Input.mousePosition);
+            DrawCurve.use.UpdateLine(objectNumber, Input.mousePosition, gameObject);
+        }
+    }
 }

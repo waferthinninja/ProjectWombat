@@ -1,117 +1,99 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Controllers.ShipComponents;
+using Controllers.UI;
+using Model.Enums;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ShipComponentControlsManager : MonoBehaviour {
-
-
-    public PanelController ShipComponentControlsPanel;
-
-    private ShipController _selectedShip;
-
-    public RectTransform ContentPanel;
-
-    // prefabs for individual items
-    public Transform ShieldEntry;
-    public Transform WeaponEntry;
-    public Transform PowerEntry;
-
-    private List<IComponentEntryController> _componentControllers;
-
-    // Use this for initialization
-    void Start ()
+namespace Managers
+{
+    public class ShipComponentControlsManager : MonoBehaviour
     {
-        InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        private List<IComponentEntryController> _componentControllers;
 
-    public void OnSelectedShipChange(ShipController ship)
-    {
-        if (ship == null)
+        private ShipController _selectedShip;
+        public RectTransform ContentPanel;
+
+        // prefabs for individual items
+        public Transform ShieldEntry;
+        public Transform PowerEntry;
+        public Transform WeaponEntry;
+        
+        public PanelController ShipComponentControlsPanel;
+        
+        // Use this for initialization
+        private void Start()
         {
-            ClearSelectedShip();
-        }
-        else if (GameManager.Instance.GameState == GameState.Planning)
-        {
-            SelectShip(ship);
-        }
-    }
-
-    private void SelectShip(ShipController ship)
-    {
-        _selectedShip = ship;
-        PopulateEntries(ship);
-
-        // subscribe to power level changes
-        _selectedShip.Power.RegisterOnPowerChange(OnPowerChange);
-
-        ShipComponentControlsPanel.SetActive(true);
-    }
-
-    private void OnPowerChange()
-    {
-        // power has changed, need to activate/deactivate controls as appropriate
-        ActivatePoweredControls();
-    }
-
-    private void PopulateEntries(ShipController ship)
-    {
-        ClearItems();
-
-        var powerEntry = Instantiate(PowerEntry);
-        powerEntry.SetParent(ContentPanel);
-        powerEntry.GetComponent<PowerEntryController>().Initialise(ship.Power);
-
-        foreach (ShieldController s in ship.Shields)
-        {
-            var entry = Instantiate(ShieldEntry);
-            entry.SetParent(ContentPanel);
-            var controller = entry.GetComponent<ShieldEntryController>();
-            controller.Initialise(s);
-            _componentControllers.Add(controller);
+            InputManager.Instance.RegisterOnSelectedShipChange(OnSelectedShipChange);
         }
 
-        foreach (WeaponController w in ship.Weapons)
+        private void OnSelectedShipChange(ShipController ship)
         {
-            var entry = Instantiate(WeaponEntry);
-            entry.SetParent(ContentPanel);
-            var controller = entry.GetComponent<WeaponEntryController>();
-            controller.Initialise(w);
-            _componentControllers.Add(controller);
+            if (ship == null)
+                ClearSelectedShip();
+            else if (GameManager.Instance.GameState == GameState.Planning) SelectShip(ship);
         }
 
-        ActivatePoweredControls();
-    }
-
-    private void ActivatePoweredControls()
-    {
-        foreach(var controller in _componentControllers)
+        private void SelectShip(ShipController ship)
         {
-            controller.ActivatePoweredControls();
-        }
-    }
+            _selectedShip = ship;
+            PopulateEntries(ship);
 
-    private void ClearSelectedShip()
-    {
-        if (_selectedShip != null)
-        {
-            _selectedShip.Power.UnregisterOnPowerChange(OnPowerChange);
-        }
-        ClearItems();
-    }
+            // subscribe to power level changes
+            _selectedShip.Power.RegisterOnPowerChange(OnPowerChange);
 
-    private void ClearItems()
-    {
-        foreach (Transform t in ContentPanel)
-        {
-            Destroy(t.gameObject);
+            ShipComponentControlsPanel.SetActive(true);
         }
-        _componentControllers = new List<IComponentEntryController>();
+
+        private void OnPowerChange()
+        {
+            // power has changed, need to activate/deactivate controls as appropriate
+            ActivatePoweredControls();
+        }
+
+        private void PopulateEntries(ShipController ship)
+        {
+            ClearItems();
+
+            var powerEntry = LeanPool.Scripts.LeanPool.Spawn(PowerEntry);
+            powerEntry.SetParent(ContentPanel);
+            powerEntry.GetComponent<PowerEntryController>().Initialise(ship.Power);
+
+            foreach (var s in ship.Shields)
+            {
+                var entry = LeanPool.Scripts.LeanPool.Spawn(ShieldEntry);
+                entry.SetParent(ContentPanel);
+                var controller = entry.GetComponent<ShieldEntryController>();
+                controller.Initialise(s);
+                _componentControllers.Add(controller);
+            }
+
+            foreach (var w in ship.Weapons)
+            {
+                var entry = LeanPool.Scripts.LeanPool.Spawn(WeaponEntry);
+                entry.SetParent(ContentPanel);
+                var controller = entry.GetComponent<WeaponEntryController>();
+                controller.Initialise(w);
+                _componentControllers.Add(controller);
+            }
+
+            ActivatePoweredControls();
+        }
+
+        private void ActivatePoweredControls()
+        {
+            foreach (var controller in _componentControllers) controller.ActivatePoweredControls();
+        }
+
+        private void ClearSelectedShip()
+        {
+            if (_selectedShip != null) _selectedShip.Power.UnregisterOnPowerChange(OnPowerChange);
+            ClearItems();
+        }
+
+        private void ClearItems()
+        {
+            foreach (Transform t in ContentPanel) LeanPool.Scripts.LeanPool.Despawn(t.gameObject);
+            _componentControllers = new List<IComponentEntryController>();
+        }
     }
 }

@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
+namespace Standard_Assets.Effects.ImageEffects.Scripts
 {
     public enum AAMode
     {
@@ -11,40 +10,40 @@ namespace UnityStandardAssets.ImageEffects
         FXAA1PresetB = 3,
         NFAA = 4,
         SSAA = 5,
-        DLAA = 6,
+        DLAA = 6
     }
 
     [ExecuteInEditMode]
-    [RequireComponent(typeof (Camera))]
+    [RequireComponent(typeof(Camera))]
     [AddComponentMenu("Image Effects/Other/Antialiasing")]
     public class Antialiasing : PostEffectsBase
     {
-        public AAMode mode = AAMode.FXAA3Console;
-
-        public bool showGeneratedNormals = false;
-        public float offsetScale = 0.2f;
         public float blurRadius = 18.0f;
+        private Material dlaa;
+        public Shader dlaaShader;
+
+        public bool dlaaSharp;
+        public float edgeSharpness = 4.0f;
+        public float edgeThreshold = 0.2f;
 
         public float edgeThresholdMin = 0.05f;
-        public float edgeThreshold = 0.2f;
-        public float edgeSharpness = 4.0f;
+        private Material materialFXAAII;
+        private Material materialFXAAIII;
+        private Material materialFXAAPreset2;
+        private Material materialFXAAPreset3;
+        public AAMode mode = AAMode.FXAA3Console;
+        private Material nfaa;
+        public Shader nfaaShader;
+        public float offsetScale = 0.2f;
+        public Shader shaderFXAAII;
+        public Shader shaderFXAAIII;
+        public Shader shaderFXAAPreset2;
+        public Shader shaderFXAAPreset3;
 
-        public bool dlaaSharp = false;
+        public bool showGeneratedNormals;
+        private Material ssaa;
 
         public Shader ssaaShader;
-        private Material ssaa;
-        public Shader dlaaShader;
-        private Material dlaa;
-        public Shader nfaaShader;
-        private Material nfaa;
-        public Shader shaderFXAAPreset2;
-        private Material materialFXAAPreset2;
-        public Shader shaderFXAAPreset3;
-        private Material materialFXAAPreset3;
-        public Shader shaderFXAAII;
-        private Material materialFXAAII;
-        public Shader shaderFXAAIII;
-        private Material materialFXAAIII;
 
 
         public Material CurrentAAMaterial()
@@ -113,10 +112,10 @@ namespace UnityStandardAssets.ImageEffects
                 return;
             }
 
-			// ----------------------------------------------------------------
+            // ----------------------------------------------------------------
             // FXAA antialiasing modes
 
-            if (mode == AAMode.FXAA3Console && (materialFXAAIII != null))
+            if (mode == AAMode.FXAA3Console && materialFXAAIII != null)
             {
                 materialFXAAIII.SetFloat("_EdgeThresholdMin", edgeThresholdMin);
                 materialFXAAIII.SetFloat("_EdgeThreshold", edgeThreshold);
@@ -124,7 +123,7 @@ namespace UnityStandardAssets.ImageEffects
 
                 Graphics.Blit(source, destination, materialFXAAIII);
             }
-            else if (mode == AAMode.FXAA1PresetB && (materialFXAAPreset3 != null))
+            else if (mode == AAMode.FXAA1PresetB && materialFXAAPreset3 != null)
             {
                 Graphics.Blit(source, destination, materialFXAAPreset3);
             }
@@ -140,17 +139,17 @@ namespace UnityStandardAssets.ImageEffects
             }
             else if (mode == AAMode.SSAA && ssaa != null)
             {
-				// ----------------------------------------------------------------
+                // ----------------------------------------------------------------
                 // SSAA antialiasing
                 Graphics.Blit(source, destination, ssaa);
             }
             else if (mode == AAMode.DLAA && dlaa != null)
             {
-				// ----------------------------------------------------------------
-				// DLAA antialiasing
+                // ----------------------------------------------------------------
+                // DLAA antialiasing
 
                 source.anisoLevel = 0;
-                RenderTexture interim = RenderTexture.GetTemporary(source.width, source.height);
+                var interim = RenderTexture.GetTemporary(source.width, source.height);
                 Graphics.Blit(source, interim, dlaa, 0);
                 Graphics.Blit(interim, destination, dlaa, dlaaSharp ? 2 : 1);
                 RenderTexture.ReleaseTemporary(interim);

@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="70cc6576-4eac-4702-b95d-563796832f32" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs.meta" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs.meta" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Corvette.controller" afterPath="$PROJECT_DIR$/Assets/Animations/Corvette.controller" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Scenarios.json" afterPath="$PROJECT_DIR$/Assets/Data/Scenarios.json" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Weapons.json" afterPath="$PROJECT_DIR$/Assets/Data/Weapons.json" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/LaserMaterial.mat" afterPath="$PROJECT_DIR$/Assets/Materials/LaserMaterial.mat" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Corvette.prefab" afterPath="$PROJECT_DIR$/Assets/Prefabs/Corvette.prefab" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Corvette.prefab.meta" afterPath="$PROJECT_DIR$/Assets/Prefabs/Corvette.prefab.meta" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ShieldGenerator.prefab" afterPath="$PROJECT_DIR$/Assets/Prefabs/ShieldGenerator.prefab" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CutSceneCameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CutSceneCameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FollowCameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FollowCameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FreeCameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FreeCameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/ICameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/ICameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ProjectileController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ProjectileController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/HardpointController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/HardpointController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/IComponentController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/IComponentController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PowerController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PowerController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShieldController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShieldController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipSectionController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipSectionController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/TargetableComponentController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/TargetableComponentController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/WeaponController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/WeaponController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/IComponentEntryController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/IComponentEntryController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/OffscreenIndicatorController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/OffscreenIndicatorController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/PanelController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/PanelController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/PowerEntryController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/PowerEntryController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/ShieldEntryController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/ShieldEntryController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/TargetIndicatorController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/TargetIndicatorController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/WeaponEntryController.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UI/WeaponEntryController.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper/DontDestroyOnLoad.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper/DontDestroyOnLoad.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper/Extensions.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper/Extensions.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper/GameObjectExtension.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper/GameObjectExtension.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper/JsonHelper.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper/JsonHelper.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helper/Tuple.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Helper/Tuple.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/CutSceneManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/CutSceneManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InterfaceManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InterfaceManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ProjectilePool.cs" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ProjectilePool.cs.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ScenarioManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ScenarioManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipDetailsManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipDetailsManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipFactory.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipFactory.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipMovementControlsManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShipMovementControlsManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/TimeManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/TimeManager.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/CameraMode.cs" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/CameraMode.cs.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/Faction.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/Faction.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/GameState.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Enums/GameState.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/FactionColors.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/FactionColors.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/ComponentOrder.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/ComponentOrder.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/ShipOrder.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/ShipOrder.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/TurnOrder.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Orders/TurnOrder.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ChassisPrefab.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ChassisPrefab.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ChassisType.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ChassisType.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Collision.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Collision.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/PowerPlant.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/PowerPlant.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/PowerPlantType.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/PowerPlantType.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Scenario.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Scenario.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Shield.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Shield.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ShieldPrefab.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ShieldPrefab.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ShieldType.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/ShieldType.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Ship.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Ship.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Weapon.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/Weapon.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/WeaponPrefab.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/WeaponPrefab.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/WeaponType.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/Structs/WeaponType.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/UI/FPSDisplay.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/UI/FPSDisplay.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/UI/PanelDirection.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/UI/PanelDirection.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Model/UI/UISelectionIndicator.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Model/UI/UISelectionIndicator.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/AntialiasingEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/AntialiasingEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/BloomAndFlaresEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/BloomAndFlaresEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/BloomEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/BloomEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/CameraMotionBlurEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/CameraMotionBlurEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/ColorCorrectionCurvesEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/ColorCorrectionCurvesEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/ColorCorrectionLookupEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/ColorCorrectionLookupEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/CreaseShadingEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/CreaseShadingEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/DepthOfFieldDeprecatedEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/DepthOfFieldDeprecatedEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/DepthOfFieldEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/DepthOfFieldEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/EdgeDetectionEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/EdgeDetectionEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/NoiseAndGrainEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/NoiseAndGrainEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/SunShaftsEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/SunShaftsEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/TonemappingEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/TonemappingEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/VignetteAndChromaticAberrationEditor.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Editor/ImageEffects/VignetteAndChromaticAberrationEditor.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Antialiasing.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Antialiasing.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Bloom.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Bloom.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BloomAndFlares.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BloomAndFlares.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BloomOptimized.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BloomOptimized.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Blur.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Blur.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BlurOptimized.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/BlurOptimized.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/CameraMotionBlur.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/CameraMotionBlur.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionCurves.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionCurves.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionLookup.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionLookup.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionRamp.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ColorCorrectionRamp.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ContrastEnhance.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ContrastEnhance.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ContrastStretch.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ContrastStretch.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/CreaseShading.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/CreaseShading.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/DepthOfField.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/DepthOfField.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/DepthOfFieldDeprecated.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/DepthOfFieldDeprecated.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/EdgeDetection.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/EdgeDetection.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Fisheye.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Fisheye.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/GlobalFog.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/GlobalFog.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Grayscale.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Grayscale.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ImageEffectBase.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ImageEffectBase.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ImageEffects.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ImageEffects.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/MotionBlur.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/MotionBlur.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndGrain.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndGrain.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndScratches.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/NoiseAndScratches.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsBase.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsBase.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsHelper.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/PostEffectsHelper.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Quads.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Quads.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenOverlay.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenOverlay.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientObscurance.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientObscurance.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientOcclusion.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/ScreenSpaceAmbientOcclusion.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/SepiaTone.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/SepiaTone.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/SunShafts.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/SunShafts.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/TiltShift.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/TiltShift.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Tonemapping.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Tonemapping.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Triangles.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Triangles.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Twirl.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Twirl.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/VignetteAndChromaticAberration.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/VignetteAndChromaticAberration.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Vortex.cs" afterPath="$PROJECT_DIR$/Assets/Standard Assets/Effects/ImageEffects/Scripts/Vortex.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity.meta" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/CurvePointControl.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/CurvePointControl.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/DrawCurve.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/DrawCurve.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/SimpleCurve.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Curve/SimpleCurve.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLines.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLines.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLinesMouse.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLinesMouse.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLinesTouch.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/DrawLines/DrawLinesTouch.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Ellipse/Ellipse1.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Ellipse/Ellipse1.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Ellipse/Ellipse2.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Ellipse/Ellipse2.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/EndCap/EndCapDemo.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/EndCap/EndCapDemo.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Grid/DrawGrid.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Grid/DrawGrid.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Grid3D/Grid3D.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Grid3D/Grid3D.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/Highlight.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/Highlight.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/MakeSpheres.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/MakeSpheres.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/RotateAroundY.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Highlight/RotateAroundY.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Mask/MaskLine1.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Mask/MaskLine1.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Mask/MaskLine2.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Mask/MaskLine2.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/CreateStars.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/CreateStars.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/Orbit.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/Orbit.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/RotateViewpoint.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Orbit/RotateViewpoint.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/PartialLine/AnimatePartialLine.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/PartialLine/AnimatePartialLine.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Path/DrawPath.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Path/DrawPath.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Points/DrawPoints.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Points/DrawPoints.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/PowerBar/PowerBar.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/PowerBar/PowerBar.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/RandomHills/CreateHills.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/RandomHills/CreateHills.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Scribblecube/CameraZoom.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Scribblecube/CameraZoom.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Scribblecube/ScribbleCube.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Scribblecube/ScribbleCube.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectLine/SelectLine.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectLine/SelectLine.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectionBox/SelectionBox.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectionBox/SelectionBox.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectionBox/SelectionBox2.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SelectionBox/SelectionBox2.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Spline/MakeSpline.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Spline/MakeSpline.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SplineFollow/SplineFollow2D.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SplineFollow/SplineFollow2D.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SplineFollow/SplineFollow3D.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/SplineFollow/SplineFollow3D.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Text/TextDemo.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Text/TextDemo.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/DrawBox.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/DrawBox.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/VectorObject.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/VectorObject.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/XrayLineData.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/Xray/XrayLineData.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/Line.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/Line.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/ReallyBasicLine.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/ReallyBasicLine.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/UniformTexturedLine.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple2DLine/UniformTexturedLine.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D2.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D2.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D3.cs" afterPath="$PROJECT_DIR$/Assets/Vectrosity/Demos/Scripts/_Simple3DObject/Simple3D3.cs" />
+      <change beforePath="$PROJECT_DIR$/Assets/warp.cs" afterPath="$PROJECT_DIR$/Assets/warp.cs" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
+      <file leaf-file-name="ShieldController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShieldController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4524">
+              <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MobileObjectController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="812">
+              <caret line="34" column="59" lean-forward="false" selection-start-line="34" selection-start-column="59" selection-end-line="34" selection-end-column="59" />
+              <folding>
+                <marker date="1521917565993" expanded="true" signature="6:87" ph="..." />
+                <marker date="1521917565993" expanded="true" signature="110:6032" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="175:6030" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="369:464" ph="/* prior to this frame, the object will be inactive ... */" />
+                <marker date="1521917565993" expanded="true" signature="681:874" ph="/* we don't dispose of the object as we might want to rewind to when it was alive ... */" />
+                <marker date="1521917565993" expanded="true" signature="993:1841" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="1908:1994" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="2038:2415" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="2061:2268" ph="/* we can't actually set active to false else this will never run the FixedUpdate that reactivates it ... */" />
+                <marker date="1521917565993" expanded="true" signature="2462:2516" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="2594:3800" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="2761:3032" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="3091:3790" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="3556:3776" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="3833:3931" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="3967:4050" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="4086:4176" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="4224:4279" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="4315:4784" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="4359:4469" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="4855:5133" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5176:5230" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5276:5330" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5377:5433" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5478:5594" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5626:5691" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5723:5808" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5861:5928" ph="{...}" />
+                <marker date="1521917565993" expanded="true" signature="5969:6024" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShipController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+              <folding>
+                <marker date="1519389430895" expanded="false" signature="6:176" ph="..." />
+                <marker date="1519389430895" expanded="true" signature="214:9934" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="319:9932" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="1259:1311" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="1365:1417" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="1485:2120" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="2194:2270" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="2312:2389" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="2436:2740" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="2555:2730" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="2813:3562" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="3604:4229" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="3715:4219" ph="/* foreach (Transform t in transform) ... */" />
+                <marker date="1519389430895" expanded="true" signature="4271:4948" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="4380:4938" ph="/* Shields = new List&lt;ShieldController&gt;(); ... */" />
+                <marker date="1519389430895" expanded="true" signature="4988:5071" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="5117:5718" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="5766:6001" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="5843:5968" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6042:6131" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6171:6223" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6270:6368" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6406:6643" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6441:6587" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="6678:7060" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="7087:7627" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="7662:8278" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="8324:9464" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="8704:9191" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="9275:9454" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="9497:9553" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="9585:9640" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="9693:9795" ph="{...}" />
+                <marker date="1519389430895" expanded="true" signature="9836:9926" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InterfaceManager.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/InterfaceManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3219">
+              <caret line="114" column="12" lean-forward="false" selection-start-line="114" selection-start-column="12" selection-end-line="114" selection-end-column="12" />
+              <folding>
+                <marker date="1519389430771" expanded="false" signature="6:81" ph="..." />
+                <marker date="1519389430771" expanded="true" signature="153:3959" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="843:1050" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="869:1040" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="1080:1656" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="1687:1707" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="1747:1927" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="1965:2337" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="2378:2588" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="2631:2763" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="2803:2932" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="2968:3076" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="3127:3233" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="3272:3401" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="3440:3953" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="3522:3610" ph="{...}" />
+                <marker date="1519389430771" expanded="true" signature="3759:3902" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PositionController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/PositionController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="203">
+              <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding>
+                <marker date="1521916680566" expanded="true" signature="15:169" ph="{...}" />
+                <marker date="1521916680566" expanded="true" signature="62:167" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NullPositionController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/NullPositionController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="6" column="44" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+              <folding>
+                <marker date="1521916692684" expanded="true" signature="30:278" ph="{...}" />
+                <marker date="1521916692684" expanded="true" signature="80:276" ph="{...}" />
+                <marker date="1521916692684" expanded="true" signature="132:178" ph="{...}" />
+                <marker date="1521916692684" expanded="true" signature="224:270" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimulationPositionController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="760">
+              <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+              <folding>
+                <marker date="1521917565974" expanded="true" signature="6:67" ph="..." />
+                <marker date="1521917565974" expanded="true" signature="84:1268" ph="{...}" />
+                <marker date="1521917565974" expanded="true" signature="153:1266" ph="{...}" />
+                <marker date="1521917565974" expanded="true" signature="466:610" ph="{...}" />
+                <marker date="1521917565974" expanded="true" signature="657:1067" ph="{...}" />
+                <marker date="1521917565974" expanded="true" signature="1113:1259" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PropulsionController.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="2" column="46" lean-forward="true" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+              <folding>
+                <marker date="1521917660042" expanded="true" signature="36:517" ph="{...}" />
+                <marker date="1521917660042" expanded="true" signature="85:515" ph="{...}" />
+                <marker date="1521917660042" expanded="true" signature="434:490" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TimeManager.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TimeManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding>
+                <marker date="1519389430721" expanded="false" signature="6:54" ph="..." />
+                <marker date="1519389430721" expanded="true" signature="74:2905" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="121:2903" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="375:577" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="401:567" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="637:697" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="759:819" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="850:1495" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="1531:1939" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="1565:1593" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="1610:1929" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="1767:1875" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="1976:2039" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2081:2162" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2202:2284" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2323:2405" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2456:2537" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2580:2662" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2697:2778" ph="{...}" />
+                <marker date="1519389430721" expanded="true" signature="2815:2897" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReplayPositionController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="783">
+              <caret line="27" column="62" lean-forward="false" selection-start-line="27" selection-start-column="62" selection-end-line="27" selection-end-column="62" />
+              <folding>
+                <marker date="1521917565951" expanded="true" signature="6:53" ph="..." />
+                <marker date="1521917565951" expanded="true" signature="70:906" ph="{...}" />
+                <marker date="1521917565951" expanded="true" signature="135:904" ph="{...}" />
+                <marker date="1521917565951" expanded="true" signature="272:316" ph="{...}" />
+                <marker date="1521917565951" expanded="true" signature="363:697" ph="{...}" />
+                <marker date="1521917565951" expanded="true" signature="743:889" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/PositionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FollowCameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FreeCameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helper/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CutSceneCameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helper/JsonHelper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/ICameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helper/GameObjectExtension.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/NullPositionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/IComponentController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShieldController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/HardpointController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ScenarioManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CutSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/GameState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/Faction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/InterfaceManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TimeManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ShipOrder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ComponentOrder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ProjectileController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/ProjectileController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CutSceneCameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FollowCameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FreeCameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/ICameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/HardpointController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/IComponentController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/Enums/CameraMode.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/IMovementController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/NullMovementController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/SimulationMovementController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PositionStore.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/DataStore.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NullMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Mover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/OutccomePositionController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/PositionController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/NullPositionController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/EngineController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="480" />
+    <option name="y" value="260" />
+    <option name="width" value="2880" />
+    <option name="height" value="1560" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Scripts" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Scripts" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Controllers" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Scripts" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Controllers" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="ShipComponents" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Scripts" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Managers" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ProjectWombat (4 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Scripts" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Model" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-file-system" value="false" />
+        <option name="show-all-items" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="do_not_show_unity_auto_save_notification" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="70cc6576-4eac-4702-b95d-563796832f32" name="Default" comment="" />
+      <created>1519158286927</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519158286927</updated>
+      <workItem from="1519158292567" duration="851000" />
+      <workItem from="1519160194147" duration="2866000" />
+      <workItem from="1519388378311" duration="1797000" />
+      <workItem from="1521461643809" duration="27000" />
+      <workItem from="1521495216472" duration="1340000" />
+      <workItem from="1521497195803" duration="6000" />
+      <workItem from="1521721216628" duration="598000" />
+      <workItem from="1521748609530" duration="3670000" />
+      <workItem from="1521906153513" duration="2897000" />
+      <workItem from="1521914451342" duration="3283000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="17335000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-13" y="-13" width="3866" height="2106" extended-state="6" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980412" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13776042" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980412" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="3" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Helper/JsonHelper.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CutSceneManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ScenarioManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/Faction.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1519389275315" expanded="true" signature="47:91" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ComponentOrder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ShipOrder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="19" column="38" lean-forward="false" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/GameState.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1392">
+          <caret line="52" column="9" lean-forward="true" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="841">
+          <caret line="31" column="33" lean-forward="true" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2059">
+          <caret line="74" column="38" lean-forward="false" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CameraManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="978">
+          <caret line="58" column="44" lean-forward="false" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ProjectileController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AIManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/CutSceneCameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FreeCameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="5" column="16" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/FollowCameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="7" column="8" lean-forward="false" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/ICameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/HardpointController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/IComponentController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Helper/Extensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Helper/GameObjectExtension.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Helper/JsonHelper.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CutSceneManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ScenarioManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/CameraMode.cs" />
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/GameState.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ComponentOrder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Orders/ShipOrder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ShipComponentControlsManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="28" column="10" lean-forward="false" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/Cameras/OverheadCameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="32" column="50" lean-forward="false" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShieldController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4524">
+          <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/Enums/Faction.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1519389275315" expanded="true" signature="47:91" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/IMovementController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="7" column="20" lean-forward="false" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/NullMovementController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="8" column="1" lean-forward="false" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/SimulationMovementController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/InterfaceManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3219">
+          <caret line="114" column="12" lean-forward="false" selection-start-line="114" selection-start-column="12" selection-end-line="114" selection-end-column="12" />
+          <folding>
+            <marker date="1519389430771" expanded="false" signature="6:81" ph="..." />
+            <marker date="1519389430771" expanded="true" signature="153:3959" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="843:1050" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="869:1040" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="1080:1656" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="1687:1707" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="1747:1927" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="1965:2337" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="2378:2588" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="2631:2763" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="2803:2932" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="2968:3076" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="3127:3233" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="3272:3401" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="3440:3953" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="3522:3610" ph="{...}" />
+            <marker date="1519389430771" expanded="true" signature="3759:3902" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/DataStore.cs" />
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/NullMover.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Mover.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TimeManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <marker date="1519389430721" expanded="false" signature="6:54" ph="..." />
+            <marker date="1519389430721" expanded="true" signature="74:2905" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="121:2903" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="375:577" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="401:567" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="637:697" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="759:819" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="850:1495" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="1531:1939" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="1565:1593" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="1610:1929" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="1767:1875" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="1976:2039" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2081:2162" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2202:2284" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2323:2405" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2456:2537" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2580:2662" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2697:2778" ph="{...}" />
+            <marker date="1519389430721" expanded="true" signature="2815:2897" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/ReplayPositionController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="27" column="62" lean-forward="false" selection-start-line="27" selection-start-column="62" selection-end-line="27" selection-end-column="62" />
+          <folding>
+            <marker date="1521917565951" expanded="true" signature="6:53" ph="..." />
+            <marker date="1521917565951" expanded="true" signature="70:906" ph="{...}" />
+            <marker date="1521917565951" expanded="true" signature="135:904" ph="{...}" />
+            <marker date="1521917565951" expanded="true" signature="272:316" ph="{...}" />
+            <marker date="1521917565951" expanded="true" signature="363:697" ph="{...}" />
+            <marker date="1521917565951" expanded="true" signature="743:889" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/MobileObjectController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="812">
+          <caret line="34" column="59" lean-forward="false" selection-start-line="34" selection-start-column="59" selection-end-line="34" selection-end-column="59" />
+          <folding>
+            <marker date="1521917565993" expanded="true" signature="6:87" ph="..." />
+            <marker date="1521917565993" expanded="true" signature="110:6032" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="175:6030" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="369:464" ph="/* prior to this frame, the object will be inactive ... */" />
+            <marker date="1521917565993" expanded="true" signature="681:874" ph="/* we don't dispose of the object as we might want to rewind to when it was alive ... */" />
+            <marker date="1521917565993" expanded="true" signature="993:1841" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="1908:1994" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="2038:2415" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="2061:2268" ph="/* we can't actually set active to false else this will never run the FixedUpdate that reactivates it ... */" />
+            <marker date="1521917565993" expanded="true" signature="2462:2516" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="2594:3800" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="2761:3032" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="3091:3790" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="3556:3776" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="3833:3931" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="3967:4050" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="4086:4176" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="4224:4279" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="4315:4784" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="4359:4469" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="4855:5133" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5176:5230" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5276:5330" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5377:5433" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5478:5594" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5626:5691" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5723:5808" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5861:5928" ph="{...}" />
+            <marker date="1521917565993" expanded="true" signature="5969:6024" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/ShipController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <marker date="1519389430895" expanded="false" signature="6:176" ph="..." />
+            <marker date="1519389430895" expanded="true" signature="214:9934" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="319:9932" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="1259:1311" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="1365:1417" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="1485:2120" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="2194:2270" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="2312:2389" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="2436:2740" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="2555:2730" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="2813:3562" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="3604:4229" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="3715:4219" ph="/* foreach (Transform t in transform) ... */" />
+            <marker date="1519389430895" expanded="true" signature="4271:4948" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="4380:4938" ph="/* Shields = new List&lt;ShieldController&gt;(); ... */" />
+            <marker date="1519389430895" expanded="true" signature="4988:5071" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="5117:5718" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="5766:6001" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="5843:5968" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6042:6131" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6171:6223" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6270:6368" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6406:6643" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6441:6587" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="6678:7060" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="7087:7627" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="7662:8278" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="8324:9464" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="8704:9191" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="9275:9454" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="9497:9553" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="9585:9640" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="9693:9795" ph="{...}" />
+            <marker date="1519389430895" expanded="true" signature="9836:9926" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/SimulationPositionController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="20" column="45" lean-forward="false" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+          <folding>
+            <marker date="1521917565974" expanded="true" signature="6:67" ph="..." />
+            <marker date="1521917565974" expanded="true" signature="84:1268" ph="{...}" />
+            <marker date="1521917565974" expanded="true" signature="153:1266" ph="{...}" />
+            <marker date="1521917565974" expanded="true" signature="466:610" ph="{...}" />
+            <marker date="1521917565974" expanded="true" signature="657:1067" ph="{...}" />
+            <marker date="1521917565974" expanded="true" signature="1113:1259" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/PositionController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding>
+            <marker date="1521916680566" expanded="true" signature="15:169" ph="{...}" />
+            <marker date="1521916680566" expanded="true" signature="62:167" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Model/NullPositionController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="6" column="44" lean-forward="false" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+          <folding>
+            <marker date="1521916692684" expanded="true" signature="30:278" ph="{...}" />
+            <marker date="1521916692684" expanded="true" signature="80:276" ph="{...}" />
+            <marker date="1521916692684" expanded="true" signature="132:178" ph="{...}" />
+            <marker date="1521916692684" expanded="true" signature="224:270" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/ShipComponents/PropulsionController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="2" column="46" lean-forward="true" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+          <folding>
+            <marker date="1521917660042" expanded="true" signature="36:517" ph="{...}" />
+            <marker date="1521917660042" expanded="true" signature="85:515" ph="{...}" />
+            <marker date="1521917660042" expanded="true" signature="434:490" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

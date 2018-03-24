@@ -1,5 +1,5 @@
 [
-	{"Name":"Small Pulse Laser", "Range":50, "Damage":20, "ProjectileSpeed":75, "TimeBetweenShots":1 },	
+	{"Name":"Small Pulse Laser", "Range":50, "Damage":15, "ProjectileSpeed":75, "TimeBetweenShots":0.5 },	
 	{"Name":"Medium Pulse Laser", "Range":60, "Damage":45, "ProjectileSpeed":75, "TimeBetweenShots":1 },
 	{"Name":"Large Pulse Laser", "Range":70, "Damage":80, "ProjectileSpeed":75, "TimeBetweenShots":2 }
 ]

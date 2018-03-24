@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour {
-
-	void Start () {
-        DontDestroyOnLoad(this);
-	}
-	
+namespace Helper
+{
+    public class DontDestroyOnLoad : MonoBehaviour
+    {
+        private void Start()
+        {
+            DontDestroyOnLoad(this);
+        }
+    }
 }

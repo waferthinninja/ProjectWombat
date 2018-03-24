@@ -1,24 +1,24 @@
-using System;
+using Standard_Assets.Effects.ImageEffects.Scripts;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
+namespace Standard_Assets.Editor.ImageEffects
 {
-    [CustomEditor(typeof (Antialiasing))]
-    public class AntialiasingEditor : Editor
+    [CustomEditor(typeof(Antialiasing))]
+    public class AntialiasingEditor : UnityEditor.Editor
     {
-        private SerializedObject serObj;
-
-        private SerializedProperty mode;
-
-        private SerializedProperty showGeneratedNormals;
-        private SerializedProperty offsetScale;
         private SerializedProperty blurRadius;
         private SerializedProperty dlaaSharp;
+        private SerializedProperty edgeSharpness;
+        private SerializedProperty edgeThreshold;
 
         private SerializedProperty edgeThresholdMin;
-        private SerializedProperty edgeThreshold;
-        private SerializedProperty edgeSharpness;
+
+        private SerializedProperty mode;
+        private SerializedProperty offsetScale;
+        private SerializedObject serObj;
+
+        private SerializedProperty showGeneratedNormals;
 
 
         private void OnEnable()
@@ -46,11 +46,11 @@ namespace UnityStandardAssets.ImageEffects
 
             EditorGUILayout.PropertyField(mode, new GUIContent("Technique"));
 
-            Material mat = (target as Antialiasing).CurrentAAMaterial();
+            var mat = (target as Antialiasing).CurrentAAMaterial();
             if (null == mat && (target as Antialiasing).enabled)
-            {
-                EditorGUILayout.HelpBox("This AA technique is currently not supported. Choose a different technique or disable the effect and use MSAA instead.", MessageType.Warning);
-            }
+                EditorGUILayout.HelpBox(
+                    "This AA technique is currently not supported. Choose a different technique or disable the effect and use MSAA instead.",
+                    MessageType.Warning);
 
             if (mode.enumValueIndex == (int) AAMode.NFAA)
             {

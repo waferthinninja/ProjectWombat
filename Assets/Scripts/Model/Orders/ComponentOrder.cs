@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ComponentOrder {
-    
-    public int TargetShipId;
-
+﻿namespace Model.Orders
+{
+    public class ComponentOrder
+    {
+        public int TargetShipId;
+    }
 }

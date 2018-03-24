@@ -1,8 +1,10 @@
-﻿
-public enum PanelDirection
+﻿namespace Model.UI
 {
-    LeftToRight,
-    TopDown,
-    RightToLeft,
-    BottomUp
+    public enum PanelDirection
+    {
+        LeftToRight,
+        TopDown,
+        RightToLeft,
+        BottomUp
+    }
 }

@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public class RotateViewpoint : MonoBehaviour {
+namespace Vectrosity.Demos.Scripts.Orbit
+{
+    public class RotateViewpoint : MonoBehaviour
+    {
+        public float rotateSpeed = 5.0f;
 
-	public float rotateSpeed = 5.0f;
-	
-	void Update () {
-		transform.RotateAround (Vector3.zero, Vector3.right, rotateSpeed * Time.deltaTime);
-	}
+        private void Update()
+        {
+            transform.RotateAround(Vector3.zero, Vector3.right, rotateSpeed * Time.deltaTime);
+        }
+    }
 }

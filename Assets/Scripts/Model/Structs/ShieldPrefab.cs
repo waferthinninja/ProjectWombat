@@ -1,9 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public struct ShieldPrefab
+namespace Model.Structs
 {
-    public string Type;
-    public Transform Prefab;
+    [Serializable]
+    public struct ShieldPrefab
+    {
+        public string Type;
+        public Transform Prefab;
+    }
 }

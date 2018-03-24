@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 
-public static class GameObjectExtension
+namespace Helper
 {
-    public static void SetLayer(this GameObject parent, int layer, bool includeChildren = true)
+    public static class GameObjectExtension
     {
-        parent.layer = layer;
-        if (includeChildren)
+        public static void SetLayer(this GameObject parent, int layer, bool includeChildren = true)
         {
-            foreach (Transform trans in parent.transform.GetComponentsInChildren<Transform>(true))
-            {
-                trans.gameObject.layer = layer;
-            }
+            parent.layer = layer;
+            if (includeChildren)
+                foreach (var trans in parent.transform.GetComponentsInChildren<Transform>(true))
+                    trans.gameObject.layer = layer;
         }
     }
 }

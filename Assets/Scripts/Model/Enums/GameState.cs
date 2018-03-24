@@ -1,11 +1,14 @@
-﻿public enum GameState
+﻿namespace Model.Enums
 {
-    Setup,
-    CutScene,
-    Planning,
-    Simulation,
-    WaitingForOpponent,
-    Outcome,
-    Replay,
-    EndOfTurn
+    public enum GameState
+    {
+        Setup,
+        CutScene,
+        Planning,
+        Simulation,
+        WaitingForOpponent,
+        Outcome,
+        Replay,
+        EndOfTurn
+    }
 }

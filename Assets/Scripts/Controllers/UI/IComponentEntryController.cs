@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Controllers.ShipComponents;
 
-
-public interface IComponentEntryController
+namespace Controllers.UI
 {
-    void Initialise(IComponentController i);
+    public interface IComponentEntryController
+    {
+        void Initialise(IComponentController i);
 
-    void ActivatePoweredControls();
-    
+        void ActivatePoweredControls();
+    }
 }
-

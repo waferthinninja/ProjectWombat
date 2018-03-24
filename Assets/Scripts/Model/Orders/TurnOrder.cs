@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class TurnOrder {
+namespace Model.Orders
+{
+    public class TurnOrder
+    {
+        // will prob eventuallt need turnid and playerid but for now
+        // will just be used for enemy AI orders
 
-    // will prob eventuallt need turnid and playerid but for now
-    // will just be used for enemy AI orders
-
-    public List<ShipOrder> ShipOrders;
+        public List<ShipOrder> ShipOrders;
+    }
 }
